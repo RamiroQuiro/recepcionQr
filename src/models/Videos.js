@@ -2,13 +2,16 @@ import { Schema,model } from "mongoose";
 
 
 const videosSchema=new Schema({
-    name:{
+    titleVideo:{
         type:String,
         require:true
     },
-    description:String,
-    done:Boolean,
-    path:String,
+    descripcionVideo:String,
+    done:{
+        type:Boolean,
+        default:false,
+    },
+ 
 
 },{
     timestamps:true

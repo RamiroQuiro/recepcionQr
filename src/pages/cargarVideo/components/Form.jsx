@@ -33,10 +33,7 @@ try {
     {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-       nombre:fomulario.titleVideo,
-       descripcion:fomulario.descripcionVideo
-      }),
+      body: JSON.stringify(fomulario),
     })
     const data=await response.json()
     console.log(data)
@@ -50,7 +47,8 @@ try {
 }
 
   return (
-    <form  class="w-1/2 h-1/2 bg-red-400 flex flex-col items-center justify-normal">
+    <form  className="">
+
     <div>
         <label htmlFor="rutaVideo">Selecciona un video</label>
         <input type="file" name="rutaVideo" id="rutaVideo" onChange={handleFileUp}/>
