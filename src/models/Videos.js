@@ -7,6 +7,14 @@ const videosSchema=new Schema({
         require:true
     },
     descripcionVideo:String,
+    path:{
+        type:String
+    },
+    file:{
+        type:Object
+    },
+    originalname:String,
+    mimetype:String,
     done:{
         type:Boolean,
         default:false,
