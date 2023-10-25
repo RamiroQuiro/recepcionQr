@@ -35,7 +35,8 @@ export default function Formulario() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             nombre: fomulario.titleVideo,
-            descripcion: fomulario.descripcionVideo
+            descripcion: fomulario.descripcionVideo,
+            file:file
           }),
         })
       const data = await response.json()
