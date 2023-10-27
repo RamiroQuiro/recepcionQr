@@ -24,7 +24,7 @@ export default function Form() {
       </label>
       <label htmlFor="video">
       video
-        <input type="file" id="email" name="email" required />
+        <input type="file" id="image" name="image" required />
       </label>
       <label htmlFor="message">
         Mensaje
