@@ -27,6 +27,10 @@ export default function Form() {
     try {
       const response = await fetch("/api/upload", {
         method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
+        },
         body: formData,
       });
       
@@ -44,7 +48,7 @@ export default function Form() {
   return (
     <form className="">
       <div>
-        <label htmlFor="rutaVideo">Selecciona un video</label>
+        <label htmlFor="rutaVideo">Selecciona un video, este es el formulario de componentes</label>
         <input
           type="file"
           name="rutaVideo"
