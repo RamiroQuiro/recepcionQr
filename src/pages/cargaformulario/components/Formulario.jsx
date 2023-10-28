@@ -2,11 +2,12 @@ import { FormEvent, useState } from "react";
 import QRCode from 'qrcode'
 
 export default function Form() {
+  const URL =import.meta.env.URLLOCAL
   const [responseMessage, setResponseMessage] = useState("");
 const [qrImage, setQrImage] = useState(null)
   const generateQR = async text => {
     try {
-      const qr=await QRCode.toDataURL('/'+text)
+      const qr=await QRCode.toDataURL(URL+text+'.mp4')
       setQrImage(qr)
     } catch (err) {
       console.error(err)
