@@ -1,7 +1,25 @@
 import { FormEvent, useState } from "react";
+import QRCode from 'qrcode'
 
 export default function Form() {
   const [responseMessage, setResponseMessage] = useState("");
+const [qrImage, setQrImage] = useState(null)
+  const generateQR = async text => {
+    try {
+      const qr=await QRCode.toDataURL('/'+text)
+      setQrImage(qr)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+  const formatoQR = {
+    color: { light: "#ffffeeff", dark: "#00001Eff" },
+    errorCorrectionLevel: "H",
+    type: "image/png",
+    margin: "3",
+    quality: 1,
+    scale: 4,
+  };
 
   async function submit(e) {
     e.preventDefault();
@@ -11,7 +29,10 @@ export default function Form() {
       body: formData,
     });
     const data = await response.json();
-    if (data.message) {
+
+
+    if (data.message && data.name) {
+      generateQR(data.name)
       setResponseMessage(data.message);
     }
   }
@@ -31,6 +52,16 @@ export default function Form() {
         <textarea id="message" name="message" required />
       </label>
       <button>Enviar</button>
+
+      {
+        qrImage&&
+        <img
+        alt="qrCode"
+        src={qrImage}
+        width={100}
+        height={100}
+        />
+      }
       {responseMessage && <p>{responseMessage}</p>}
     </form>
   );
