@@ -12,6 +12,11 @@ export default function Form() {
   const URL = import.meta.env.URLLOCAL;
   const [responseMessage, setResponseMessage] = useState("");
   const [qrImage, setQrImage] = useState(null);
+  const [video, setVideo] = useState(null)
+
+  
+  
+  // generador de codigoQR
   const generateQR = async (text) => {
     try {
       const qr = await QRCode.toDataURL(
@@ -23,7 +28,7 @@ export default function Form() {
     }
   };
 ;
-
+// funcion para cargar el fomulario
   async function submit(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -39,6 +44,11 @@ export default function Form() {
     }
   }
 
+
+
+  const handleVideo=(e)=>{
+    setVideo(e.target.files[0])
+  }
   return (
     <form
       onSubmit={submit}
@@ -57,21 +67,32 @@ export default function Form() {
           className="rounded-lg ring-0 border p-2"
         />
       </label>
-      <label
+     {
+     !video?
+
+     <label
         htmlFor="video"
         className="my-5 cursor-pointer text-center border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
       >
-        Click aqui para cargar tu video
+        <p className="mx-auto animate-pulse">Click aqui para cargar tu video 📂</p>
         <input
           type="file"
           id="video"
           name="video"
           required
           className="hidden"
+          onChange={handleVideo}
         />
       </label>
+    : 
+    <div className="my-5 cursor-pointer text-center border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
+    >
+      <p className="mx-auto text-green-400 font-medium">Video Cargado 👌🏼 </p>
+    </div>  
+    }
 
-      <button>Enviar</button>
+      <button  className=" cursor-pointer  border flex items-center justify-center hover:bg-blue-400 duration-200 hover:ring-2 bg-blue-500 text-white font-medium rounded-lg p-2 text-center w-2/3 gap-2 text-sm"
+    >Enviar</button>
 
       {qrImage && <img alt="qrCode" src={qrImage} width={100} height={100} />}
       {responseMessage && <p>{responseMessage}</p>}
