@@ -1,0 +1,37 @@
+---
+
+const respuesta = await fetch("http://localhost:4321/api/listarvideos");
+ const data = await respuesta.json();
+---
+
+
+    <div
+      class="  backdrop-blur-sm flex flex-col p-5 rounded-lg items-left justify-normal  w-full min-h-screen "
+    >
+     { 
+     data.files.length>0?
+     
+     
+      <div class="flex items-center flex-wrap justify-between w-full gap-5 ">
+          {data.files?.map((video) => (
+            <div class="w-1/4 flex-shrink h-96 rounded-lg text-gray-700 overflow-hidden bg-white/80 backdrop-blur-sm flex flex-col items-center justify-normal ">
+              <video src={`/upload/${video}`} class="w-full h-2/3 object-cover "></video>
+             <div class=" flex items-center justify-around h-1/3">
+              <h2><span class="capitalize font-bold text-xl">nombre</span>: {video}</h2>
+              <img src="#" alt="#"/>
+              </div>
+              </div>
+              ))}
+            </div>
+          :
+          <div class="text-left">
+        <h2 class="mt-5 text-3xl font-bold text-gray-700">Sube un Video!</h2>
+        <p class="mt-2 text-sm text-gray-400">
+          no hay videos que mostrar, para realizar una carga, dirigete a cargar Videos
+        </p>
+      </div>
+          }
+      <!-- <ListadoVideos client:load/> -->
+    </div>
+ 
+
