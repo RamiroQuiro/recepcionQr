@@ -7,7 +7,7 @@ export default function Form() {
 const [qrImage, setQrImage] = useState(null)
   const generateQR = async text => {
     try {
-      const qr=await QRCode.toDataURL(URL+text+'.mp4')
+      const qr=await QRCode.toDataURL("http://localhost:4321/upload/"+text+'.mp4')
       setQrImage(qr)
     } catch (err) {
       console.error(err)

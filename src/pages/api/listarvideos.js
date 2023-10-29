@@ -1,11 +1,26 @@
-import { conexion } from "../../database/conexion";
-import Videos from "../../models/Videos";
+import fs from 'fs'
+import path from "path";
 
 export async function GET() {
-    conexion()
-const videos=await Videos.find()
-console.log(videos)
-    return {
-        body:JSON.stringify(videos)
-    }
+
+const directoryPath=path.join(process.cwd(),'public/upload')
+try {
+    const files = fs.readdirSync(directoryPath);
+    console.log(files);
+    return new Response(
+        JSON.stringify({
+          message: "¡Éxito!",
+          files: files
+        }),
+        { status: 200 }
+      );
+} catch (err) {
+    console.log(err);
+    return new Response(
+        JSON.stringify({
+          message: 'error al leer el directorio',
+        }),
+        { status: 200 }
+      );
+}
 }

@@ -2,9 +2,8 @@
 import ListadoVideos from "./components/ListadoVideos";
 import Layout from "../../layouts/Layout.astro";
 
-const respuesta=await fetch('http://localhost:4321/api/listarvideos')
-const data =await respuesta.json()
-console.log(data)
+const respuesta = await fetch("http://localhost:4321/api/listarvideos");
+ const data = await respuesta.json();
 ---
 
 <Layout title="Welcome to Astro.">
@@ -20,13 +19,16 @@ console.log(data)
           Sube el video e indica el la mesa a relacionar
         </p>
       </div>
-      {
-        data?.map((video:any)=>(
-<div>
-    <p>
-        {video.titleVideo}</p></div>
-        ))
-      }
+      <div class="flex items-center flex-wrap justify-between w-full gap-5 ">
+
+        {
+          data.files?.map((video) => (
+            <div class="w-1/3 flex-shrink h-64 rounded-lg ">
+              <video src={`/upload/${video}`} class="w-full h-full"></video>
+              </div>
+              ))
+            }
+            </div>
       <!-- <ListadoVideos client:load/> -->
     </div>
   </main>
