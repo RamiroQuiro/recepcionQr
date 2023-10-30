@@ -8,7 +8,6 @@ const filePathData = path.join(process.cwd(), 'public','base', 'base.json');
 try {
     const files = fs.readdirSync(directoryPath);
     const data = JSON.parse(fs.readFileSync(filePathData, 'utf8'));
-console.log('este es el archivo',data.data)
     return new Response(
         JSON.stringify({
           message: "¡Éxito!",

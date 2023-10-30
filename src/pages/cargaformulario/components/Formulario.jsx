@@ -14,7 +14,7 @@ export default function Form() {
   async function submit(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
-    console.log(formData)
+    formData.append('video',videook)
     const response = await fetch("/api/feedback", {
       method: "POST",
       body: formData,
@@ -64,6 +64,7 @@ export default function Form() {
           name="video"
           required
           className="hidden"
+          onChange={handleVideo}
         />
       </label>
     : 
