@@ -8,7 +8,7 @@ function generarUID() {
 
 
 const formatoQR = {
-  color: { light: "#ffffeeff", dark: "#00001Eff" },
+  color: { light: "#ffffff", dark: "#00001Eff" },
   errorCorrectionLevel: "H",
   type: "image/png",
   margin: "3",
