@@ -33,7 +33,6 @@ export default function Form() {
     }
   }
 
-console.log('first')
 
   const handleVideo=(e)=>{
     setVideook(e.target.files[0])
