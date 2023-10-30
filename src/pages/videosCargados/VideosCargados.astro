@@ -2,6 +2,7 @@
 
 const respuesta = await fetch("http://localhost:4321/api/listarvideos");
  const data = await respuesta.json();
+ 
 ---
 
 
@@ -15,10 +16,10 @@ const respuesta = await fetch("http://localhost:4321/api/listarvideos");
       <div class="flex items-center flex-wrap justify-between w-full gap-5 ">
           {data.files?.map((video) => (
             <div class="w-1/4 flex-shrink h-96 rounded-lg text-gray-700 overflow-hidden p-9 bg-white/80 backdrop-blur-sm flex flex-col items-center justify-normal ">
-              <video src={`/upload/${video}`} class="w-full h-2/3 object-cover "></video>
-             <div class=" flex items-center justify-around h-1/3">
-              <h2><span class="capitalize font-bold text-xl">nombre</span>: {video}</h2>
-              <img src="#" alt="#"/>
+              <video src={`/upload/${video.name}.mp4`} class="w-full h-2/3 object-cover "></video>
+             <div class=" flex items-center justify-around h-1/3 flex-col my-5">
+              <h2><span class="capitalize font-bold text-">nombre</span>: {video.name}</h2>
+              <a download={video.name} href={video.code}> <img src={video.code} width="100" height="100" alt="#"/></a>
               </div>
               </div>
               ))}

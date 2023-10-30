@@ -5,23 +5,30 @@ import Layout from "../../layouts/Layout.astro";
 <Layout title="Welcome to Astro.">
   <main class="flex items-center justify-normal flex-col w-full min-h-screen">
     <h1>Bienvenido ! Scanea tu codigo</h1>
-    <div class="w-2/3 rounded-lg bg-white">
-	  <video autoplay id="lectorQr" class="w-full h-full"></video>
-	  <div class="flex w-full justify-around items-center">
-		<botton class="0" id="prender">Activar Lector</botton>
-		<botton id="prender" class=" ">Apagar Lector</botton>
-	  </div>
-	</div>
+    <div
+      class="w-[500px] h-[85vh] rounded-lg bg-white flex flex-col items-center justify-normal overflow-hidden p-2"
+    >
+      <video autoplay id="lectorQr" class="w-full h-2/3"></video>
+      <div
+        class="flex w-full justify-around items-center text-gray-700 py-2 font-medium"
+      >
+        <botton
+          class="0"
+          id="prender"
+          class="cursor-pointer z-20 bg-red-300 hover:bg-gray-300"
+          >Activar Lector</botton
+        >
+        <botton id="prender" class="">Apagar Lector</botton>
+      </div>
+    </div>
   </main>
 </Layout>
 |
 
-<script src="./funcionamientoLector.js">
-
-</script>
+<script src="./funcionamientoLector.js"></script>
 
 <style>
-	.camaraActiva{
-		display: flex;
-	}
+  .camaraActiva {
+    display: flex;
+  }
 </style>

@@ -4,13 +4,15 @@ import path from "path";
 export async function GET() {
 
 const directoryPath=path.join(process.cwd(),'public/upload')
+const filePathData = path.join(process.cwd(), 'public','base', 'base.json');
 try {
     const files = fs.readdirSync(directoryPath);
-    console.log(files);
+    const data = JSON.parse(fs.readFileSync(filePathData, 'utf8'));
+console.log('este es el archivo',data.data)
     return new Response(
         JSON.stringify({
           message: "¡Éxito!",
-          files: files
+          files: data.data,
         }),
         { status: 200 }
       );
