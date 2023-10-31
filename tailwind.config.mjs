@@ -5,8 +5,8 @@ export default {
     extend: {
       colors: {
         paleta1: {
-          primary: "#F1AAF5",
-          secondary: "#FCA5A9",
+          primary: "#F4CFEB",
+          secondary: "#BFDAFE",
           tertiary: "#FFFFFF",
           gray: "#808080",
           white: "#FFFFFF",

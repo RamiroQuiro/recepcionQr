@@ -3,14 +3,14 @@ import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout title="Welcome to Astro.">
-  <main class="flex items-center justify-normal flex-col w-full min-h-screen">
-    <h1  class="mt-5 text-3xl font-bold text-gray-700">Scanea tu codigo</h1>
+  <main class="flex items-center justify-normal flex-col w-full min-h-screen ">
     <div
-      class="w-[500px] h-[85vh] rounded-lg bg-white flex flex-col items-center justify-normal p-2"
+    class="w-[500px] h-[85vh] rounded-lg bg-white flex flex-col items-center justify-normal p-2 relative"
     >
-      <div class="h-5/6 flex camaraInactiva items-center justify-center">
+    <h1  class="absolute  top-2 bg-white px-3 rounded-lg  mt-5 text-3xl font-bold text-gray-700">Scanea tu codigo</h1>
+      <div class="h-5/6 flex  items-center justify-center">
         <!-- <img src="/lectorQR.jpeg" alt="lector" class="object-contain " /> -->
-        <video autoplay id="lectorQr" class="w-auto h-full object-full "></video>
+        <video autoplay id="lectorQr" class="w-auto camaraInactiva h-full object-cover "></video>
       </div>
       <div
         class="flex w-full  h-1/6 justify-around items-center text-gray-700 py-2 font-medium"
