@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 import QRCode from 'qrcode'
 
@@ -35,11 +35,10 @@ const id=generarUID()
 
   //   leyendo video
 
-  const byte = await video.arrayBuffer()
+  const byte = await video.arrayBuffer();
   const buffer = Buffer.from(byte);
   const filePath = path.join(process.cwd(), 'public', 'upload', `${id}.mp4`);
-  fs.writeFileSync(filePath, buffer);
-
+  await fs.writeFile(filePath, buffer);
 
   // generando el codigo
   const generateQR = async (text) => {
@@ -61,7 +60,7 @@ const newData = { name: name, path: `http://localhost:4321/public/upload/${name}
 const filePathData = path.join(process.cwd(), 'public','base', 'base.json');
 
 // Lee el archivo y parsea el contenido a un array
-const dataBase = JSON.parse(fs.readFileSync(filePathData, 'utf8'));
+const dataBase = JSON.parse(await fs.readFile(filePathData, 'utf8'));
 
 
 // Agrega los nuevos datos al array
@@ -71,7 +70,7 @@ dataBase.data.push(newData);
 const jsonData = JSON.stringify(dataBase);
 
 // Escribe el array actualizado de vuelta al archivo
-fs.writeFileSync(filePathData, jsonData);
+await fs.writeFile(filePathData, jsonData);
 
 
 

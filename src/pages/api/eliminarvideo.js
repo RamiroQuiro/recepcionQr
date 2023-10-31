@@ -1,14 +1,13 @@
-import path from 'path'
-import fs from 'fs'
-
+import path from 'path';
+import fs from 'fs/promises';
 export async function POST({request}) {
     const {id} = await request.json();
     const directoryPath = path.join(process.cwd(), 'public', 'upload');
     const filePathData = path.join(process.cwd(), 'public', 'base', 'base.json');
     
     try {
-        const files = fs.readdirSync(directoryPath);
-        const data = JSON.parse(fs.readFileSync(filePathData, 'utf8'));
+        const files = await fs.readdir(directoryPath);
+        const data = JSON.parse(await fs.readFile(filePathData, 'utf8'));
         // Find the index of the video with the given id
         const index = data.data.findIndex(video => video.id === id);
         
@@ -17,12 +16,12 @@ export async function POST({request}) {
             data.data.splice(index, 1);
             
             // Save the updated data to the JSON file
-            fs.writeFileSync(filePathData, JSON.stringify(data));
+            await fs.writeFile(filePathData, JSON.stringify(data));
             
             // Delete the video file from the upload directory
             const videoFileName = files.find(file => file.startsWith(id));
             if (videoFileName) {
-                fs.unlinkSync(path.join(directoryPath, videoFileName));
+                await fs.unlink(path.join(directoryPath, videoFileName));
             }
             
             return new Response(JSON.stringify({
