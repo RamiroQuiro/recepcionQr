@@ -20,7 +20,7 @@ export const POST = async ({ request }) => {
   const name = data.get("name");
   const video = data.get("video");
 
-
+const id=generarUID()
   
 
   // Valida los datos - probablemente querrás hacer más que esto
@@ -37,7 +37,7 @@ export const POST = async ({ request }) => {
 
   const byte = await video.arrayBuffer()
   const buffer = Buffer.from(byte);
-  const filePath = path.join(process.cwd(), 'public', 'upload', `${name}.mp4`);
+  const filePath = path.join(process.cwd(), 'public', 'upload', `${id}.mp4`);
   fs.writeFileSync(filePath, buffer);
 
 
@@ -53,9 +53,9 @@ export const POST = async ({ request }) => {
     }
   };
 ;
-const qrCodeGenerado=await generateQR(name)
+const qrCodeGenerado=await generateQR(id)
 // Tus nuevos datos a agregar
-const newData = { name: name, path: `http://localhost:4321/public/upload/${name}.mp4` ,id:generarUID(),code:qrCodeGenerado};
+const newData = { name: name, path: `http://localhost:4321/public/upload/${name}.mp4` ,id:id,code:qrCodeGenerado};
 
 // Define la ruta del archivo
 const filePathData = path.join(process.cwd(), 'public','base', 'base.json');

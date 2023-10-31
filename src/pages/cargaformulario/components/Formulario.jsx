@@ -5,28 +5,33 @@ export default function Form() {
   const [responseMessage, setResponseMessage] = useState("");
   const [qrImage, setQrImage] = useState(null);
   const [videook, setVideook] = useState(null)
-  const [data, setData] = useState(null)
-
+  const [isLoading, setIsLoading] = useState(false)
   
   
 
 // funcion para cargar el fomulario
   async function submit(e) {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    console.log(formData)
-    const response = await fetch("/api/feedback", {
-      method: "POST",
-      body: formData,
-    });
-    const data = await response.json();
-  setData(data)
-    if (data.message && data.name) {
-      setQrImage(data.qr);
-      setResponseMessage(data.message);
+    try {
+      setIsLoading(true)
+      const formData = new FormData(e.target);
+      formData.append('video',videook)
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      if (data.message && data.name) {
+        setIsLoading(false)
+        setQrImage(data.qr);
+        setResponseMessage(data.message);
+      }
+    } catch (error) {
+      console.log(error)
+      setIsLoading(false)
+      setResponseMessage(error)
     }
   }
-
 
 
   const handleVideo=(e)=>{
@@ -64,6 +69,7 @@ export default function Form() {
           name="video"
           required
           className="hidden"
+          onChange={handleVideo}
         />
       </label>
     : 
@@ -72,9 +78,11 @@ export default function Form() {
       <p className="mx-auto text-green-400 font-medium">Video Cargado 👌🏼 </p>
     </div>  
     }
-
-      <button className=" cursor-pointer  border flex items-center justify-center hover:bg-blue-400 duration-200 hover:ring-2 bg-blue-500 text-white font-medium rounded-lg p-2 text-center w-2/3 gap-2 text-sm"
-    >Enviar</button>
+{
+  isLoading&&
+  <span className="text-sm font-medium text-orange-500 animate-pulse">cargando video...</span>
+}
+      <button className=" cursor-pointer  border flex items-center justify-center hover:bg-blue-400 duration-200 hover:ring-2 bg-blue-500 text-white font-medium rounded-lg p-2 text-center w-2/3 gap-2 text-sm">Enviar</button>
       {qrImage &&
       <div className="p-2 my-5 space-y-4 flex flex-col items-center">
         <p>Toca la imagen para descargar y usarla como quieras</p>

@@ -4,21 +4,23 @@ import Layout from "../../layouts/Layout.astro";
 
 <Layout title="Welcome to Astro.">
   <main class="flex items-center justify-normal flex-col w-full min-h-screen">
-    <h1>Bienvenido ! Scanea tu codigo</h1>
+    <h1  class="mt-5 text-3xl font-bold text-gray-700">Scanea tu codigo</h1>
     <div
-      class="w-[500px] h-[85vh] rounded-lg bg-white flex flex-col items-center justify-normal overflow-hidden p-2"
+      class="w-[500px] h-[85vh] rounded-lg bg-white flex flex-col items-center justify-normal p-2"
     >
-      <video autoplay id="lectorQr" class="w-full h-2/3"></video>
+      <div class="h-5/6 flex camaraInactiva items-center justify-center">
+        <!-- <img src="/lectorQR.jpeg" alt="lector" class="object-contain " /> -->
+        <video autoplay id="lectorQr" class="w-auto h-full object-full "></video>
+      </div>
       <div
-        class="flex w-full justify-around items-center text-gray-700 py-2 font-medium"
+        class="flex w-full  h-1/6 justify-around items-center text-gray-700 py-2 font-medium"
       >
-        <botton
-          class="0"
+        <button
           id="prender"
-          class="cursor-pointer z-20 bg-red-300 hover:bg-gray-300"
-          >Activar Lector</botton
+          class="cursor-pointer z-20 w-1/2 h-full border-r-2 hover:bg-gray-300 duration-500"
+          >Activar Lector</button
         >
-        <botton id="prender" class="">Apagar Lector</botton>
+        <button id="prender"   class="cursor-pointer z-20 w-1/2 h-full hover:bg-gray-300 duration-500">Apagar Lector</button>
       </div>
     </div>
   </main>
@@ -28,7 +30,12 @@ import Layout from "../../layouts/Layout.astro";
 <script src="./funcionamientoLector.js"></script>
 
 <style>
-  .camaraActiva {
-    display: flex;
+  .camaraInactiva {
+    background-image: url('/lectorQR.jpeg');
+    background-size: contain;
+  }
+  .aparecer{
+    display: hidden;
+
   }
 </style>
