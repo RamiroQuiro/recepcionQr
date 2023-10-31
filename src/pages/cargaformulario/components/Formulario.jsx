@@ -6,7 +6,7 @@ export default function Form() {
   const [qrImage, setQrImage] = useState(null);
   const [videook, setVideook] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
-  
+  const [data, setData] = useState(null)
   
 
 // funcion para cargar el fomulario
@@ -16,11 +16,13 @@ export default function Form() {
       setIsLoading(true)
       const formData = new FormData(e.target);
       formData.append('video',videook)
+
       const response = await fetch("/api/feedback", {
         method: "POST",
         body: formData,
       });
       const data = await response.json();
+      setData(data)
       if (data.message && data.name) {
         setIsLoading(false)
         setQrImage(data.qr);
@@ -82,7 +84,7 @@ export default function Form() {
   isLoading&&
   <span className="text-sm font-medium text-orange-500 animate-pulse">cargando video...</span>
 }
-      <button className=" cursor-pointer  border flex items-center justify-center hover:bg-blue-400 duration-200 hover:ring-2 bg-blue-500 text-white font-medium rounded-lg p-2 text-center w-2/3 gap-2 text-sm">Enviar</button>
+      <button disabled={isLoading} className="disabled:bg-gray-200 cursor-pointer  border flex items-center justify-center hover:bg-blue-400 duration-200 hover:ring-2 bg-blue-500 text-white font-medium rounded-lg p-2 text-center w-2/3 gap-2 text-sm">Cargar</button>
       {qrImage &&
       <div className="p-2 my-5 space-y-4 flex flex-col items-center">
         <p>Toca la imagen para descargar y usarla como quieras</p>

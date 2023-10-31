@@ -1,22 +1,30 @@
 ---
+
 ---
 
 <header
-  class="w-full flex items-center justify-around min-h-20 text-neutral-500 bg-white/50"
+  class="md:w-10/12 md:rounded-3xl h-12 flex items-center justify-between min-h-20 text-neutral-500 bg-white/50 mt-5"
 >
-<div class="w-28 h-16">
-  <img src="/recepcionQR.png" alt="logo" width="65" class="bg-gray-700 object-fill rounded-full">
-</div>
+  <div class="w-1/4 h-16 items-center flex justify-center">
+    <img
+      src="/recepcionQR.png"
+      alt="logo"
+      width="75"
+      class="bg-paleta1-gray object-fill rounded-full"
+    />
+  </div>
   <ul
-    class="w-1/2 flex items-center justify-between gap-5 font-medium text-sm py-5"
+    class="w-2/4 flex items-center justify-between gap-5  overflow-hidden font-medium text-sm  h-full "
   >
-    <li><a href="/">Inicio</a></li>
-    <li>
-      <a href="/recepcion">recepcion</a>
+    <li class="hover:bg-paleta1-primary h-full w-full text-center flex duration-300 m-auto">
+      <a href="/" class="text-center w-full m-auto ">Inicio</a>
     </li>
- 
-    <li>
-      <a href="/cargaformulario">cargaformulario</a>
+    <li class="hover:bg-paleta1-primary h-full w-full text-center flex duration-300 m-auto">
+      <a href="/recepcion" class="text-center w-full m-auto ">Lector</a>
+    </li>
+
+    <li class="hover:bg-paleta1-primary h-full w-full text-center flex duration-300 m-auto rounded-r-3xl">
+      <a href="/cargaformulario" class="text-center w-full m-auto ">Cargar Videos</a>
     </li>
   </ul>
 </header>

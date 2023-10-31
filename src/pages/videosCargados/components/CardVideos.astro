@@ -5,13 +5,13 @@ console.log(video.id)
 ---
 
 <div
-  class="w-[300px] flex-shrink h-[300px] duration-300 rounded-lg text-gray-700 overflow-hidden p-2 bg-white group backdrop-blur-sm flex flex-col items-center justify-normal relative"
+  class="w-[300px] flex-shrink h-[300px] duration-300 rounded-lg text-gray-700 overflow-hidden p-2 bg-white backdrop-blur-sm flex flex-col items-center justify-normal relative"
 >
 <BotonEliminar id={video.id} client:load/>
   <h2
-    class="absolute top-5 bg- left-1/4 text-white bg-paleta1-primary py-2 px-3 rounded-lg z-20"
+    class="absolute top-5   bg-paleta1-primary py-2 px-3 rounded-lg z-20"
   >
-    <span class="capitalize font-bold text-gray-50">nombre</span>: {video.name}
+    {video.name}
   </h2>
   <a target="_blank" class="w-full h-full" href={`/upload/${video.id}.mp4`}>
     <video
@@ -24,7 +24,7 @@ console.log(video.id)
     class="flex group items-center duration-300 justify-around h-1/3 flex-col my-5 absolute bottom-2 left-1/5"
   >
     <span
-      class="text-xs font-medium bg-paleta1-primary/80 text-white px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 z-0 scale-50 group-hover:scale-100 duration-300 group-hover:translate-y-0 translate-y-20"
+      class="text-xs font-medium bg-paleta1-primary/80  px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 z-0 scale-50 group-hover:scale-100 duration-300 group-hover:translate-y-0 translate-y-20"
       >Click en la imagen para descargar</span
     >
     <a download={video.name} href={video.code} class="z-20">

@@ -3,7 +3,6 @@ import React from 'react'
 export default function BotonEliminar({id}) {
 
     const handleClick=async()=>{
-        console.log(id)
        const res=await fetch('/api/eliminarvideo',{
         method: 'POST',
         headers: {
@@ -12,8 +11,7 @@ export default function BotonEliminar({id}) {
         body:JSON.stringify({id:id})
        })
 
-       console.log(res)
-
+       window.location.reload()
     }
   return (
   
