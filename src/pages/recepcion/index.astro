@@ -1,42 +1,30 @@
 ---
-
-import Portada from './components/Portada.astro'
+import Portada from "./components/Portada.astro";
 ---
 
-	<body class="w-full flex flex-col items-center justify-center bg-gradient-to-tr text-white from-paleta1-primary backdrop-blur-sm to-paleta1-secondary min-h-screen">
-
+<body
+  class="w-full flex flex-col items-center justify-center bg-gradient-to-tr text-white from-paleta1-primary backdrop-blur-sm to-paleta1-secondary min-h-screen"
+>
   <main
-    class="flex items-center justify-center gap-5 flex-col w-full min-h-screen">
-
- <Portada/>
+    class="flex items-center justify-center gap-5 flex-col w-full min-h-screen relative"
+  >
+    <h1 class="text-4xl italic font-bold text-gray-700">Rayuela 360</h1>
+    <Portada />
     <div
       class="w-[200px] h-[200px] rounded-lg bg-white flex flex-col items-center justify-normal p-2 relative"
     >
-      <h1
-        class="absolute top-2 bg-white px-3 rounded-lg mt-5 text-lg font-bold text-gray-700"
-      >
+      <h1 class="absolute top-2 bg-white px-3 rounded-lg mt-5 text-lg font-bold text-gray-700">
         Scanea tu codigo
       </h1>
       <!-- /** * lector abajo */ -->
       <div class="h-full w-full flex items-center justify-center">
-        <video
-          autoplay
+        <video autoplay
           id="lectorQr"
           class="w-auto camaraInactiva h-full object-cover"></video>
-      </div>
-
-      <!-- /**/ botonera */ -->
-      <!-- <div
-        class="flex w-full  h-1/6 justify-around items-center text-gray-700 py-2 font-medium"
-      >
-        <button
-          id="prender"
-          class="cursor-pointer z-20 w-1/2 h-full border-r-2 hover:bg-gray-300 duration-500"
-          >Activar Lector</button
-        >
-        <button id="prender"   class="cursor-pointer z-20 w-1/2 h-full hover:bg-gray-300 duration-500">Apagar Lector</button>
-      </div> -->
-    </div>
+     </div>
+    <a href="/"
+      class="p-2 rounded-full bg-paleta1-primary absolute ring-2 left-2">
+      vovler</a>
   </main>
 </body>
 <script src="./funcionamientoLector.js"></script>
