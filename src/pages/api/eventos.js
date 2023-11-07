@@ -63,3 +63,12 @@ export const POST = async ({ request }) => {
     })
   );
 };
+
+
+export const GET =async ()=>{
+  const fileDirectory = path.join(process.cwd(), "public", "upload");
+  const arrayEventos = await fs.readdir(fileDirectory);
+  return new Response(JSON.stringify({
+    eventos: arrayEventos
+  }));
+}
