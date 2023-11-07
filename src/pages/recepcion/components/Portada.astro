@@ -2,9 +2,12 @@
 ---
 
 <div
-  class="w-[550px] relative h-[60vh] rounded-3xl bg-white flex flex-col items-center justify-normal p-2 "
+id="contenedorVideo"
+  class="w-[550px] relative h-[60vh] duration-700 rounded-3xl bg-white flex flex-col items-center justify-normal p-2 "
 >
+<video src="#" class="object-cover opacity-0 z-20 rounded-3xl absolute top-0 left-0 w-full h-full"  id="videoRecepcion"  autoplay></video>
   <img
+  id="portadaRecepcion"
     src="/recepcionQR.jpeg"
     alt="Receptor"
     width="540"
@@ -14,3 +17,12 @@
 
 
 </div>
+
+<style>
+  .videoActivo{
+    
+    width: 100%;
+    height: 90vh;
+    object-fit: cover;
+  }
+</style>

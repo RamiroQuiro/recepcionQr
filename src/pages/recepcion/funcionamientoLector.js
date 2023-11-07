@@ -1,5 +1,5 @@
 import jsQR from 'jsqr' // Importamos la librería jsQR para leer códigos QR
-
+let videoQR;
   let streamRef;
   let videoRef;
 
@@ -20,7 +20,7 @@ import jsQR from 'jsqr' // Importamos la librería jsQR para leer códigos QR
         video: { width: 960 , height:540 },
         audio: true,
       });
-      videoRef = document.querySelector('video');
+      videoRef = document.getElementById('lectorQr');
       videoRef.srcObject = streamRef;
       videoRef.play();
       // Cuando el video esté cargado, iniciamos el escaneo
@@ -48,7 +48,19 @@ import jsQR from 'jsqr' // Importamos la librería jsQR para leer códigos QR
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const code = jsQR(imageData.data, imageData.width, imageData.height);
     if (code) {
-      window.location.href = code.data;
+      const hrefVideo=code.data
+const contenedorVideo=document.getElementById('contenedorVideo')     
+      videoQR=document.getElementById('videoRecepcion')
+      contenedorVideo.classList.add('videoActivo')
+      videoQR.style.opacity = "1";
+      videoQR.src = hrefVideo;
+      
+      videoQR.play();
+      videoQR.onended = () => {
+        contenedorVideo.classList.remove('videoActivo');
+        videoQR.style.opacity = "0";
+        window.location.reload()
+      };
     } else {
       setTimeout(scan, 300);
     }
