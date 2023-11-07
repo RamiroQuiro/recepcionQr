@@ -1,28 +1,38 @@
 ---
 import Portada from "./components/Portada.astro";
-import LayoutLector from '../../layouts/LayoutLector.astro'
+import LayoutLector from "../../layouts/LayoutLector.astro";
 ---
+
 <LayoutLector title="LectorQR">
   <main
     class="flex items-center justify-center gap-5 flex-col w-full min-h-screen relative"
-  > <a href="/"
-  class="px-2 py-5 rounded-full bg-paleta1-primary border  text-gray-700 font-medium absolute top-1/2  left-3">
-  volver</a>
+  >
+    <a
+      href="/"
+      class="px-2 py-5 rounded-full text-sm bg-paleta1-primary border text-gray-700 font-medium absolute top-1/2 left-3 shadow-lg"
+    >
+      volver</a
+    >
     <h1 class="text-4xl italic font-bold text-gray-700">Rayuela 360</h1>
     <Portada />
     <div
       class="w-[200px] h-[200px] rounded-lg bg-white flex flex-col items-center justify-normal p-2 relative"
     >
-      <h1 class="absolute top-2 bg-white px-3 rounded-lg mt-5 text-lg font-bold text-gray-700">
+      <h1
+        class="absolute top-2 bg-white px-3 rounded-lg mt-5 text-lg font-bold text-gray-700"
+      >
         Scanea tu codigo
       </h1>
       <!-- /** * lector abajo */ -->
       <div class="h-full w-full flex items-center justify-center">
-        <video autoplay
+        <video
+          autoplay
           id="lectorQr"
           class="w-auto camaraInactiva h-full object-cover"></video>
-     </div>
-   
+      </div>
+      <div class="absolute bottom-2 animate-bounce text-2xl">⬇️</div>
+
+    </div>
   </main>
 </LayoutLector>
 <script src="./funcionamientoLector.js"></script>
