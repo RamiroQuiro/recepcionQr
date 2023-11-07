@@ -1,8 +1,8 @@
 import jsQR from 'jsqr' // Importamos la librería jsQR para leer códigos QR
 
   // Referencias a los botones de prender y apagar
-  const bottonPrender=document.getElementById('prender')
-  const bottonApagar=document.getElementById('apagar')
+  // const bottonPrender=document.getElementById('prender')
+  // const bottonApagar=document.getElementById('apagar')
   // Referencias al stream y al video
   let streamRef;
   let videoRef;
@@ -32,7 +32,7 @@ import jsQR from 'jsqr' // Importamos la librería jsQR para leer códigos QR
   const getVideo = () => {
     navigator.mediaDevices
       .getUserMedia({
-        video: { width: 1920, height: 1080 },
+        video: { width: 960 , height:540 },
         audio: true,
       })
       .then((stream) => {
