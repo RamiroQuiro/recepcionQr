@@ -1,13 +1,13 @@
 ---
 import Portada from "./components/Portada.astro";
+import LayoutLector from '../../layouts/LayoutLector.astro'
 ---
-
-<body
-  class="w-full flex flex-col items-center justify-center bg-gradient-to-tr text-white from-paleta1-primary backdrop-blur-sm to-paleta1-secondary min-h-screen"
->
+<LayoutLector title="LectorQR">
   <main
     class="flex items-center justify-center gap-5 flex-col w-full min-h-screen relative"
-  >
+  > <a href="/"
+  class="px-2 py-5 rounded-full bg-paleta1-primary border  text-gray-700 font-medium absolute top-1/2  left-3">
+  volver</a>
     <h1 class="text-4xl italic font-bold text-gray-700">Rayuela 360</h1>
     <Portada />
     <div
@@ -22,11 +22,9 @@ import Portada from "./components/Portada.astro";
           id="lectorQr"
           class="w-auto camaraInactiva h-full object-cover"></video>
      </div>
-    <a href="/"
-      class="p-2 rounded-full bg-paleta1-primary absolute ring-2 left-2">
-      vovler</a>
+   
   </main>
-</body>
+</LayoutLector>
 <script src="./funcionamientoLector.js"></script>
 
 <style>
