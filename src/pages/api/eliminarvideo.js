@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs/promises';
 export async function POST({request}) {
     const {id} = await request.json();
+    console.log(id)
     const directoryPath = path.join(process.cwd(), 'public', 'upload');
     const filePathData = path.join(process.cwd(), 'public', 'base', 'base.json');
     
@@ -9,7 +10,7 @@ export async function POST({request}) {
         const files = await fs.readdir(directoryPath);
         const data = JSON.parse(await fs.readFile(filePathData, 'utf8'));
         // Find the index of the video with the given id
-        const index = data.data.findIndex(video => video.id === id);
+        const index = data.data.findIndex(video => video.uid === id);
         
         if (index !== -1) {
             // Remove the video from the data array
