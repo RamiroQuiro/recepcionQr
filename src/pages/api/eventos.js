@@ -65,7 +65,8 @@ export const POST = async ({ request }) => {
 };
 
 
-export const GET =async ()=>{
+export const GET =async ({request})=>{
+console.log(request)    
   // Define la ruta del archivo
   const filePathData = path.join(process.cwd(), "public", "base", "base.json");
 

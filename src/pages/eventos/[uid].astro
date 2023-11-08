@@ -1,0 +1,18 @@
+---
+
+import Layout from '../../layouts/Layout.astro'
+const {uid}=Astro.params
+import VideosCargados from './components/CardVideos.astro'
+const arrayEventos = await fetch(`http://localhost:4321/api/${uid}`);
+const dataEventos =await arrayEventos.json()
+
+---
+
+<Layout title='eventos'>
+    <main class=" min-h-screen w-10/12  container flex flex-col  pt-10 items-start justify-normal">
+    
+        <h1 class="text-3xl font-bold capitalize text-gray-700"></h1>
+        
+    </main>
+
+</Layout>

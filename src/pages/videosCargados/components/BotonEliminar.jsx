@@ -15,6 +15,6 @@ export default function BotonEliminar({id}) {
     }
   return (
   
-<button onClick={handleClick} className="absolute right-5 top-5 text-xl hover:scale-110 duration-150 z-30">❌</button>
+<button onClick={handleClick} className="font-black text-xl hover:scale-125 duration-150 z-30 rotate-45 ">+</button>
   )
 }

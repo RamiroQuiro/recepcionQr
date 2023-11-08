@@ -1,11 +1,9 @@
 ---
-import Card from './components/CardVideos.astro'
 import CardEventos from './components/CardEventos.astro'
-const respuesta = await fetch("http://localhost:4321/api/listarvideos");
+
 const arrayEventos = await fetch("http://localhost:4321/api/eventos");
- const data = await respuesta.json();
+
  const dataEventos =await arrayEventos.json()
- console.log(dataEventos)
  
 ---
 
@@ -14,7 +12,7 @@ const arrayEventos = await fetch("http://localhost:4321/api/eventos");
       class="  backdrop-blur-sm flex flex-col p-5 rounded-lg items-left justify-normal  w-10/12 mx-auto py-10 min-h-screen "
     >
      { 
-     data?.files?.length>0?
+     dataEventos?.eventos?.length>0?
      
      
       <div class="flex items-center flex-wrap justify-evenly w-full gap-5 ">

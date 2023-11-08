@@ -60,8 +60,8 @@ export default function Form() {
       onSubmit={submit}
       className="flex flex-col items-center text-gray-700"
     >
-      <select name="eventos" id="eventos">
-<option value="noSelect" >Selecciona un Evento</option>
+      <select name="eventos" id="eventos" className="p-2 text-xs rounded-lg my-3 ring-0 border-none">
+<option value="noSelect" disabled selected className="text-sx p-2 rounded-lg font-medium text-gray-400">Selecciona un Evento</option>
 {
   eventos?.map((event)=>(
     <option value={event.uid}>{event.name}</option>

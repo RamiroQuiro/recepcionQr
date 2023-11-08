@@ -23,6 +23,15 @@ const { title } = Astro.props;
 	</body>
 </html>
 <style is:global>
+@font-face {
+  font-family: 'NunitoSans';
+  src: url('/fonts/NunitoSans.ttf') format('tff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 	:root {
 		--accent: 136, 58, 234;
 		--accent-light: 224, 204, 250;
@@ -33,6 +42,7 @@ const { title } = Astro.props;
 			rgb(var(--accent-light)) 30%,
 			white 60%
 		);
+		font-family: 'NunitoSans',sans-serif;
 	}
 	
 </style>

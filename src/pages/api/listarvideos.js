@@ -1,8 +1,8 @@
 import fs from 'fs/promises';
 import path from "path";
 
-export async function GET({request}) {
-const data=await request
+export async function GET() {
+
   const directoryPath = path.join(process.cwd(), 'public/upload');
   const filePathData = path.join(process.cwd(), 'public', 'base', 'base.json');
   try {
