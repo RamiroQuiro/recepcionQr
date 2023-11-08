@@ -66,8 +66,20 @@ export const POST = async ({ request }) => {
 
 
 export const GET =async ()=>{
-  const fileDirectory = path.join(process.cwd(), "public", "upload");
-  const arrayEventos = await fs.readdir(fileDirectory);
+  // Define la ruta del archivo
+  const filePathData = path.join(process.cwd(), "public", "base", "base.json");
+
+  // Lee el archivo y parsea el contenido a un array
+  const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
+
+  
+  let arrayEventos = dataBase.data?.map(element => {
+    return {
+      name: element.nombre,
+      uid: element.uid
+    }
+  });
+  // Agrega los nuevos datos al array
   return new Response(JSON.stringify({
     eventos: arrayEventos
   }));

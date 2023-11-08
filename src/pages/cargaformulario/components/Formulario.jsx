@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Form() {
   const URL = import.meta.env.URLLOCAL;
@@ -7,6 +7,7 @@ export default function Form() {
   const [videook, setVideook] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState(null)
+   const [eventos, setEventos] = useState([])
   
 
 // funcion para cargar el fomulario
@@ -39,11 +40,34 @@ export default function Form() {
   const handleVideo=(e)=>{
     setVideook(e.target.files[0])
   }
+
+  useEffect(() => {
+    const fetchEventos = async () => {
+      try {
+        const response = await fetch('api/eventos');
+        const data = await response.json();
+        setEventos(data.eventos);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+  
+    fetchEventos();
+  }, []);
+  
   return (
     <form
       onSubmit={submit}
       className="flex flex-col items-center text-gray-700"
     >
+      <select name="eventos" id="eventos">
+<option value="noSelect" >Selecciona un Evento</option>
+{
+  eventos?.map((event)=>(
+    <option value={event.uid}>{event.name}</option>
+  ))
+}
+      </select>
       <label
         htmlFor="name"
         className="my-5 border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"

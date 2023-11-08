@@ -1,7 +1,11 @@
 ---
 import Card from './components/CardVideos.astro'
+import CardEventos from './components/CardEventos.astro'
 const respuesta = await fetch("http://localhost:4321/api/listarvideos");
+const arrayEventos = await fetch("http://localhost:4321/api/eventos");
  const data = await respuesta.json();
+ const dataEventos =await arrayEventos.json()
+ console.log(dataEventos)
  
 ---
 
@@ -14,8 +18,8 @@ const respuesta = await fetch("http://localhost:4321/api/listarvideos");
      
      
       <div class="flex items-center flex-wrap justify-evenly w-full gap-5 ">
-          {data.files?.map((video) => (
-            <Card video={video}/>
+          {dataEventos.eventos?.map((evento) => (
+            <CardEventos evento={evento}/>
               ))}
             </div>
           :

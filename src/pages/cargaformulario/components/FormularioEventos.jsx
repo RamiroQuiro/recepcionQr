@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 export default function FormularioEventos() {
   const [form, setForm] = useState({ nombre: '', foto: '' });
-  const [preview, setPreview] = useState();
+  const [preview, setPreview] = useState(null);
 
   const handleInputChange = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -14,7 +14,6 @@ export default function FormularioEventos() {
   }
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
     const formData = new FormData();
     formData.append('nombre', form.nombre);
     formData.append('foto', form.foto);
@@ -25,7 +24,8 @@ export default function FormularioEventos() {
     });
 
     const data = await response.json();
-    console.log(data);
+    setPreview(null)
+    setForm({ nombre: '', foto: '' })
   }
 
   return (
@@ -41,8 +41,8 @@ export default function FormularioEventos() {
       </label>
 
       {preview && (
-        <div className="my-5 cursor-pointer text-center border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm">
-          <img src={preview} alt="Preview" className="mx-auto" />
+        <div className="my-5 cursor-pointer text-center border flex items-center justify-between bg-white rounded-lg p-5 w-full h-[350px] gap-2 text-sm">
+          <img src={preview} alt="Preview" className="mx-auto object-cover h-full w-auto" />
         </div>
       )}
 
