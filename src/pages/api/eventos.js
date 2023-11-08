@@ -10,7 +10,7 @@ export const POST = async ({ request }) => {
   const data = await request.formData();
   const nombre = data.get("nombre");
   const foto = data.get("foto");
-
+const uid=generarUID()
   // Valida los datos - probablemente querrás hacer más que esto
   if (!nombre || !foto) {
     return new Response(
@@ -24,7 +24,7 @@ export const POST = async ({ request }) => {
   const byte = await foto.arrayBuffer();
   const buffer = Buffer.from(byte);
   try {
-    const dirPath = path.join(process.cwd(), "public", "upload", `${nombre}`);
+    const dirPath = path.join(process.cwd(), "public", "upload", `${uid}`);
     await fs.mkdir(dirPath, { recursive: true });
     const filePath=path.join(process.cwd(),"public","upload",nombre,"portada.jpg")
     await fs.writeFile(filePath,buffer)
@@ -34,9 +34,9 @@ export const POST = async ({ request }) => {
 
   // Tus nuevos datos a agregar
   const newData = {
-    uid: generarUID(),
+    uid: uid,
     nombre: nombre,
-    path: `/upload/${nombre}/portada.jpg`,
+    path: `/upload/${uid}/portada.jpg`,
     videos: [],
   };
 

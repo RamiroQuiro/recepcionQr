@@ -4,7 +4,6 @@ import Layout from '../../layouts/Layout.astro'
 const {uid}=Astro.params
 import VideosCargados from './components/CardVideos.astro'
 const arrayEventos = await fetch(`http://localhost:4321/api/${uid}`);
-const dataEventos =await arrayEventos.json()
 
 ---
 

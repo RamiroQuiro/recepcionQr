@@ -18,13 +18,14 @@ const formatoQR = {
 export const POST = async ({ request }) => {
   const data = await request.formData();
   const name = data.get("name");
+  const evento=data.get("eventoUID")
   const video = data.get("video");
 
 const id=generarUID()
   
 
   // Valida los datos - probablemente querrás hacer más que esto
-  if (!name || !video ) {
+  if (!name || !video || !evento ) {
     return new Response(
       JSON.stringify({
         message: "Faltan campos requeridos",
@@ -37,14 +38,14 @@ const id=generarUID()
 
   const byte = await video.arrayBuffer();
   const buffer = Buffer.from(byte);
-  const filePath = path.join(process.cwd(), 'public', 'upload', `${id}.mp4`);
+  const filePath = path.join(process.cwd(), 'public', `upload/${evento}/${id}.mp4`);
   await fs.writeFile(filePath, buffer);
 
   // generando el codigo
   const generateQR = async (text) => {
     try {
       const qr = await QRCode.toDataURL(
-        "http://localhost:4321/upload/" + text + ".mp4",formatoQR
+        `http://localhost:4321/upload/${evento}` + text + ".mp4",formatoQR
       );
       return qr;
     } catch (err) {
@@ -52,9 +53,10 @@ const id=generarUID()
     }
   };
 ;
+// qr de video
 const qrCodeGenerado=await generateQR(id)
 // Tus nuevos datos a agregar
-const newData = { name: name, path: `http://localhost:4321/public/upload/${name}.mp4` ,id:id,code:qrCodeGenerado};
+const newData = { name: name, path: `http://localhost:4321/public/upload/${evento}/${id}.mp4` ,id:id,code:qrCodeGenerado};
 
 // Define la ruta del archivo
 const filePathData = path.join(process.cwd(), 'public','base', 'base.json');
@@ -64,8 +66,8 @@ const dataBase = JSON.parse(await fs.readFile(filePathData, 'utf8'));
 
 
 // Agrega los nuevos datos al array
-dataBase.data.push(newData);
-
+const eventoFind = dataBase.data.find((event) => event.uid == evento);
+eventoFind.videos.push(newData);
 // Convierte el array actualizado a formato JSON
 const jsonData = JSON.stringify(dataBase);
 
