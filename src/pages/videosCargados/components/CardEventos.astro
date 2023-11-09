@@ -9,7 +9,7 @@ const { evento, videos } = Astro.props;
 >
 <div class=" flex items-start justify-  gap-2 hover:gap-10 bg-paleta1-primary py-4 px-3 group  hover:justify-evenly hover:bg-paleta1-primary/80 backdrop-blur-sm duration-500  rounded-bl-full absolute right-0 top-0 before:content-[' '] before:absolute before:right-0 before:top-0 before:w-3 before:h-3 before:bg-paleta1-primary/80 before:backdrop-blur-sm before:rounded-full before:scale-100 before:hover:scale-[21] before:duration-500 before: ">
 
-  <BotonEliminar id={evento.uid} client:load />
+  <BotonEliminar uidEvento={evento.uid} idVideo={null} client:load />
   <BotonEntrar uid={evento.uid}  client:load/>
 </div>
   <h2 class="text-lg font-semibold capitalize rounded-lg z-">

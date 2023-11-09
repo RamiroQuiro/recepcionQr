@@ -2,16 +2,38 @@
 
 import Layout from '../../layouts/Layout.astro'
 const {uid}=Astro.params
-import VideosCargados from './components/CardVideos.astro'
-const arrayEventos = await fetch(`http://localhost:4321/api/${uid}`);
+import CardVideos from './components/CardVideos.astro'
+import VideosCargados from './components/VideosCargados.astro';
+const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
+const data=await objectEvento.json()
+const evento=data.files
+
 
 ---
 
 <Layout title='eventos'>
     <main class=" min-h-screen w-10/12  container flex flex-col  pt-10 items-start justify-normal">
     
-        <h1 class="text-3xl font-bold capitalize text-gray-700"></h1>
+        <h1 class="text-3xl font-bold capitalize text-gray-700">{evento?.nombre}</h1>
         
+        { 
+            evento?.videos?.length>0?
+            
+            
+             <div class="flex items-center flex-wrap justify-evenly w-full gap-5 ">
+                 {evento.videos?.map((video) => (
+                   <CardVideos video={video} uidEvento={evento?.uid}/>
+                     ))}
+                   </div>
+                 :
+                 <div class="text-left">
+               <h2 class="mt-5 text-3xl font-bold text-gray-700">Sube un Video!</h2>
+               <p class="mt-2 text-sm text-gray-900 font-medium">
+                 No hay videos que mostrar, para realizar una carga, dirigete a cargar Videos
+               </p>
+             </div>
+                 }
+
     </main>
 
 </Layout>

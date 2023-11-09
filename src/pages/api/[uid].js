@@ -6,12 +6,12 @@ export const GET=async({request})=>{
     const filePathData = path.join(process.cwd(), 'public', 'base', 'base.json');
     try {
         const data = JSON.parse(await fs.readFile(filePathData, 'utf8'));
-        const arrayVideos=data.data.find(event=>event.uid==uid).videos
+        const objectEvento=data.data.find(event=>event.uid==uid)
         
         return new Response(
           JSON.stringify({
             message: "¡Éxito!",
-            files: arrayVideos,
+            files: objectEvento,
           }),
           { status: 200 }
         );

@@ -66,7 +66,6 @@ const uid=generarUID()
 
 
 export const GET =async ({request})=>{
-console.log(request)    
   // Define la ruta del archivo
   const filePathData = path.join(process.cwd(), "public", "base", "base.json");
 
