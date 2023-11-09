@@ -14,7 +14,7 @@ const arrayEventos = await fetch("http://localhost:4321/api/eventos");
      dataEventos?.eventos?.length>0?
      
      
-      <div class="flex items-center flex-wrap justify-evenly w-full gap-5 ">
+      <div class="flex items-center flex-wrap justify-evenly w-full gap-2 ">
           {dataEventos.eventos?.map((evento) => (
             <CardEventos evento={evento}/>
               ))}

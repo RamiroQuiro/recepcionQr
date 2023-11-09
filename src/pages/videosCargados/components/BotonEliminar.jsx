@@ -20,7 +20,7 @@ export default function BotonEliminar({ idVideo, uidEvento }) {
   return (
     <button
       onClick={handleClick}
-      className="font-black text-xl hover:scale-125 duration-150 z-30 rotate-45 "
+      className="font-black text-xl hover:scale-125 duration-150 z-30 rotate-45   bg-white rounded-full w-8 h-8 "
     >
       +
     </button>

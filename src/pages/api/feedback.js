@@ -45,7 +45,7 @@ const id=generarUID()
   const generateQR = async (text) => {
     try {
       const qr = await QRCode.toDataURL(
-        `http://localhost:4321/upload/${evento}` + text + ".mp4",formatoQR
+        `http://localhost:4321/upload/${evento}/` + text + ".mp4",formatoQR
       );
       return qr;
     } catch (err) {
