@@ -15,7 +15,9 @@ const evento=data.files
     <main class=" min-h-screen w-10/12  container flex flex-col  pt-10 items-start justify-normal">
     
         <h1 class="text-3xl font-bold capitalize text-gray-700">{evento?.nombre}</h1>
-        
+        <div>
+            <img src={evento.path} alt="portada">
+        </div>
         { 
             evento?.videos?.length>0?
             

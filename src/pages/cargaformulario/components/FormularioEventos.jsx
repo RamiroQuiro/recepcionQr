@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 export default function FormularioEventos() {
   const [form, setForm] = useState({ nombre: '', foto: '' });
   const [preview, setPreview] = useState(null);
+  const [fileExtension, setFileExtension] = useState(null)
 
   const handleInputChange = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -11,12 +12,14 @@ export default function FormularioEventos() {
   const handleImageChange = (event) => {
     setForm({ ...form, foto: event.target.files[0] });
     setPreview(URL.createObjectURL(event.target.files[0]));
+    setFileExtension(event.target.files[0].name.split('.').pop())
   }
 
   const handleSubmit = async (event) => {
     const formData = new FormData();
     formData.append('nombre', form.nombre);
     formData.append('foto', form.foto);
+    formData.append('extencion',fileExtension)
 
     const response = await fetch('/api/eventos', {
       method: 'POST',

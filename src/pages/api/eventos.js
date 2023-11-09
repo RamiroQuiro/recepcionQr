@@ -10,7 +10,9 @@ export const POST = async ({ request }) => {
   const data = await request.formData();
   const nombre = data.get("nombre");
   const foto = data.get("foto");
-const uid=generarUID()
+  const fileExtension=data.get("extencion")
+  console.log(fileExtension)
+  const uid = generarUID();
   // Valida los datos - probablemente querrás hacer más que esto
   if (!nombre || !foto) {
     return new Response(
@@ -26,7 +28,8 @@ const uid=generarUID()
   try {
     const dirPath = path.join(process.cwd(), "public", "upload", `${uid}`);
     await fs.mkdir(dirPath, { recursive: true });
-    const filePath=path.join(process.cwd(),"public","upload",nombre,"portada.jpg")
+    const nombreArcivo=`portada.${fileExtension}`
+    const filePath=path.join(process.cwd(),"public","upload",uid,nombreArcivo)
     await fs.writeFile(filePath,buffer)
   } catch (error) {
     console.error("Error al crar evento", error);
@@ -36,7 +39,7 @@ const uid=generarUID()
   const newData = {
     uid: uid,
     nombre: nombre,
-    path: `/upload/${uid}/portada.jpg`,
+    path: `/upload/${uid}/portada.${fileExtension}`,
     videos: [],
   };
 
@@ -64,23 +67,25 @@ const uid=generarUID()
   );
 };
 
-
-export const GET =async ({request})=>{
+export const GET = async ({ request }) => {
   // Define la ruta del archivo
   const filePathData = path.join(process.cwd(), "public", "base", "base.json");
 
   // Lee el archivo y parsea el contenido a un array
   const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
 
-  
-  let arrayEventos = dataBase.data?.map(element => {
+  let arrayEventos = dataBase.data?.map((element) => {
     return {
       name: element.nombre,
-      uid: element.uid
-    }
+      uid: element.uid,
+      portada:element.path,
+      nVideos:element.videos.length
+    };
   });
   // Agrega los nuevos datos al array
-  return new Response(JSON.stringify({
-    eventos: arrayEventos
-  }));
-}
+  return new Response(
+    JSON.stringify({
+      eventos: arrayEventos,
+    })
+  );
+};
