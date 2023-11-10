@@ -3,26 +3,41 @@ let videoQR;
 let streamRef;
 let videoRef;
 
+const selectorCamaras = document.getElementById('selectorCamara');
+
 // Función para obtener los medios conectados
 const obtenerMediosConectados = async () => {
   try {
     const devices = await navigator.mediaDevices.enumerateDevices();
-    let opcionesDeCamaras = devices.filter(
-      (device) => device.kind === "videoinput"
-    );
+    return devices.filter(device => device.kind === "videoinput");
   } catch (error) {
     console.error("Error al obtener los medios conectados: ", error);
   }
 };
 
+// Función para llenar el selector con las cámaras disponibles
+const llenarSelector = async () => {
+  const camaras = await obtenerMediosConectados();
+  camaras.forEach(device => {
+    const option = document.createElement("option");
+    option.value = device.deviceId;
+    option.text = device.label;
+    selectorCamaras.appendChild(option);
+  });
+};
+
+// Llama a la función para llenar el selector
+llenarSelector();
+
 // Función para obtener el video
 const getVideo = async () => {
   try {
-    streamRef = await navigator.mediaDevices.getUserMedia({
-      video: { width: 960, height: 540 },
+    const opcionSeleccionada = selectorCamaras.value;
+    const streamRef = await navigator.mediaDevices.getUserMedia({
+      video: { deviceId: opcionSeleccionada, width: 960, height: 540 },
       audio: true,
     });
-    videoRef = document.getElementById("lectorQr");
+    const videoRef = document.getElementById("lectorQr");
     videoRef.srcObject = streamRef;
     videoRef.play();
     // Cuando el video esté cargado, iniciamos el escaneo
@@ -32,6 +47,10 @@ const getVideo = async () => {
   }
 };
 
+// Evento que se dispara cuando se selecciona una opción en el selector
+selectorCamaras.addEventListener('change', () => {
+  getVideo();
+});
 // Función para detener el video
 const detenerVideo = () => {
   if (videoRef && videoRef.srcObject) {
