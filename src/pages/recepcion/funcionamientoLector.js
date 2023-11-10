@@ -50,6 +50,7 @@ const scan = () => {
   ctx.drawImage(videoRef, 0, 0, canvas.width, canvas.height);
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
   const code = jsQR(imageData.data, imageData.width, imageData.height);
+  console.log(code)
   if (code) {
     const hrefVideo = code.data;
 
