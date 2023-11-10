@@ -11,7 +11,6 @@ export async function POST({ request }) {
 este codigo para eliminar el evento
 */
 
-  console.log(idVideo);
   try {
     // Find the index of the video with the given id
     const indexEvento = data.data.findIndex(

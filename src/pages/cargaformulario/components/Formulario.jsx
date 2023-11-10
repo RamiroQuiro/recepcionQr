@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { showToast } from "../../toast";
 
 export default function Form() {
   const URL = import.meta.env.URLLOCAL;
@@ -27,8 +28,9 @@ export default function Form() {
       if (data.message && data.name) {
         setIsLoading(false)
         setQrImage(data.qr);
-        setResponseMessage(data.message);
+        showToast(`🎞️ Video Cargado`,3000)
       }
+
     } catch (error) {
       console.log(error)
       setIsLoading(false)
@@ -107,6 +109,7 @@ export default function Form() {
           id="video"
           name="video"
           required
+          accept=".mp4"
           className="hidden"
           onChange={handleVideo}
         />
@@ -124,11 +127,11 @@ export default function Form() {
       <button disabled={isLoading} className="disabled:bg-gray-200 cursor-pointer  border flex items-center justify-center hover:bg-blue-400 duration-200 hover:ring-2 bg-blue-500 text-white font-medium rounded-lg p-2 text-center w-2/3 gap-2 text-sm">Cargar</button>
       {qrImage &&
       <div className="p-2 my-5 space-y-4 flex flex-col items-center">
-        <p>Toca la imagen para descargar y usarla como quieras</p>
+        <p className="text-xs font-medium">Toca la imagen para descargar y usarla como quieras</p>
       <a className=" mx-auto cursor-pointer" href={qrImage} download={data.name}> <img alt="qrCode" src={qrImage} width={100} height={100} /></a>
       </div>
       }
-      {responseMessage && <p>{responseMessage}</p>}
+
     </form>
   );
 }

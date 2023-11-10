@@ -1,4 +1,5 @@
 import React from "react";
+import { showToast } from "../../toast";
 
 export default function BotonEliminar({ idVideo, uidEvento }) {
   const handleClick = async () => {
@@ -15,7 +16,8 @@ export default function BotonEliminar({ idVideo, uidEvento }) {
           }),
     });
 
-    window.location.reload();
+    showToast('Elemento Eliminado',25000)
+    
   };
   return (
     <button

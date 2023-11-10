@@ -56,7 +56,7 @@ const id=generarUID()
 // qr de video
 const qrCodeGenerado=await generateQR(id)
 // Tus nuevos datos a agregar
-const newData = { name: name, path: `http://localhost:4321/public/upload/${evento}/${id}.mp4` ,id:id,code:qrCodeGenerado};
+const newData = { name: name, path: `http://localhost:4321/upload/${evento}/${id}.mp4` ,id:id,code:qrCodeGenerado};
 
 // Define la ruta del archivo
 const filePathData = path.join(process.cwd(), 'public','base', 'base.json');
