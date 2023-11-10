@@ -1,23 +1,22 @@
 ---
 
 import Layout from "../../layouts/Layout.astro";
-import Formulario from "./components/Formulario";
+import FormularioEventos from "./componets/FormularioEventos";
 
 ---
 
 <Layout title="Carga de Videos">
    
 <main class=" min-h-screen w-full flex flex-col gap-10 items-center justify-start mt-20">
-
 <div class="md:w-1/2 md:h-1/2  bg-white/80  backdrop-blur-sm flex flex-col p-5 rounded-lg items-center justify-normal">
     <div class="text-center">
         <h2 class="mt-5 text-lg font-bold text-gray-700">
-            Sube un video
+           Carga tu Evento
         </h2>
-        <p class="mt-2 text-sm text-gray-400">Sube el video e indica el la mesa a relacionar</p>
     </div>
-    <Formulario client:load/>
+    <FormularioEventos client:load/>
 </div>
+
 
 </main>
 </Layout>

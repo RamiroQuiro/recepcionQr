@@ -70,20 +70,37 @@ const scan = () => {
   const code = jsQR(imageData.data, imageData.width, imageData.height);
   if (code) {
     const hrefVideo = code.data;
-    const contenedorVideo = document.getElementById("contenedorVideo");
-    videoQR = document.getElementById("videoRecepcion");
-    contenedorVideo.classList.add("videoActivo");
-    videoQR.style.opacity = "1";
-    videoQR.src = hrefVideo;
 
-    videoQR.play();
-    videoQR.onended = () => {
-      contenedorVideo.classList.remove("videoActivo");
-      videoQR.style.opacity = "0";
-      scan()
-    };
+    const videosCargados = data.data.map((obj) => obj.videos).flat();
+    console.log(videosCargados);
+    const videoValido = videosCargados.find(
+      (video) => video.path === hrefVideo
+    );
+    if (videoValido) {
+      // El hrefVideo es una dirección válida en la base de datos
+      // Inserta aquí tu código adicional
+      console.log("este es un video validao");
+
+      const contenedorVideo = document.getElementById("contenedorVideo");
+
+      videoQR = document.getElementById("videoRecepcion");
+      contenedorVideo.classList.add("videoActivo");
+      videoQR.style.opacity = "1";
+      videoQR.src = hrefVideo;
+
+      videoQR.play();
+      videoQR.onended = () => {
+        contenedorVideo.classList.remove("videoActivo");
+        videoQR.style.opacity = "0";
+        scan();
+      };
+    } else {
+      setTimeout(scan, 300);
+    }
   } else {
-    setTimeout(scan, 300);
+    // El hrefVideo no es una dirección válida en la base de datos
+    console.log("este es NO ES un video validao");
+    // Inserta aquí tu código adicional
   }
 };
 

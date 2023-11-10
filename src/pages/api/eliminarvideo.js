@@ -11,7 +11,6 @@ export async function POST({ request }) {
 este codigo para eliminar el evento
 */
 
-  console.log(idVideo);
   try {
     // Find the index of the video with the given id
     const indexEvento = data.data.findIndex(
@@ -28,9 +27,12 @@ este codigo para eliminar el evento
         await fs.writeFile(filePathData, JSON.stringify(data));
 
         // Delete the video file from the upload directory
-        const carpetaEvento = files.find((file) => file.startsWith(uidEvento));
+        const carpetaEvento = files.find((file) => file === uidEvento);
+        
         if (carpetaEvento) {
-          await fs.rmdir(path.join(directoryPath, carpetaEvento));
+          await fs.rm(path.join(directoryPath, carpetaEvento),{recursive:true});
+        } else {
+          console.log("Evento no encontrado");
         }
 
         return new Response(
@@ -91,3 +93,4 @@ este codigo para eliminar el evento
     );
   }
 }
+
