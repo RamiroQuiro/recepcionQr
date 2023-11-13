@@ -1,29 +1,43 @@
 import jsQR from "jsqr"; // Importamos la librería jsQR para leer códigos QR
+import { showToast } from "../toast";
 let videoQR;
 let streamRef;
 let videoRef;
+let videosCargados
+const selectorCamaras = document.getElementById('selectorCamara');
 
-import data from "../../../public/base/base.json";
 // Función para obtener los medios conectados
 const obtenerMediosConectados = async () => {
   try {
     const devices = await navigator.mediaDevices.enumerateDevices();
-    let opcionesDeCamaras = devices.filter(
-      (device) => device.kind === "videoinput"
-    );
+    return devices.filter(device => device.kind === "videoinput");
   } catch (error) {
     console.error("Error al obtener los medios conectados: ", error);
   }
 };
 
+// Función para llenar el selector con las cámaras disponibles
+const llenarSelector = async () => {
+  const camaras = await obtenerMediosConectados();
+  camaras.forEach(device => {
+    const option = document.createElement("option");
+    option.value = device.deviceId;
+    option.text = device.label;
+    selectorCamaras.appendChild(option);
+  });
+};
+
+// Llama a la función para llenar el selector
+llenarSelector();
+
 // Función para obtener el video
 const getVideo = async () => {
   try {
+    const opcionSeleccionada = selectorCamaras.value;
     streamRef = await navigator.mediaDevices.getUserMedia({
-      video: { width: 960, height: 540 },
-      audio: true,
+      video: { deviceId: opcionSeleccionada, width: 960, height: 540 },
     });
-    videoRef = document.getElementById("lectorQr");
+     videoRef = document.getElementById("lectorQr");
     videoRef.srcObject = streamRef;
     videoRef.play();
     // Cuando el video esté cargado, iniciamos el escaneo
@@ -33,6 +47,10 @@ const getVideo = async () => {
   }
 };
 
+// Evento que se dispara cuando se selecciona una opción en el selector
+selectorCamaras.addEventListener('change', () => {
+  getVideo();
+});
 // Función para detener el video
 const detenerVideo = () => {
   if (videoRef && videoRef.srcObject) {
@@ -40,6 +58,22 @@ const detenerVideo = () => {
     videoRef = null; // Limpia la referencia al video
   }
 };
+async function cargarModulo() {
+  const response = await fetch('/base/base.json');
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  return await response.json();
+}
+
+cargarModulo()
+  .then(data => {
+   videosCargados = data.data.flatMap(objeto => objeto.videos);
+    console.log(videosCargados);
+  })
+  .catch(e => {
+    console.log('Hubo un error al cargar el módulo: ' + e.message);
+  });
 
 // Función para escanear el código QR
 const scan = () => {
@@ -49,6 +83,7 @@ const scan = () => {
   const ctx = canvas.getContext("2d");
   ctx.drawImage(videoRef, 0, 0, canvas.width, canvas.height);
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+<<<<<<< HEAD
   const code = jsQR(imageData.data, imageData.width, imageData.height);
   console.log(code)
   if (code) {
@@ -60,8 +95,24 @@ const scan = () => {
       (video) => video.path === hrefVideo
     );
     if (videoValido) {
+=======
+   const code = jsQR(imageData.data, imageData.width, imageData.height);
+  
+  
+   // const hrefVideo=code.data
+   if (code) {
+    const hrefVideo=code.data
+  
+  
+>>>>>>> f4c07848b70965b1347d864782e574b4c773be4b
       // El hrefVideo es una dirección válida en la base de datos
-      // Inserta aquí tu código adicional
+
+// Verificar si el hrefVideo existe en videosCargados
+if (!videosCargados.some(video => video.path === hrefVideo)) {
+  console.log('no exite el video')
+  showToast('no existe el video',2000)
+return
+}
       console.log("este es un video validao");
 
       const contenedorVideo = document.getElementById("contenedorVideo");
@@ -80,11 +131,7 @@ const scan = () => {
     } else {
       setTimeout(scan, 300);
     }
-  } else {
-    // El hrefVideo no es una dirección válida en la base de datos
-    console.log("este es NO ES un video validao");
-    // Inserta aquí tu código adicional
-  }
+  
 };
 
 // Iniciamos la obtención de medios y el video
