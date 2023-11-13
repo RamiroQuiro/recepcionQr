@@ -83,19 +83,6 @@ const scan = () => {
   const ctx = canvas.getContext("2d");
   ctx.drawImage(videoRef, 0, 0, canvas.width, canvas.height);
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-<<<<<<< HEAD
-  const code = jsQR(imageData.data, imageData.width, imageData.height);
-  console.log(code)
-  if (code) {
-    const hrefVideo = code.data;
-
-    const videosCargados = data.data.map((obj) => obj.videos).flat();
-    console.log(videosCargados);
-    const videoValido = videosCargados.find(
-      (video) => video.path === hrefVideo
-    );
-    if (videoValido) {
-=======
    const code = jsQR(imageData.data, imageData.width, imageData.height);
   
   
@@ -104,7 +91,6 @@ const scan = () => {
     const hrefVideo=code.data
   
   
->>>>>>> f4c07848b70965b1347d864782e574b4c773be4b
       // El hrefVideo es una dirección válida en la base de datos
 
 // Verificar si el hrefVideo existe en videosCargados
