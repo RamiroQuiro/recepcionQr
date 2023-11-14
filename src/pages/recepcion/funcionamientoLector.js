@@ -91,7 +91,12 @@ const scan = () => {
 
     // Verificar si el hrefVideo existe en videosCargados
     if (!videosCargados.some((video) => video.path === hrefVideo)) {
-      console.log("no exite el video");
+      const errorElement = document.createElement("p");
+      errorElement.textContent = "El video no existe";
+      errorElement.style.position="fixed"
+      errorElement.style.top="20%"
+      errorElement.style.left="30%"
+      document.body.appendChild(errorElement);
       scan();
       return;
     }

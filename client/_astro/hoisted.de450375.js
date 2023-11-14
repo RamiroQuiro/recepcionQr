@@ -1,1 +1,0 @@
-const e=document.getElementById("botonX"),t=document.getElementById("menuRecepcion"),n=document.getElementById("menuOculto");e.addEventListener("click",()=>{n.classList.toggle("menudesplegable"),t.classList.toggle("agrandarBoton"),e.classList.toggle("botonOpen")});

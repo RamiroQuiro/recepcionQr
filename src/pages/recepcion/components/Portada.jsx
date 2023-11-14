@@ -31,7 +31,6 @@ export default function Portada() {
       (option) => option.uid === e.target.value
     );
     setSelect(selectedOption);
-    console.log(selectedOption);
     setToggle(false);
   };
   return (
@@ -84,7 +83,7 @@ export default function Portada() {
         </h1>
         <video
           src="#"
-          className="object-scale-down opacity-0  absolute top-0 left-0 w-screen h-screen duration-700 "
+          className="object-cover opacity-0  absolute top-0 left-0 w-screen h-screen duration-700 "
           id="videoRecepcion"
           autoplay
         ></video>
@@ -94,7 +93,7 @@ export default function Portada() {
           alt="Receptor"
           width="540"
           height="540"
-          className="object-scale-down object-center w-full rounded-3xl h-full"
+          className="object-cover object-center w-screen rounded-3xl h-screen"
         />
       </div>
     </>

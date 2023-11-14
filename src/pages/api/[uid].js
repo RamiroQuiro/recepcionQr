@@ -3,7 +3,7 @@ import fs from 'fs/promises'
 
 export const GET=async({request})=>{
     const uid = request.url.split("/")[4];
-    const filePathData = path.join(process.cwd(), 'client', 'base', 'base.json');
+    const filePathData = path.join(process.cwd(), 'public', 'base', 'base.json');
     console.log(filePathData)
     console.log( path.join(process.cwd(),  'base', 'base.json'))
     try {
