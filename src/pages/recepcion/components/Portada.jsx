@@ -77,7 +77,7 @@ export default function Portada() {
       >
         <h1
           onClick={handleClick}
-          className="cursor-pointer z-20 text-4xl absolute top-5 italic font-bold text-gray-100 drop-shadow-[1px_1px_3px_#555]"
+          className="cursor-pointer z-10 text-4xl absolute top-5 italic font-bold text-gray-100 drop-shadow-[1px_1px_3px_#555]"
         >
           {select ? select.name : "Selecciona el evento"}
         </h1>
@@ -91,9 +91,9 @@ export default function Portada() {
           id="portadaRecepcion"
           src={!select ? "/recepcionQR.png" : select.portada}
           alt="Receptor"
-          width="540"
-          height="540"
-          className="object-cover object-center w-screen rounded-3xl h-screen"
+          width="1080"
+          height="1920"
+          className="object-fill object-center absolute top-0 left-0 w-screen  h-screen"
         />
       </div>
     </>
