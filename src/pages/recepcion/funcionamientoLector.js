@@ -69,7 +69,6 @@ async function cargarModulo() {
 cargarModulo()
   .then(data => {
    videosCargados = data.data.flatMap(objeto => objeto.videos);
-    console.log(videosCargados);
   })
   .catch(e => {
     console.log('Hubo un error al cargar el módulo: ' + e.message);

@@ -1,41 +1,61 @@
 ---
+import SelectorCamara from "./SelectorCamara.astro";
 ---
+
 <div
-id="menuRecepcion"
-      class="p-2 cursor-pointer w-16 h-16 flex items-center justify-center rounded-full text-sm bg-paleta1-primary border text-gray-700 font-medium absolute bottom-2 left-3 shadow-lg">
+  id="menuRecepcion"
+  class="p-2 cursor-pointer duration-300 w-14 h-14 overflow-hidden flex items-center justify-normal rounded-full text-sm bg-white/50 border text-gray-700 font-medium absolute bottom-5 left-3 shadow-lg"
+>
+  <div
+    id="botonX"
+    class="flex items-center justify-center hover:bg-gray-300/80 duration-150 rounded-full text-center"
+  >
+    <p class="font-bold rotate-45 text-3xl text-gray-700 h-10 text-center w-10">
+      +
+    </p>
+  </div>
+  <div
+    id="menuOculto"
+    class="flex-col items-center justify-center text-center font-thin text-sm w-40 duration-700 gap-2 opacity-0"
+  >
+    <a href="/"> 🔙 volver</a>
 
-    <p class="font-bold rotate-45 text-2xl text-white">+</p>
-      <div id="menuOculto" class=" flex-col items-center justify-normal hidden duration-500">
-
-          <a href="/"> volver</a>
-
-          <select
-          name="camara"
-          id="selectorCamara"
-          class="w-full text-xs text-gray-700 rounded px-2 border-transparent focus:ring-o bg-gray-200"
-        >
-          <option
-            value="selectCamara"
-            selected
-            disabled
-            class="text-xs text-gray-700">Selecciona una camara</option
-          >
-        </select>
-
-        </div>
+    <SelectorCamara
+    name="camara"
+    id="selectorCamara"
+    />
+   <SelectorCamara
+   name="eventos"
+   id="selectorEventos"
+   />
+  </div>
 </div>
 <script>
-
-const botonMenu=document.getElementById('menuRecepcion')
-const menuOculto=document.getElementById('menuOculto')
-botonMenu.addEventListener('click',()=>{
-    menuOculto.classList.toggle('menudesplegable')
-})
+  const botonX = document.getElementById("botonX");
+  const botonMenu = document.getElementById("menuRecepcion");
+  const menuOculto = document.getElementById("menuOculto");
+  botonX.addEventListener("click", () => {
+    menuOculto.classList.toggle("menudesplegable");
+    botonMenu.classList.toggle("agrandarBoton");
+    botonX.classList.toggle("botonOpen");
+  });
 </script>
 
 <style>
-    .menudesplegable{
-        display: flex;
-        height: 100%;
-    }
+  .menudesplegable {
+    display: flex;
+    opacity: 1;
+    height: 100%;
+  }
+  .agrandarBoton {
+    width: 230px;
+    height: 100px;
+
+    gap: 10px;
+  }
+
+  .botonOpen {
+    transform: rotate(45deg);
+    background-color: rgb(209 213 219 / 0.8);
+  }
 </style>

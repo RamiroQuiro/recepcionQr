@@ -1,0 +1,16 @@
+---
+
+const {name, id,}=Astro.props
+---
+<select
+      name={name}
+      id={id}
+      class="text-xs text-gray-700 rounded px-2 border-transparent focus:ring-o bg-gray-200 w-40"
+    >
+      <option
+        value="selectCamara"
+        selected
+        disabled
+        class="text-xs text-gray-700">Selecciona una opcion</option
+      >
+    </select>
