@@ -8,8 +8,8 @@ export async function POST({ request }) {
   const { idVideo, uidEvento } = await request.json();
 
   // Definimos las rutas de los directorios y archivos relevantes.
-  const directoryPath = path.join(process.cwd(), "public", "upload");
-  const filePathData = path.join(process.cwd(), "public", "base", "base.json");
+  const directoryPath = path.join(process.cwd(), "client", "upload");
+  const filePathData = path.join(process.cwd(), "client", "base", "base.json");
 
   // Leemos los archivos del directorio y el archivo de datos JSON.
   const files = await fs.readdir(directoryPath);

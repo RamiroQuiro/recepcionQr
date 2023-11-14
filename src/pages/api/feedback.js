@@ -38,7 +38,7 @@ const id=generarUID()
 
   const byte = await video.arrayBuffer();
   const buffer = Buffer.from(byte);
-  const filePath = path.join(process.cwd(), 'public', `upload/${evento}/${id}.mp4`);
+  const filePath = path.join(process.cwd(), 'client', `upload/${evento}/${id}.mp4`);
   await fs.writeFile(filePath, buffer);
 
   // generando el codigo
@@ -59,7 +59,7 @@ const qrCodeGenerado=await generateQR(id)
 const newData = { name: name, path: `http://localhost:4321/upload/${evento}/${id}.mp4` ,id:id,code:qrCodeGenerado};
 
 // Define la ruta del archivo
-const filePathData = path.join(process.cwd(), 'public','base', 'base.json');
+const filePathData = path.join(process.cwd(), 'client','base', 'base.json');
 
 // Lee el archivo y parsea el contenido a un array
 const dataBase = JSON.parse(await fs.readFile(filePathData, 'utf8'));
