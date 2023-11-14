@@ -1,11 +1,12 @@
-import fs from 'fs/promises';
-import path from 'path';
-import QRCode from 'qrcode'
+import fs from "fs/promises";
+import path from "path";
+import QRCode from "qrcode";
 
 function generarUID() {
-  return Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+  return Math.floor(Math.random() * 10000)
+    .toString()
+    .padStart(4, "0");
 }
-
 
 const formatoQR = {
   color: { light: "#ffffff", dark: "#00001Eff" },
@@ -14,18 +15,18 @@ const formatoQR = {
   margin: "3",
   quality: 1,
   scale: 4,
-}
+};
+
 export const POST = async ({ request }) => {
   const data = await request.formData();
   const name = data.get("name");
-  const evento=data.get("eventoUID")
+  const evento = data.get("eventoUID");
   const video = data.get("video");
 
-const id=generarUID()
-  
+  const id = generarUID();
 
   // Valida los datos - probablemente querrás hacer más que esto
-  if (!name || !video || !evento ) {
+  if (!name || !video || !evento) {
     return new Response(
       JSON.stringify({
         message: "Faltan campos requeridos",
@@ -34,55 +35,85 @@ const id=generarUID()
     );
   }
 
+  // Define la ruta del archivo
+  const filePathData = path.join(process.cwd(), "public", "base", "base.json");
+  // Lee el archivo y parsea el contenido a un array
+  const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
+
+  // Función para verificar si el nombre ya existe
+  const nombreExiste = (nombre, eventoUID) => {
+    // Busca en el array de videos
+    const eventoFind = dataBase.data.find((event) => event.uid == eventoUID);
+    return eventoFind.videos.some((video) => video.name === nombre);
+  };
+
+  // Antes de agregar los nuevos datos, verifica si el nombre ya existe
+  if (nombreExiste(name, evento)) {
+    return new Response(
+      JSON.stringify({
+        message: "El nombre ya existe",
+         status: 205
+      }),
+      { status: 400 }
+    );
+  }
+  else{
+
+  
+
   //   leyendo video
 
   const byte = await video.arrayBuffer();
   const buffer = Buffer.from(byte);
-  const filePath = path.join(process.cwd(), 'client', `upload/${evento}/${id}.mp4`);
+
+  // escirbiendo el video
+  const filePath = path.join(
+    process.cwd(),
+    "public",
+    `upload/${evento}/${id}.mp4`
+  );
   await fs.writeFile(filePath, buffer);
 
   // generando el codigo
   const generateQR = async (text) => {
     try {
       const qr = await QRCode.toDataURL(
-        `http://localhost:4321/upload/${evento}/` + text + ".mp4",formatoQR
+        `http://localhost:4321/upload/${evento}/` + text + ".mp4",
+        formatoQR
       );
       return qr;
     } catch (err) {
       console.error(err);
     }
   };
-;
-// qr de video
-const qrCodeGenerado=await generateQR(id)
-// Tus nuevos datos a agregar
-const newData = { name: name, path: `http://localhost:4321/upload/${evento}/${id}.mp4` ,id:id,code:qrCodeGenerado};
+  // qr de video
+  const qrCodeGenerado = await generateQR(id);
+  // Tus nuevos datos a agregar
+  const newData = {
+    name: name,
+    path: `http://localhost:4321/upload/${evento}/${id}.mp4`,
+    id: id,
+    code: qrCodeGenerado,
+  };
 
-// Define la ruta del archivo
-const filePathData = path.join(process.cwd(), 'client','base', 'base.json');
+  // Lee el archivo y parsea el contenido a un array
 
-// Lee el archivo y parsea el contenido a un array
-const dataBase = JSON.parse(await fs.readFile(filePathData, 'utf8'));
+  // Agrega los nuevos datos al array
+  const eventoFind = dataBase.data.find((event) => event.uid == evento);
+  eventoFind.videos.push(newData);
+  // Convierte el array actualizado a formato JSON
+  const jsonData = JSON.stringify(dataBase);
 
-
-// Agrega los nuevos datos al array
-const eventoFind = dataBase.data.find((event) => event.uid == evento);
-eventoFind.videos.push(newData);
-// Convierte el array actualizado a formato JSON
-const jsonData = JSON.stringify(dataBase);
-
-// Escribe el array actualizado de vuelta al archivo
-await fs.writeFile(filePathData, jsonData);
-
-
+  // Escribe el array actualizado de vuelta al archivo
+  await fs.writeFile(filePathData, jsonData);
 
   // Haz algo con los datos, luego devuelve una respuesta de éxito
   return new Response(
     JSON.stringify({
       message: "¡Éxito!",
       name: name,
-      qr:qrCodeGenerado
+      qr: qrCodeGenerado,
     }),
     { status: 200 }
   );
-};
+}}

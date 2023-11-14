@@ -1,1 +1,0 @@
-import{j as t}from"./jsx-runtime.391947bd.js";import"./index.ed373d49.js";function n({uid:e}){return t.jsx("a",{href:`/eventos/${e}`,className:"font-black text-xl  hover:scale-125 duration-150 z-30  flex items-center text-center pl-1   bg-white rounded-full w-8 h-8  before:",children:"→"})}export{n as default};

@@ -30,6 +30,14 @@ export default function Form() {
         });
         const data = await response.json();
         setData(data);
+if(data.status==205){
+  setResponseMessage('Nombre Duplicado')
+  setIsLoading(false)
+  setVideook(false);
+  e.target.reset();
+}else{
+
+
         if (data.message && data.name) {
           setIsLoading(false);
           setQrImage(data.qr);
@@ -37,7 +45,7 @@ export default function Form() {
           setResponseMessage(false);
           setVideook(false);
           e.target.reset();
-        }
+        }}
       } catch (error) {
         console.log(error);
         setIsLoading(false);
