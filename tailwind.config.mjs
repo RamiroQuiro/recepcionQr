@@ -12,6 +12,12 @@ export default {
           white: "#FFFFFF",
         },
       },
+      extend: {
+        screens: {
+          'videoActivo': {'raw': '(min-width: 100vw) and (min-height: 100vh)'},
+        },
+      },
+   
     },
   },
   plugins: [],

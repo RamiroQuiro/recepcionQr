@@ -17,7 +17,9 @@ export default function BotonEliminar({ idVideo, uidEvento }) {
     });
 
     showToast('Elemento Eliminado',25000)
-    
+    setTimeout(()=>{
+window.location.reload()
+    },1200)
   };
   return (
     <button
