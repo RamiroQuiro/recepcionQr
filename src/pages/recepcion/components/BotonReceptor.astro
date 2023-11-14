@@ -18,7 +18,7 @@ import SelectorCamara from "./SelectorCamara.astro";
     id="menuOculto"
     class="flex-col items-center justify-center text-center font-thin text-sm w-40 duration-700 gap-2 opacity-0"
   >
-    <a href="/"> 🔙 volver</a>
+    <a href="/" class="hover:bg-gray-300/80 duration-150 px-2 py-0.5 w-full text-xs"> 🔙 volver</a>
 
     <SelectorCamara
     name="camara"
@@ -55,7 +55,8 @@ import SelectorCamara from "./SelectorCamara.astro";
   }
 
   .botonOpen {
-    transform: rotate(45deg);
+    transform: rotate(45deg) scale(1.2);
+
     background-color: rgb(209 213 219 / 0.8);
   }
 </style>

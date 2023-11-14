@@ -1,5 +1,5 @@
 ---
-import Portada from "./components/Portada.astro";
+import Portada from "./components/Portada.jsx";
 import LayoutLector from "../../layouts/LayoutLector.astro";
 import BotonReceptor from "./components/BotonReceptor.astro";
 ---
@@ -10,7 +10,7 @@ import BotonReceptor from "./components/BotonReceptor.astro";
   >
     <BotonReceptor/>
 
-    <Portada />
+    <Portada client:load/>
     <div
       class="w-[200px] h-[200px] rounded-lg bg-white flex flex-col items-center justify-normal p-2 relative"
     >
@@ -43,4 +43,10 @@ import BotonReceptor from "./components/BotonReceptor.astro";
   .aparecer {
     display: hidden;
   }
+  .videoActivo {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+  }
+
 </style>
