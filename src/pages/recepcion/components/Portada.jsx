@@ -89,7 +89,7 @@ export default function Portada() {
         ></video>
         <img
           id="portadaRecepcion"
-          src={!select ? "/recepcionQR.png" : select.portada}
+          src={!select ? "/rayuela360.jpg" : select.portada}
           alt="Receptor"
           width="1080"
           height="1920"
