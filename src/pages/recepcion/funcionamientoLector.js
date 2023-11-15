@@ -75,36 +75,41 @@ cargarModulo()
 
 // Función para escanear el código QR
 const scan = () => {
+  // Crear un canvas y establecer su tamaño al tamaño del video
   const canvas = document.createElement("canvas");
   canvas.width = videoRef.videoWidth;
   canvas.height = videoRef.videoHeight;
+
+  // Dibujar el video en el canvas
   const ctx = canvas.getContext("2d");
   ctx.drawImage(videoRef, 0, 0, canvas.width, canvas.height);
+
+  // Obtener los datos de la imagen del canvas
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+  // Decodificar el código QR de los datos de la imagen
   const code = jsQR(imageData.data, imageData.width, imageData.height);
 
-  // const hrefVideo=code.data
-  if (code) {
+  // Si el código es válido y contiene datos
+  if (code && code.data) {
     const hrefVideo = code.data;
-
-    // El hrefVideo es una dirección válida en la base de datos
 
     // Verificar si el hrefVideo existe en videosCargados
     if (!videosCargados.some((video) => video.path === hrefVideo)) {
+      // Si el video no existe, mostrar un mensaje de error y volver a escanear
       const errorElement = document.createElement("p");
       errorElement.textContent = "El video no existe";
       errorElement.style.position="fixed"
       errorElement.style.top="20%"
       errorElement.style.left="30%"
       document.body.appendChild(errorElement);
-      scan();
+      setTimeout(scan, 300); // Añadido un delay antes de volver a escanear
       return;
     }
-    console.log("este es un video validao");
 
+    // Si el video existe, reproducirlo
     const contenedorVideo = document.getElementById("contenedorVideo");
-
-    videoQR = document.getElementById("videoRecepcion");
+    const videoQR = document.getElementById("videoRecepcion");
     contenedorVideo.classList.add("videoActivo");
     videoQR.style.opacity = "1";
     videoQR.style.zIndex= "99";
@@ -112,21 +117,24 @@ const scan = () => {
     videoQR.style.width= "100vw";
     videoQR.style.top= "0";
     videoQR.style.left= "0"
-
     videoQR.src = hrefVideo;
-
     videoQR.play();
+
+    // Cuando el video termine, quitar la clase "videoActivo" y volver a escanear
     videoQR.onended = () => {
       contenedorVideo.classList.remove("videoActivo");
       videoQR.style.opacity = "0";
-    videoQR.style.zIndex= "0";
-      scan();
+      videoQR.style.zIndex= "0";
+      setTimeout(scan, 300); // Añadido un delay antes de volver a escanear
     };
   } else {
+    // Si el código no es válido o no contiene datos, volver a escanear después de un delay
     setTimeout(scan, 300);
   }
 };
 
+
 // Iniciamos la obtención de medios y el video
 obtenerMediosConectados();
 getVideo();
+

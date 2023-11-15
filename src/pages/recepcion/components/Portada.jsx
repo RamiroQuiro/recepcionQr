@@ -36,7 +36,7 @@ export default function Portada() {
   return (
     <>
       {toggle && (
-        <div className="bg-white/30 backdrop-blur-sm  top-0 left-0 w-full h-screen flex items-center justify-center z-40 duration-500">
+        <div className="bg-white/50 backdrop-blur-sm  top-0 left-0 w-full h-screen flex items-center justify-center z-40 duration-500">
           <div className="p-4 rounded-lg border-2 gap-4 relative flex-col  h-36 text-gray-700 border-gray-200 bg-white flex items-center justify-normal w-1/3">
             <button
               className=" bg-gray-400/70 w-7 h-7  rounded-full absolute top-4 right-3 text-white "
@@ -93,7 +93,7 @@ export default function Portada() {
           alt="Receptor"
           width="1080"
           height="1920"
-          className="object-fill object-center absolute top-0 left-0 w-screen  h-screen"
+          className="object-fill object-center absolute top-0 left-0 w-screen bg-gray-800 h-screen"
         />
       </div>
     </>
