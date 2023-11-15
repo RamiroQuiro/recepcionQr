@@ -25,12 +25,13 @@ const [fileExtension, setFileExtension] = useState(false)
           showToast('👌 Imagen Cargada',3000)
           const data = await response.json();
           console.log(data)
+          setTimeout(()=>window.location.reload(),1000)
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <div className='absolute right-3 top-3 rounded-full p-2 bg-green-300/80 before:content-["editar"] before:opacity-0 hover:before:opacity-100 before:absolute before:top-2 before:right-11 before:bg-green-300 before:px-2 before:rounded-full before:duration-300 before:text-gray-800'>
+    <div className={`absolute right-3 top-3 rounded-full p-2 bg-green-300/80 before:content-["modificar"] cursor-pointer before:opacity-0 hover:before:opacity-100 before:absolute before:top-2 before:right-11 before:bg-green-300 before:px-2 text-xs before:rounded-full before:duration-300 before:text-gray-800`}>
       {!selectFile?<label htmFor="editarPortada" onChange={handleChange}>
         🖋️
         <input
