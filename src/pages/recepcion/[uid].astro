@@ -10,8 +10,11 @@ const data = await objectEvento.json();
 
 <LayoutLector title="LectorQR">
   <main
+
     class="flex items-center justify-around gap-5 flex-col w-screen overflow-hidden min-h-screen relative"
   >
+  <astro-greet   data-uid={uid}>
+  </astro-greet>
   <div
   id="videoEquivocado"
   class="absolute top-1/2 z-30 py-1 px-2 rounded-lg bg-red-500/80 backdrop-blur-sm text-gray-100 text-xl invisible font-bold duration-200">
@@ -19,7 +22,7 @@ const data = await objectEvento.json();
   </div>
     <BotonReceptor/>
 
-    <Portada srcImage={data?.files?.path}/>
+    <Portada  srcImage={data?.files?.path}/>
     <div
       class="w-[200px] absolute bottom-4 h-[200px] rounded-lg bg-white flex flex-col items-center justify-normal p-2 "
     >

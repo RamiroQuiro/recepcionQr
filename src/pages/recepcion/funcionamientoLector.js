@@ -5,6 +5,26 @@ let videoRef;
 let videosCargados;
 const selectorCamaras = document.getElementById("selectorCamara");
 const videEquivocado=document.getElementById('videoEquivocado')
+
+/** Traer UID del cliente */
+
+class AstroGreet extends HTMLElement {
+  constructor() {
+    super();
+    // Lee el mensaje del atributo data.
+    this.message = this.dataset.uid;
+  }
+
+  getMessage() {
+    return this.message;
+  }
+}
+
+customElements.define('astro-greet', AstroGreet);
+const astroGreet = document.querySelector('astro-greet');
+const uidCliente=astroGreet.getMessage()
+
+
 // Función para obtener los medios conectados
 const obtenerMediosConectados = async () => {
   try {
@@ -127,7 +147,7 @@ cargarModulo()
 /**CODIGO CHAT CURSOR */
 // Función para escanear el código QR
 const scan = async () => {
-  console.log(windows.location.href)
+  console.log(uidCliente)
    videEquivocado.classList.remove('videoError')
   // Crear un canvas y establecer su tamaño al tamaño del video
   const canvas = document.createElement("canvas");
@@ -155,6 +175,14 @@ const scan = async () => {
       await delay(300); // Añadido un delay antes de volver a escanear
       await scan(); // Volver a escanear
       return;
+    }
+    
+    if(!hrefVideo.includes(uidCliente)){
+        // Si el video no existe, mostrar un mensaje de error y volver a escanear
+      videEquivocado.classList.add('videoError')
+        await delay(300); // Añadido un delay antes de volver a escanear
+        await scan(); // Volver a escanear
+        return;
     }
 
     // Si el video existe, reproducirlo
