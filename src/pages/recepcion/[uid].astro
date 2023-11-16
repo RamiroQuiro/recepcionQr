@@ -1,0 +1,62 @@
+---
+// import Portada from "./components/Portada.astro";
+import Portada from "./components/Portada.astro";
+import LayoutLector from "../../layouts/LayoutLector.astro";
+import BotonReceptor from "./components/BotonReceptor.astro";
+const { uid } = Astro.params;
+const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
+const data = await objectEvento.json();
+---
+
+<LayoutLector title="LectorQR">
+  <main
+    class="flex items-center justify-around gap-5 flex-col w-screen overflow-hidden min-h-screen relative"
+  >
+  <div
+  id="videoEquivocado"
+  class="absolute top-1/2 z-30 py-1 px-2 rounded-lg bg-red-500/80 backdrop-blur-sm text-gray-100 text-xl invisible font-bold duration-200">
+    <p>Video Equivocado</p>
+  </div>
+    <BotonReceptor/>
+
+    <Portada srcImage={data?.files?.path}/>
+    <div
+      class="w-[200px] absolute bottom-4 h-[200px] rounded-lg bg-white flex flex-col items-center justify-normal p-2 "
+    >
+      <h1
+        class="absolute top-3 bg-white px-3 rounded-lg text-sm font-bold text-gray-700"
+      >
+        Scanea tu codigo
+      </h1>
+      <!--  lector abajo -->
+      <div class="h-full w-full flex flex-col items-center justify-center ">
+        <video
+          muted
+          autoplay
+          id="lectorQr"
+          class="w-auto camaraInactiva h-full object-cover"></video>
+      </div>
+  
+      <div class="absolute bottom-2 animate-bounce text-2xl">⬇️</div>
+    </div>
+  </main>
+</LayoutLector>
+<script  src="./funcionamientoLector.js"></script>
+
+<style>
+  .camaraInactiva {
+    background-image: url("/lectorQR.jpeg");
+    background-size: contain;
+  }
+  .aparecer {
+    display: hidden;
+  }
+  .videoActivo {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+  }
+.videoError{
+  visibility: visible;
+}
+</style>

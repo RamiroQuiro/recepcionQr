@@ -4,7 +4,7 @@ let streamRef;
 let videoRef;
 let videosCargados;
 const selectorCamaras = document.getElementById("selectorCamara");
-
+const videEquivocado=document.getElementById('videoEquivocado')
 // Función para obtener los medios conectados
 const obtenerMediosConectados = async () => {
   try {
@@ -50,13 +50,7 @@ const getVideo = async () => {
 selectorCamaras.addEventListener("change", () => {
   getVideo();
 });
-// Función para detener el video
-const detenerVideo = () => {
-  if (videoRef && videoRef.srcObject) {
-    videoRef.srcObject.getTracks().forEach((pista) => pista.stop());
-    videoRef = null; // Limpia la referencia al video
-  }
-};
+
 async function cargarModulo() {
   const response = await fetch("/base/base.json");
   if (!response.ok) {
@@ -73,8 +67,68 @@ cargarModulo()
     console.log("Hubo un error al cargar el módulo: " + e.message);
   });
 
+
+  /**CODIGO MIO */
+// // Función para escanear el código QR
+// const scan = () => {
+//   // Crear un canvas y establecer su tamaño al tamaño del video
+//   const canvas = document.createElement("canvas");
+//   canvas.width = videoRef.videoWidth;
+//   canvas.height = videoRef.videoHeight;
+
+//   // Dibujar el video en el canvas
+//   const ctx = canvas.getContext("2d");
+//   ctx.drawImage(videoRef, 0, 0, canvas.width, canvas.height);
+
+//   // Obtener los datos de la imagen del canvas
+//   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+//   // Decodificar el código QR de los datos de la imagen
+//   const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+//   // Si el código es válido y contiene datos
+//   if (code && code.data) {
+//     const hrefVideo = code.data;
+
+//     // Verificar si el hrefVideo existe en videosCargados
+//     if (!videosCargados.some((video) => video.path === hrefVideo)) {
+//       // Si el video no existe, mostrar un mensaje de error y volver a escanear
+//       const errorElement = document.createElement("p");
+//       errorElement.textContent = "El video no existe";
+//       errorElement.style.position="fixed"
+//       errorElement.style.top="20%"
+//       errorElement.style.left="30%"
+//       document.body.appendChild(errorElement);
+//       setTimeout(scan, 300); // Añadido un delay antes de volver a escanear
+//       return;
+//     }
+
+//     // Si el video existe, reproducirlo
+//     const contenedorVideo = document.getElementById("contenedorVideo");
+//     const videoQR = document.getElementById("videoRecepcion");
+//     videoQR.classList.add("aparecer");
+   
+//     videoQR.src = hrefVideo;
+//     videoQR.play();
+
+//     // Cuando el video termine, quitar la clase "videoActivo" y volver a escanear
+//     videoQR.onended = () => {
+//       videoQR.classList.remove("aparecer");
+    
+//       setTimeout(scan, 300); // Añadido un delay antes de volver a escanear
+//     };
+//   } else {
+//     // Si el código no es válido o no contiene datos, volver a escanear después de un delay
+//     setTimeout(scan, 300);
+//   }
+// };
+
+
+/**CODIGO CHAT CURSOR */
 // Función para escanear el código QR
-const scan = () => {
+const scan = async () => {
+  console.log(windows.location.href)
+   videEquivocado.classList.remove('videoError')
   // Crear un canvas y establecer su tamaño al tamaño del video
   const canvas = document.createElement("canvas");
   canvas.width = videoRef.videoWidth;
@@ -97,42 +151,39 @@ const scan = () => {
     // Verificar si el hrefVideo existe en videosCargados
     if (!videosCargados.some((video) => video.path === hrefVideo)) {
       // Si el video no existe, mostrar un mensaje de error y volver a escanear
-      const errorElement = document.createElement("p");
-      errorElement.textContent = "El video no existe";
-      errorElement.style.position="fixed"
-      errorElement.style.top="20%"
-      errorElement.style.left="30%"
-      document.body.appendChild(errorElement);
-      setTimeout(scan, 300); // Añadido un delay antes de volver a escanear
+    videEquivocado.classList.add('videoError')
+      await delay(300); // Añadido un delay antes de volver a escanear
+      await scan(); // Volver a escanear
       return;
     }
 
     // Si el video existe, reproducirlo
-    const contenedorVideo = document.getElementById("contenedorVideo");
     const videoQR = document.getElementById("videoRecepcion");
-    contenedorVideo.classList.add("videoActivo");
-    videoQR.style.opacity = "1";
-    videoQR.style.zIndex= "99";
-    videoQR.style.height= "100vh";
-    videoQR.style.width= "100vw";
-    videoQR.style.top= "0";
-    videoQR.style.left= "0"
+    videoQR.classList.add("aparecer");
+
     videoQR.src = hrefVideo;
     videoQR.play();
 
-    // Cuando el video termine, quitar la clase "videoActivo" y volver a escanear
-    videoQR.onended = () => {
-      contenedorVideo.classList.remove("videoActivo");
-      videoQR.style.opacity = "0";
-      videoQR.style.zIndex= "0";
-      setTimeout(scan, 300); // Añadido un delay antes de volver a escanear
-    };
+    // Esperar a que el video termine de reproducirse
+    await new Promise((resolve) => {
+      videoQR.onended = resolve;
+    });
+
+    videoQR.classList.remove("aparecer");
+
+    await delay(300); // Añadido un delay antes de volver a escanear
+    await scan(); // Volver a escanear
   } else {
     // Si el código no es válido o no contiene datos, volver a escanear después de un delay
-    setTimeout(scan, 300);
+    await delay(300);
+    await scan(); // Volver a escanear
   }
 };
 
+// Función para crear una promesa que se resuelve después de un tiempo determinado
+const delay = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
 
 // Iniciamos la obtención de medios y el video
 obtenerMediosConectados();
