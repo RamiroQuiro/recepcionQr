@@ -6,11 +6,13 @@ const { video, uidEvento } = Astro.props;
 <div
   class="w-[300px] flex-shrink h-[300px] duration-300 rounded-lg text-gray-700 group overflow-hidden hover:p-2 bg-white backdrop-blur-sm flex flex-col items-center justify-normal relative"
 >
-  <div class="flex items-center relative opacity-0 group-hover:opacity-100 duration-300 absolute top-0 left-0 z-20 justify-between w-full px-5 bg-paleta1-primary/80 backdrop-blur">
+  <div class="flex items-center   opacity-0 group-hover:opacity-100 duration-300 absolute top-0 left-0 z-20 justify-between w-full px-5 bg-paleta1-primary/80 backdrop-blur">
     <h2 class="top-5 text-sm  py-2 px-3 rounded-lg z-20 ">
       {video.name}
     </h2>
-    <BotonEliminar idVideo={video.id} uidEvento={uidEvento} client:load />
+    <div class="absolute z-30 top-2 right-2">
+     <BotonEliminar idVideo={video.id} uidEvento={uidEvento} client:load />
+   </div>
   </div>
 
   <a target="_blank" class="w-full h-full " href={video.path}>
@@ -18,7 +20,7 @@ const { video, uidEvento } = Astro.props;
       data-videoname={video.name}
       id={video.name}
       src={video.path}
-      class="w-full h-full duration-500 object-cover rounded-lg"></video>
+      class="w-full h-full duration-500 object-cover "></video>
   </a>
   <div
     class="flex group items-center duration-300 justify-around h-1/3 flex-col my-5 absolute bottom-2 left-1/5"
