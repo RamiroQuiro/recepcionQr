@@ -3,7 +3,6 @@ import Layout from "../../layouts/Layout.astro";
 import BotonModificarPortada from "./components/BotonModificarPortada";
 const { uid } = Astro.params;
 import CardVideos from "./components/CardVideos.astro";
-import VideosCargados from "./components/VideosCargados.astro";
 const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
 const data = await objectEvento.json();
 const evento = data.files;
