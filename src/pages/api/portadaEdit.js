@@ -13,25 +13,25 @@ export async function POST({request}) {
     const pathDirectory = path.join(process.cwd(), 'public', 'upload', uid);
     const pathPortada = path.join(pathDirectory, 'portada.' + extension);
 
-    // Leer y parsear la base de datos
-    const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
+    try {
+        // Convertir el archivo a un Buffer
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
 
-    // Leer el directorio
-    const leerDirectorio = await fs.readdir(pathDirectory);
+        // Reemplazar el archivo de portada con el archivo entrante
+        await fs.writeFile(pathPortada, buffer);
+        const data = JSON.parse(await fs.readFile(filePathData, "utf8"));
+        const indexEvento = data.data.findIndex((evento) => evento.uid === uid);
+        data.data[indexEvento].path=`/upload/${uid}/portada.${extension}`;
+        await fs.writeFile(filePathData, JSON.stringify(data));
 
-    // Verificar si el archivo de portada existe
-    if (leerDirectorio.includes('portada.' + extension)) {
-        console.log('El archivo de portada ya existe');
+        return new Response(JSON.stringify({
+            data: "is ok"
+        }));
+    } catch (error) {
+        console.error(error);
+        return new Response(JSON.stringify({
+            error: "Error al cambiar la imagen de portada"
+        }));
     }
-
-    // Convertir el archivo a un Buffer
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-
-    // Reemplazar el archivo de portada con el archivo entrante
-    await fs.writeFile(pathPortada, buffer);
-
-    return new Response(JSON.stringify({
-        data: "is ok"
-    }));
 }

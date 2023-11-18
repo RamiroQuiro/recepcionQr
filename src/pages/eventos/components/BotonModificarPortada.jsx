@@ -31,8 +31,8 @@ const [fileExtension, setFileExtension] = useState(false)
     }
   };
   return (
-    <div className={`absolute right-3 top-3 rounded-full p-2 bg-green-300/80 before:content-["modificar"] cursor-pointer before:opacity-0 hover:before:opacity-100 before:absolute before:top-2 before:right-11 before:bg-green-300 before:px-2 text-xs before:rounded-full before:duration-300 before:text-gray-800`}>
-      {!selectFile?<label htmFor="editarPortada" onChange={handleChange}>
+    <div className={`absolute right-3 top-3 rounded-full p-2 bg-green-300/80 before:content-["modificar"] hover:bg-green-300 hover:-translate-y-0.5 duration-200 cursor-pointer before:opacity-0 hover:before:opacity-100 before:absolute before:top-2 before:right-11 before:bg-green-300 before:px-2 text-xs before:rounded-full before:duration-300 before:text-gray-800`}>
+      {!selectFile?<label htmFor="editarPortada" className="cursor-pointer" onChange={handleChange}>
         🖋️
         <input
           type="file"
@@ -42,7 +42,7 @@ const [fileExtension, setFileExtension] = useState(false)
         />
       </label>
     :
-    <button className="px-1.5 text-black" onClick={handleEdit}>&#10003;</button>  
+    <button className="px-1.5 text-black cursor-pointer" onClick={handleEdit}>&#10003;</button>  
     }
     </div>
   );
