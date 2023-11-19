@@ -1,16 +1,43 @@
-const modalMensaje = (mensaje) => {
+import { showToast } from "./toast";
+
+  const modalMensaje = (mensaje,uidEvento,idVideo) => {
     // Crea un elemento para la notificación
     const children = document.createElement('div');
+    const parrafo=document.getElementById('textoModal')
     children.classList.add('modalMensaje');
-    children.textContent = mensaje;
+    parrafo.textContent = mensaje;
 
     // Crea un botón para cerrar el modal
-    const closeButton = document.createElement('button');
-    closeButton.textContent = 'Cerrar';
+    const closeButton = document.getElementById('botonCerrarModal');
+
     closeButton.addEventListener('click', () => {
         container.classList.remove('activarModal');
+        children.remove()
     });
-    children.appendChild(closeButton);
+// boton de aceptar
+    const botonAceptar=document.getElementById('botonAceptar')
+    const handleConfirm = async () => {
+        const res = await fetch("/api/eliminarvideo", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: !idVideo
+            ? JSON.stringify({ uidEvento: uidEvento })
+            : JSON.stringify({
+                uidEvento: uidEvento,
+                idVideo: idVideo,
+              }),
+        });
+    
+        showToast("Elemento Eliminado", 25000);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1200);
+      };
+    botonAceptar.addEventListener('click',handleConfirm)
+  
+    
 
     const container = document.getElementById('mensaje-modal');
     // Agrega la notificación al contenedor

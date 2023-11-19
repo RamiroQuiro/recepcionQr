@@ -1,72 +1,87 @@
 ---
-import NavBar from '../components/NavBar.astro';
+import NavBar from "../components/NavBar.astro";
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body class="w-full flex flex-col items-center justify-center bg-gradient-to-tr text-white from-paleta1-primary backdrop-blur-sm to-paleta1-secondary min-h-screen">
-		<NavBar/>
-		<slot />
-		<div id="toast-container"></div>
-    <div id="mensaje-modal"></div>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body
+    class="w-full flex flex-col items-center justify-center bg-gradient-to-tr text-white from-paleta1-primary backdrop-blur-sm to-paleta1-secondary min-h-screen"
+  >
+    <NavBar />
+    <slot />
+    <div id="toast-container"></div>
+    <div id="mensaje-modal" class="duration-500 text-gray-700 hidden items-center justify-center">
+     
+        <div
+          class="text-center z-30 flex items-center relative font-bold flex-col justify-center gap-5 h-52 w-auto p-5 bg-white rounded-lg "
+        >
+         
+          <div class="text-center z-30 flex items-center font-bold flex-col justify-center gap-5 h-full">
+            <p id="textoModal"></p>
+            <div class="modal-buttons flex items-center gap-3 ">
+              <button id="botonAceptar"class="px-2 py-0.5 rounded-lg bg-blue-500 text-white hover:bg-blue-400 duration-300">Confirmar</button>
+              <button id="botonCerrarModal" class="px-2 py-0.5 rounded-lg bg-blue-500 text-white hover:bg-blue-400 duration-300">Cancelar</button>
+            </div>
+          </div>
+        </div>
+     
+    </div>
+  </body>
 </html>
 
-
-
-
 <style is:global>
-@font-face {
-  font-family: 'NunitoSans';
-  src: url('/fonts/NunitoSans.ttf') format('tff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
+  @font-face {
+    font-family: "NunitoSans";
+    src: url("/fonts/NunitoSans.ttf") format("tff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
 
+  :root {
+    --accent: 136, 58, 234;
+    --accent-light: 224, 204, 250;
+    --accent-dark: 49, 10, 101;
+    --accent-gradient: linear-gradient(
+      45deg,
+      rgb(var(--accent)),
+      rgb(var(--accent-light)) 30%,
+      white 60%
+    );
+    font-family: "NunitoSans", sans-serif;
+  }
+  #toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+  }
 
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-		font-family: 'NunitoSans',sans-serif;
-	}
-	#toast-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 9999;
-}
-
-.toast {
-  background-color: #3d3d3d;
-  color: #fff;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  animation: slideInDown 0.5s ease-in-out, slideOutUp 1s ease-in-out 2s;
-}
-.activarModal {
-    display: block; /* Hace que el modal sea visible */
+  .toast {
+    background-color: #3d3d3d;
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    animation: slideInDown 0.5s ease-in-out, slideOutUp 1s ease-in-out 2s;
+  }
+  .activarModal {
+    display: flex; /* Hace que el modal sea visible */
+    align-items: center;
+    justify-content: center;
     position: fixed; /* Posiciona el modal de manera fija en la pantalla */
     z-index: 1; /* Sitúa el modal por encima de otros elementos */
     left: 0;
@@ -74,34 +89,33 @@ const { title } = Astro.props;
     width: 100%; /* Ancho completo */
     height: 100%; /* Altura completa */
     overflow: auto; /* Habilita el scroll si es necesario */
-    background-color: rgb(0,0,0); /* Color de fondo */
-    background-color: rgba(0,0,0,0.4); /* Color de fondo con opacidad */
-    padding-top: 60px; /* Espacio en la parte superior */
-}
+    background-color: rgb(0, 0, 0); /* Color de fondo */
+    background-color: rgba(0, 0, 0, 0.4); /* Color de fondo con opacidad */
+   
+  }
+ 
 
+  @keyframes slideInDown {
+    0% {
+      transform: translateY(-100%);
+    }
+    50% {
+      transform: translateY(10%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
 
-@keyframes slideInDown {
-  0% {
-    transform: translateY(-100%);
+  @keyframes slideOutUp {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10%);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
   }
-  50% {
-    transform: translateY(10%);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideOutUp {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10%);
-  }
-  100% {
-    transform: translateY(-100%);
-  }
-}
-
 </style>
