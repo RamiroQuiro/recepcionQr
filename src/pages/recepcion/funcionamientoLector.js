@@ -65,7 +65,6 @@ const getVideo = async () => {
     console.error("Error al obtener el video: ", error);
   }
 };
-
 // Evento que se dispara cuando se selecciona una opción en el selector
 selectorCamaras.addEventListener("change", () => {
   getVideo();
@@ -145,10 +144,18 @@ cargarModulo()
 
 
 /**CODIGO CHAT CURSOR */
+
+// Antes de la función scan
+let scanning = true;
+let intentos = 0;
+const maxIntentos = 800;
+// Función para escanear el código QR
 // Función para escanear el código QR
 const scan = async () => {
-  console.log(uidCliente)
-   videEquivocado.classList.remove('videoError')
+  console.log(intentos)
+  // if (!scanning || intentos >= maxIntentos) return;
+  videEquivocado.classList.remove('videoError')
+
   // Crear un canvas y establecer su tamaño al tamaño del video
   const canvas = document.createElement("canvas");
   canvas.width = videoRef.videoWidth;
@@ -171,18 +178,20 @@ const scan = async () => {
     // Verificar si el hrefVideo existe en videosCargados
     if (!videosCargados.some((video) => video.path === hrefVideo)) {
       // Si el video no existe, mostrar un mensaje de error y volver a escanear
-    videEquivocado.classList.add('videoError')
+      videEquivocado.classList.add('videoError')
       await delay(300); // Añadido un delay antes de volver a escanear
+      intentos++;
       await scan(); // Volver a escanear
       return;
     }
-    
+
     if(!hrefVideo.includes(uidCliente)){
-        // Si el video no existe, mostrar un mensaje de error y volver a escanear
+      // Si el video no existe, mostrar un mensaje de error y volver a escanear
       videEquivocado.classList.add('videoError')
-        await delay(300); // Añadido un delay antes de volver a escanear
-        await scan(); // Volver a escanear
-        return;
+      await delay(300); // Añadido un delay antes de volver a escanear
+      intentos++;
+      await scan(); // Volver a escanear
+      return;
     }
 
     // Si el video existe, reproducirlo
@@ -204,10 +213,15 @@ const scan = async () => {
   } else {
     // Si el código no es válido o no contiene datos, volver a escanear después de un delay
     await delay(300);
+    intentos++;
     await scan(); // Volver a escanear
   }
-};
 
+  // Liberar la memoria del canvas después de cada escaneo
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  canvas.width = 0;
+  canvas.height = 0;
+};
 // Función para crear una promesa que se resuelve después de un tiempo determinado
 const delay = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
