@@ -21,8 +21,8 @@ export async function POST({request}) {
         // Reemplazar el archivo de portada con el archivo entrante
         await fs.writeFile(pathPortada, buffer);
         const data = JSON.parse(await fs.readFile(filePathData, "utf8"));
-        const indexEvento = data.data.findIndex((evento) => evento.uid === uid);
-        data.data[indexEvento].path=`/upload/${uid}/portada.${extension}`;
+        const indexEvento = data.eventos.findIndex((evento) => evento.uid === uid);
+        data.eventos[indexEvento].path=`/upload/${uid}/portada.${extension}`;
         await fs.writeFile(filePathData, JSON.stringify(data));
 
         return new Response(JSON.stringify({

@@ -4,6 +4,7 @@ import CardEventos from './components/CardEventos.astro'
 const arrayEventos = await fetch("http://localhost:4321/api/eventos");
 
  const dataEventos =await arrayEventos.json()
+ console.log(dataEventos)
 ---
 
 

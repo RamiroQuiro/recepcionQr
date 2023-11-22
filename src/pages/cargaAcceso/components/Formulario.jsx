@@ -8,19 +8,22 @@ export default function Form() {
   const [data, setData] = useState(null);
   const [eventos, setEventos] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState(null);
   const [videos, setVideos] = useState([]);
   // funcion para cargar el fomulario
   async function submit(e) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    const eventoUID = formData.get("eventoUID");
-    const videoName = formData.get("name");
-    if (!eventoUID || !videoName) {
+    const nombreApellido = formData.get("nombreApellido");
+    const dni = formData.get("dni");
+    const cantInvitados = formData.get("cantInvitados");
+    if (!nombreApellido || !cantInvitados) {
       setResponseMessage("completa todos los campos");
       return;
     } else {
-      formData.append("video", videook);
+      formData.append("evento", selectedEvent);
+      formData.append("video", selectedVideo);
       try {
         setIsLoading(true);
         const response = await fetch("/api/feedback", {
@@ -32,7 +35,6 @@ export default function Form() {
         if (data.status == 205) {
           setResponseMessage("Nombre Duplicado");
           setIsLoading(false);
-          setVideook(false);
           e.target.reset();
         } else {
           if (data.message && data.name) {
@@ -40,7 +42,6 @@ export default function Form() {
             setQrImage(data.qr);
             showToast(`🎞️ Video Cargado`, 3000);
             setResponseMessage(false);
-            setVideook(false);
             e.target.reset();
           }
         }
@@ -73,12 +74,18 @@ export default function Form() {
       setVideos(selectedEvent.videos);
     }
   }, [selectedEvent]);
+
+
 const handleSelectr=(e)=>{
   const seleccion=e.target.value
     const selected = eventos.find((event) => event.uid === seleccion);
     setSelectedEvent(selected);
 }
 
+const handleSelectVideo=(e)=>{
+  const videoSelect=e.target.value
+  setSelectedVideo(videoSelect)
+}
 
 
   return (
@@ -177,7 +184,7 @@ const handleSelectr=(e)=>{
           id="eventos"
           required
           className="p-2 text-xs rounded-lg my-3 ring-0 border-none"
-          onChange={""}
+          onChange={handleSelectVideo}
         >
           <option
             value="noSelect"

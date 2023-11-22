@@ -17,13 +17,13 @@ export async function POST({ request }) {
 
   try {
     // Buscamos el índice del evento en los datos.
-    const indexEvento = data.data.findIndex((evento) => evento.uid === uidEvento);
+    const indexEvento = data.eventos.findIndex((evento) => evento.uid === uidEvento);
 
     if (indexEvento !== -1) {
       // Si no se proporciona un idVideo, eliminamos todo el evento.
       if (!idVideo) {
         // Eliminamos el evento de los datos y guardamos los cambios.
-        data.data.splice(indexEvento, 1);
+        data.eventos.splice(indexEvento, 1);
         await fs.writeFile(filePathData, JSON.stringify(data));
 
         // Buscamos la carpeta del evento en el directorio y la eliminamos si existe.
@@ -45,15 +45,15 @@ export async function POST({ request }) {
         );
       } else {
         // Si se proporciona un idVideo, eliminamos solo ese video del evento.
-        const indexVideo = data.data[indexEvento].videos.findIndex((video) => video.id === idVideo);
+        const indexVideo = data.eventos[indexEvento].videos.findIndex((video) => video.id === idVideo);
 
         if (indexVideo !== -1) {
           // Eliminamos el video de los datos y guardamos los cambios.
-          data.data[indexEvento].videos.splice(indexVideo, 1);
+          data.eventos[indexEvento].videos.splice(indexVideo, 1);
           await fs.writeFile(filePathData, JSON.stringify(data));
 
           // Obtenemos la ruta y el nombre de archivo del video.
-          const videoPath = data.data[indexEvento].videos[indexVideo].path;
+          const videoPath = data.eventos[indexEvento].videos[indexVideo].path;
           const videoFileName = videoPath.split("/").pop();
 
           // Eliminamos el archivo de video del directorio.

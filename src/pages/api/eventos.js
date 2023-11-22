@@ -50,7 +50,7 @@ export const POST = async ({ request }) => {
   const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
 
   // Agrega los nuevos datos al array
-  dataBase.data.push(newData);
+  dataBase.eventos.push(newData);
 
   // Convierte el array actualizado a formato JSON
   const jsonData = JSON.stringify(dataBase);
@@ -74,7 +74,7 @@ export const GET = async ({ request }) => {
   // Lee el archivo y parsea el contenido a un array
   const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
 
-  let arrayEventos = dataBase.data?.map((element) => {
+  let arrayEventos = dataBase.eventos?.map((element) => {
     return {
       name: element.nombre,
       uid: element.uid,

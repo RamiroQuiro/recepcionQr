@@ -11,7 +11,7 @@ export async function GET() {
     return new Response(
       JSON.stringify({
         message: "¡Éxito!",
-        files: data.data,
+        files: data.eventos,
       }),
       { status: 200 }
     );

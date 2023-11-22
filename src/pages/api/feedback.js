@@ -43,7 +43,7 @@ export const POST = async ({ request }) => {
   // Función para verificar si el nombre ya existe
   const nombreExiste = (nombre, eventoUID) => {
     // Busca en el array de videos
-    const eventoFind = dataBase.data.find((event) => event.uid == eventoUID);
+    const eventoFind = dataBase.eventos.find((event) => event.uid == eventoUID);
     return eventoFind.videos.some((video) => video.name === nombre);
   };
 
@@ -99,7 +99,7 @@ export const POST = async ({ request }) => {
   // Lee el archivo y parsea el contenido a un array
 
   // Agrega los nuevos datos al array
-  const eventoFind = dataBase.data.find((event) => event.uid == evento);
+  const eventoFind = dataBase.eventos.find((event) => event.uid == evento);
   eventoFind.videos.push(newData);
   // Convierte el array actualizado a formato JSON
   const jsonData = JSON.stringify(dataBase);

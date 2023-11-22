@@ -7,7 +7,7 @@ export const GET=async({request})=>{
    
     try {
         const data = JSON.parse(await fs.readFile(filePathData, 'utf8'));
-        const objectEvento=data.data.find(event=>event.uid==uid)
+        const objectEvento=data.eventos.find(event=>event.uid==uid)
         
         return new Response(
           JSON.stringify({
