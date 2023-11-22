@@ -1,4 +1,6 @@
 import QRCode from 'qrcode'
+import path from 'path'
+import fs from 'fs/promises'
 import { generateToken } from '../../database/jsonwebtoken';
 
 function generarUID() {
@@ -40,9 +42,8 @@ export const POST = async ({ request }) => {
     const evento = data.get("evento");
     const video = data.get("video");
     const cantInvitados = data.get("cantInvitados");
-  
     const uid = generarUID();
-  console.log(name, dni, evento, video, cantInvitados)
+  
     // Valida los datos - probablemente querrás hacer más que esto
     if (!name || !video || !evento) {
       return new Response(
@@ -52,8 +53,48 @@ export const POST = async ({ request }) => {
         { status: 400 }
       );
     }
+    else{
+
+    
+    
+      // Define la ruta del archivo
+  const filePathData = path.join(process.cwd(), "public", "base", "base.json");
+  // Lee el archivo y parsea el contenido a un array
+  const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
+
+
+
+    const newData={
+      uid:uid,
+      nombreApellido:name,
+      dni:dni,
+      invitados:cantInvitados,
+      evento:evento,
+      video:video
+    }
+    
+    dataBase?.credenciales?.push(newData)
+    
+    
+    const jsonData = JSON.stringify(dataBase);
+
+    // Escribe el array actualizado de vuelta al archivo
+    await fs.writeFile(filePathData, jsonData);
+
+    
+    
+    
+    
+    
     const qrCodeGenerado = await generateQR(name,dni,cantInvitados,evento,dni)
     
+
+
+
+
+
+
+
 
     return new Response(
         JSON.stringify({
@@ -63,4 +104,4 @@ export const POST = async ({ request }) => {
         }),
         { status: 200 }
       );
-}
+}}

@@ -52,68 +52,65 @@ export const POST = async ({ request }) => {
     return new Response(
       JSON.stringify({
         message: "El nombre ya existe",
-         status: 205
+        status: 205,
       }),
       { status: 400 }
     );
-  }
-  else{
+  } else {
+    //   leyendo video
 
-  
+    const byte = await video.arrayBuffer();
+    const buffer = Buffer.from(byte);
 
-  //   leyendo video
+    // escirbiendo el video
+    const filePath = path.join(
+      process.cwd(),
+      "public",
+      `upload/${evento}/${id}.mp4`
+    );
+    await fs.writeFile(filePath, buffer);
 
-  const byte = await video.arrayBuffer();
-  const buffer = Buffer.from(byte);
-
-  // escirbiendo el video
-  const filePath = path.join(
-    process.cwd(),
-    "public",
-    `upload/${evento}/${id}.mp4`
-  );
-  await fs.writeFile(filePath, buffer);
-
-  // generando el codigo
-  const generateQR = async (text) => {
-    try {
-      const qr = await QRCode.toDataURL(
-        `http://localhost:4321/upload/${evento}/` + text + ".mp4",
-        formatoQR
-      );
-      return qr;
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  // qr de video
-  const qrCodeGenerado = await generateQR(id);
-  // Tus nuevos datos a agregar
-  const newData = {
-    name: name,
-    path: `http://localhost:4321/upload/${evento}/${id}.mp4`,
-    id: id,
-    code: qrCodeGenerado,
-  };
-
-  // Lee el archivo y parsea el contenido a un array
-
-  // Agrega los nuevos datos al array
-  const eventoFind = dataBase.eventos.find((event) => event.uid == evento);
-  eventoFind.videos.push(newData);
-  // Convierte el array actualizado a formato JSON
-  const jsonData = JSON.stringify(dataBase);
-
-  // Escribe el array actualizado de vuelta al archivo
-  await fs.writeFile(filePathData, jsonData);
-
-  // Haz algo con los datos, luego devuelve una respuesta de éxito
-  return new Response(
-    JSON.stringify({
-      message: "¡Éxito!",
+    // generando el codigo
+    const generateQR = async (text) => {
+      try {
+        const qr = await QRCode.toDataURL(
+          `http://localhost:4321/upload/${evento}/` + text + ".mp4",
+          formatoQR
+        );
+        return qr;
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    // qr de video
+    const qrCodeGenerado = await generateQR(id);
+    // Tus nuevos datos a agregar
+    const newData = {
       name: name,
-      qr: qrCodeGenerado,
-    }),
-    { status: 200 }
-  );
-}}
+      path: `http://localhost:4321/upload/${evento}/${id}.mp4`,
+      id: id,
+      code: qrCodeGenerado,
+    };
+
+    // Lee el archivo y parsea el contenido a un array
+
+    // Agrega los nuevos datos al array
+    const eventoFind = dataBase.eventos.find((event) => event.uid == evento);
+    eventoFind.videos.push(newData);
+    // Convierte el array actualizado a formato JSON
+    const jsonData = JSON.stringify(dataBase);
+
+    // Escribe el array actualizado de vuelta al archivo
+    await fs.writeFile(filePathData, jsonData);
+
+    // Haz algo con los datos, luego devuelve una respuesta de éxito
+    return new Response(
+      JSON.stringify({
+        message: "¡Éxito!",
+        name: name,
+        qr: qrCodeGenerado,
+      }),
+      { status: 200 }
+    );
+  }
+};
