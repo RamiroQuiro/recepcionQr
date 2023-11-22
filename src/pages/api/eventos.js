@@ -79,7 +79,8 @@ export const GET = async ({ request }) => {
       name: element.nombre,
       uid: element.uid,
       portada:element.path,
-      nVideos:element.videos.length
+      nVideos:element.videos.length,
+      videos:element.videos
     };
   });
   // Agrega los nuevos datos al array

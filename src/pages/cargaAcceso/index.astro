@@ -1,26 +1,22 @@
 ---
-
-import Layout from '../../layouts/Layout.astro'
+import Layout from "../../layouts/Layout.astro";
+import Formulario from './components/Formulario'
 ---
 
-<Layout
-title='Carga de credenciales Acceso'
->
-
-<main class="relative min-h-screen w-full flex flex-col gap-10 items-center justify-start mt-20">
-
-<form>
-  <div>
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre">
-  </div>
-  <div>
-    <label for="mesa">Mesa Relacionada:</label>
-    <input type="text" id="mesa" name="mesa">
-  </div>
-  <input type="submit" value="Enviar">
-</form>
-
-    
-</main>
+<Layout title="Carga de credenciales Acceso">
+  <main
+    class="relative min-h-screen w-full flex flex-col gap-10 items-center justify-start mt-20"
+  >
+    <div
+      class="md:w-1/2 md:h-1/2 bg-white/80 backdrop-blur-sm flex flex-col p-5 rounded-lg items-center justify-normal"
+    >
+      <div class="text-center">
+        <h2 class="mt-5 text-lg font-bold text-gray-700">Carga Credencial</h2>
+        <p class="mt-2 text-sm text-gray-400">
+          Sube el video e indica el la mesa a relacionar
+        </p>
+      </div>
+      <Formulario client:load/>
+    </div>
+  </main>
 </Layout>
