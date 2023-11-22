@@ -1,4 +1,5 @@
 import QRCode from 'qrcode'
+import { generateToken } from '../../database/jsonwebtoken';
 
 function generarUID() {
     return Math.floor(Math.random() * 10000)
@@ -6,14 +7,6 @@ function generarUID() {
       .padStart(4, "0");
   }
   
-  const formatoQR = {
-    color: { light: "#ffffff", dark: "#00001Eff" },
-    errorCorrectionLevel: "H",
-    type: "image/png",
-    margin: "3",
-    quality: 1,
-    scale: 4,
-  };
 
 
   const generateQR = async (name, dni, invitados, evento, mesa) => {
@@ -28,8 +21,10 @@ function generarUID() {
       };
   
       // Convertir el objeto a una cadena de texto en formato JSON
-      const dataString = JSON.stringify(data);
-  
+      // const dataString = JSON.stringify(data);
+  // generar el TOKEN
+const dataString=generateToken(data)
+
       // Generar el código QR
       const qr = await QRCode.toDataURL(dataString);
       return qr;
