@@ -13,7 +13,6 @@ export default function Form() {
   // funcion para cargar el fomulario
   async function submit(e) {
     e.preventDefault();
-
     const formData = new FormData(e.target);
     const nombreApellido = formData.get("nombreApellido");
     const dni = formData.get("dni");
@@ -22,16 +21,17 @@ export default function Form() {
       setResponseMessage("completa todos los campos");
       return;
     } else {
-      formData.append("evento", selectedEvent);
+      formData.append("evento", selectedEvent.uid);
       formData.append("video", selectedVideo);
       try {
         setIsLoading(true);
-        const response = await fetch("/api/feedback", {
+        const response = await fetch("/api/data", {
           method: "POST",
           body: formData,
         });
         const data = await response.json();
         setData(data);
+        console.log("esto es la respest",data)
         if (data.status == 205) {
           setResponseMessage("Nombre Duplicado");
           setIsLoading(false);
@@ -67,25 +67,26 @@ export default function Form() {
 
     fetchEventos();
   }, []);
-  
+
 
   useEffect(() => {
     if (selectedEvent) {
       setVideos(selectedEvent.videos);
     }
+    console.log(eventos)
   }, [selectedEvent]);
 
 
-const handleSelectr=(e)=>{
-  const seleccion=e.target.value
+  const handleSelectr = (e) => {
+    const seleccion = e.target.value
     const selected = eventos.find((event) => event.uid === seleccion);
     setSelectedEvent(selected);
-}
+  }
 
-const handleSelectVideo=(e)=>{
-  const videoSelect=e.target.value
-  setSelectedVideo(videoSelect)
-}
+  const handleSelectVideo = (e) => {
+    const videoSelect = e.target.value
+    setSelectedVideo(videoSelect)
+  }
 
 
   return (
@@ -110,94 +111,94 @@ const handleSelectVideo=(e)=>{
         className="flex flex-col items-center text-gray-700"
       >
         <div className=" border flex flex-col gap-3 items-center justify-between bg-white rounded-lg p-5 w-full my-5 text-sm">
-        
-        <label
-          htmlFor="nombreApellido"
-          className=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
-        >
-          <p>Nombre y Apellido</p>
-          <input
-            type="text"
-            id="nombreApellido"
-            name="nombreApellido"
-            required
-            className="rounded-lg ring-0 border p-2"
-          />
-        </label>
-        <label
-          htmlFor="dni"
-          className=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
-        >
-          <p>DNI</p>
-          <input
-            type="number"
-            id="dni"
-            name="dni"
-            required
-            className="rounded-lg ring-0 border p-2"
-          />
-        </label>
-        <label
-          htmlFor="cantInvitados"
-          className=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
-        >
-          <p>Cantidad de Invitados</p>
-          <input
-            type="number"
-            id="cantInvitados"
-            name="cantInvitados"
-            required
-            className="rounded-lg ring-0 border p-2"
-          />
-        </label>
+
+          <label
+            htmlFor="nombreApellido"
+            className=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
+          >
+            <p>Nombre y Apellido</p>
+            <input
+              type="text"
+              id="nombreApellido"
+              name="nombreApellido"
+              required
+              className="rounded-lg ring-0 border p-2"
+            />
+          </label>
+          <label
+            htmlFor="dni"
+            className=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
+          >
+            <p>DNI</p>
+            <input
+              type="number"
+              id="dni"
+              name="dni"
+              required
+              className="rounded-lg ring-0 border p-2"
+            />
+          </label>
+          <label
+            htmlFor="cantInvitados"
+            className=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
+          >
+            <p>Cantidad de Invitados</p>
+            <input
+              type="number"
+              id="cantInvitados"
+              name="cantInvitados"
+              required
+              className="rounded-lg ring-0 border p-2"
+            />
+          </label>
         </div>
 
 
- {/* contenedores de eventos y videos  */}
+        {/* contenedores de eventos y videos  */}
 
 
         <div className=" border flex flex-col gap-3 items-center justify-between bg-white rounded-lg p-5 w-full my-5 text-sm">
-{/* selector de eventos */}
-<select
-          name="eventoUID"
-          id="eventos"
-          required
-          className="p-2 text-xs rounded-lg my-3 ring-0 border-none"
-          onChange={handleSelectr}
-        >
-          <option
-            value="noSelect"
-            disabled
-            selected
-            className="text-sx p-2 rounded-lg font-medium text-gray-400"
-           
+          {/* selector de eventos */}
+          <select
+            name="eventoUID"
+            id="eventos"
+            required
+            className="p-2 text-xs rounded-lg my-3 ring-0 border "
+            onChange={handleSelectr}
           >
-            Relacionar un Evento
-          </option>
-          {eventos?.map((event) => (
-            <option value={event.uid}>{event.name}</option>
-          ))}
-        </select>
-{/* selector de videos segun evento correspondiente */}
-<select
-          name="eventoUID"
-          id="eventos"
-          required
-          className="p-2 text-xs rounded-lg my-3 ring-0 border-none"
-          onChange={handleSelectVideo}
-        >
-          <option
-            value="noSelect"
-            disabled
-            selected
-            className="text-sx p-2 rounded-lg font-medium text-gray-400"
+            <option
+              value="noSelect"
+              disabled
+              selected
+              className="text-sx p-2 rounded-lg font-medium text-gray-400"
+
+            >
+              Relacionar un Evento
+            </option>
+            {eventos?.map((event) => (
+              <option value={event.uid}>{event.name}</option>
+            ))}
+          </select>
+          {/* selector de videos segun evento correspondiente */}
+          <select
+            name="eventoUID"
+            id="eventos"
+            required
+            className="p-2 text-xs rounded-lg my-3 ring-0 border"
+            onChange={handleSelectVideo}
           >
-            Relacionar un Video
-          </option>
-          {videos?.map((video) => (
-      <option value={video.uid}>{video.name}</option>
-    ))}
-        </select>
+            <option
+              value="noSelect"
+              disabled
+              selected
+              className="text-sx p-2 rounded-lg font-medium text-gray-400"
+            >
+              Relacionar un Video
+            </option>
+            {videos?.map((video) => (
+              <option value={video.id}>{video.name}</option>
+            ))}
+          </select>
         </div>
 
         {isLoading && (
