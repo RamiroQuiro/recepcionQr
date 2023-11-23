@@ -5,12 +5,16 @@ import TablaCredenciales from "./components/tabla/TablaCredenciales.astro";
 
 <Layout title="Credenciales">
   <main
-    class="min-h-screen w-full flex flex-col gap-10 items-center justify-start mt-20"
+    class="min-h-screen w-full flex flex-col gap-10 items-center relative justify-start mt-20"
   >
+
+  
     <div
-      class="md:w-10/12 md:min-h-[50vh] bg-white/80 backdrop-blur-sm flex flex-col p-5 rounded-lg items-center justify-normal"
-    >
-      <div class="text-center">
+      class="md:w-10/12 md:min-h-[50vh] relative bg-white/80 backdrop-blur-sm flex flex-col p-5 rounded-lg items-center justify-normal"
+    ><div class="absolute top-5 right-5 + hover:scale-105 active:scale-90 duration-300 rounded-full">
+        <a href="/cargaAcceso" class="text-2xl text-gray-800 px-2">+</a>
+      </div>
+      <div class="text-center my-5">
         <h2 class="mt-5 text-lg font-bold text-gray-700">Credenciales</h2>
       </div>
 

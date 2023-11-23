@@ -31,7 +31,7 @@ export default function Form() {
         });
         const data = await response.json();
         setData(data);
-        console.log("esto es la respest",data)
+
         if (data.status == 205) {
           setResponseMessage("Nombre Duplicado");
           setIsLoading(false);
@@ -43,6 +43,9 @@ export default function Form() {
             showToast(`🎞️ Video Cargado`, 3000);
             setResponseMessage(false);
             e.target.reset();
+            setTimeout(()=>{
+              
+            })
           }
         }
       } catch (error) {
