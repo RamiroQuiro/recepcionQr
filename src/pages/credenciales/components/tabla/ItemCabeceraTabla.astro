@@ -1,0 +1,14 @@
+---
+
+const {id,label,order}=Astro.props
+---
+
+<th
+id={id}
+class="whitespace-nowrap text-sm font-mono border-l px-2 relative capitalize py-2 font-medium text-primary-800 cursor-pointer hover:bg-primary-300/20 duration-200"
+>
+{label}
+<span class="duration-200 animate-aparecer absolute top-2 right-2">
+  {order == id && "⬇️"}
+</span>
+</th>

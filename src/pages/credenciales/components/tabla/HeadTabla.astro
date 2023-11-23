@@ -1,0 +1,48 @@
+---
+import ItemCabeceraTabla from "./ItemCabeceraTabla.astro";
+
+const cabeceras = [
+  {
+    key: 1,
+    id: 1,
+    name: "Nombre y Apellido",
+  },
+  {
+    key: 2,
+    id: 2,
+    name: "DNI",
+  },
+  {
+    key: 3,
+    id: 3,
+    name: "Cantidad de Invitados",
+  },
+  {
+    key: 4,
+    id: 4,
+    name: "Evento",
+  },
+  {
+    key: 5,
+    id: 5,
+    name: "video",
+  },
+  {
+    key: 6,
+    id: 6,
+    name: "activo",
+  },
+];
+---
+
+<thead
+  class="text-left ltr:text-left rtl:text-right bg-zinc-600 rounded-lg py-2 sticky top-0 left-0"
+>
+  <tr class="px-2 ">
+    {
+      cabeceras?.map((item, i) => (
+        <ItemCabeceraTabla key={item.key} id={item.id} label={item.name} />
+      ))
+    }
+  </tr>
+</thead>

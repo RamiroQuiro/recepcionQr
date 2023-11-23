@@ -1,0 +1,14 @@
+---
+import ItemsBodyTabla from './ItemsBodyTabla'
+const fetching=await fetch('http://localhost:4321/api/data')
+const dataCredenciales=await fetching.json()
+const credenciales=dataCredenciales.credenciales
+---
+<tbody class="divide-y divide-gray-200 my-3 text-neutral-800 w-full">
+    {
+    credenciales&&
+    credenciales 
+      ?.map((credencial) => (
+<ItemsBodyTabla client:visible {credencial} />
+      ))}
+      </tbody>
