@@ -6,9 +6,9 @@ const credenciales=dataCredenciales.credenciales
 ---
 <tbody class="divide-y divide-gray-200 my-3 text-neutral-800 w-full">
     {
-    credenciales&&
+  
     credenciales 
       ?.map((credencial) => (
-<ItemsBodyTabla client:visible {credencial} />
+<ItemsBodyTabla client:only="react" {credencial} />
       ))}
       </tbody>
