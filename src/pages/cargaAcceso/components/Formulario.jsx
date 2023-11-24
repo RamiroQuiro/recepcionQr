@@ -14,45 +14,37 @@ export default function Form() {
   async function submit(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const nombreApellido = formData.get("nombreApellido");
-    const dni = formData.get("dni");
-    const cantInvitados = formData.get("cantInvitados");
-    if (!nombreApellido || !cantInvitados) {
-      setResponseMessage("completa todos los campos");
-      return;
-    } else {
-      formData.append("evento", selectedEvent.uid);
-      formData.append("video", selectedVideo);
-      try {
-        setIsLoading(true);
-        const response = await fetch("/api/data", {
-          method: "POST",
-          body: formData,
-        });
-        const data = await response.json();
-        setData(data);
-
-        if (data.status == 205) {
-          setResponseMessage("Nombre Duplicado");
-          setIsLoading(false);
-          e.target.reset();
-        } else {
-          if (data.message && data.name) {
-            setIsLoading(false);
-            setQrImage(data.qr);
-            showToast(`🎞️ Video Cargado`, 3000);
-            setResponseMessage(false);
-            e.target.reset();
-            setTimeout(()=>{
-              
-            })
-          }
-        }
-      } catch (error) {
-        console.log(error);
+    formData.append("evento", selectedEvent.uid);
+    formData.append("video", selectedVideo);
+    try {
+      setIsLoading(true);
+      const response = await fetch("/api/data", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      setData(data);
+      if (data.status == 205) {
+        setResponseMessage("Nombre Duplicado");
         setIsLoading(false);
-        setResponseMessage(error);
+        e.target.reset();
+      } else {
+        if (data.message && data.name) {
+          setIsLoading(false);
+          setQrImage(data.qr);
+          showToast(`🎞️ Video Cargado`, 3000);
+          setResponseMessage(false);
+          e.target.reset();
+          setTimeout(() => {
+
+          })
+        }
       }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      setResponseMessage(error);
+
     }
   }
 
@@ -142,6 +134,32 @@ export default function Form() {
             />
           </label>
           <label
+            htmlFor="celular"
+            className=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
+          >
+            <p>Celular</p>
+            <input
+              type="tel"
+              id="celular"
+              name="celular"
+              required
+              className="rounded-lg ring-0 border p-2"
+            />
+          </label>
+          <label
+            htmlFor="email"
+            className=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
+          >
+            <p>email</p>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              className="rounded-lg ring-0 border p-2"
+            />
+          </label>
+          <label
             htmlFor="cantInvitados"
             className=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
           >
@@ -204,17 +222,6 @@ export default function Form() {
           </select>
         </div>
 
-        {isLoading && (
-          <span className="text-sm font-medium text-orange-500 animate-pulse">
-            cargando credencial...
-          </span>
-        )}
-        <button
-          disabled={isLoading}
-          className="disabled:bg-gray-200 cursor-pointer  border flex items-center justify-center hover:bg-blue-400 duration-200 hover:ring-2 bg-blue-500 text-white font-medium rounded-lg p-2 text-center w-2/3 gap-2 text-sm"
-        >
-          Cargar
-        </button>
         {qrImage && (
           <div className="p-2 my-5 space-y-4 flex flex-col items-center">
             <p className="text-xs font-medium">

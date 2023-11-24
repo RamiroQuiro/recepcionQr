@@ -32,7 +32,10 @@ const uidCredencial = credencial.uid;
       {credencial.activo == true ? "activo" : "inactivo"}
     </p>
   </td>
-
+  <td class="whitespace-nowrap px-4 py-2 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase">
+    <buton class="text-red-500">❌eliminar</buton>
+    <buton class="text-yellow-500">✖️suspender</buton>
+  </td>
 </tr>
 
 <script define:vars={{ uidCredencial }}>

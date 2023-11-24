@@ -42,6 +42,8 @@ export const POST = async ({ request }) => {
   const data = await request.formData();
   const name = data.get("nombreApellido");
   const dni = data.get("dni");
+  const celular = data.get("celular");
+  const email = data.get("email");
   const evento = data.get("evento");
   const video = data.get("video");
   const cantInvitados = data.get("cantInvitados");
@@ -56,13 +58,27 @@ export const POST = async ({ request }) => {
       { status: 400 }
     );
   } else {
+
+    
+    const qrCodeGenerado = await generateQR(
+      name,
+      dni,
+      cantInvitados,
+      evento,
+      dni
+    );
+
+
     const newData = {
       uid: uid,
       nombreApellido: name,
-      dni: dni,
+      celular,
+      email,
+      dni,
       invitados: cantInvitados,
-      evento: evento,
-      video: video,
+      evento,
+      video,
+      QRCode:qrCodeGenerado
     };
 
     dataBase?.credenciales?.push(newData);
@@ -72,13 +88,6 @@ export const POST = async ({ request }) => {
     // Escribe el array actualizado de vuelta al archivo
     await fs.writeFile(filePathData, jsonData);
 
-    const qrCodeGenerado = await generateQR(
-      name,
-      dni,
-      cantInvitados,
-      evento,
-      dni
-    );
 
     return new Response(
       JSON.stringify({
