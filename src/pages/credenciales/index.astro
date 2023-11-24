@@ -1,12 +1,11 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import TablaCredenciales from "./components/tabla/TablaCredenciales.astro";
+import MainDashboard from '../../components/MainDasboard.astro'
 ---
 
 <Layout title="Credenciales">
-  <main
-    class="min-h-screen w-full flex flex-col gap-10 items-center relative justify-start mt-20"
-  >
+<MainDashboard>
 
   
     <div
@@ -20,5 +19,5 @@ import TablaCredenciales from "./components/tabla/TablaCredenciales.astro";
 
       <TablaCredenciales />
     </div>
-  </main>
+  </MainDashboard>
 </Layout>

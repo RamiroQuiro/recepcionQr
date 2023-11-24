@@ -1,14 +1,13 @@
 ---
-import ItemsBodyTabla from './ItemsBodyTabla'
+import ItemsBodyTabla from './ItemsBodyTabla.astro'
 const fetching=await fetch('http://localhost:4321/api/data')
 const dataCredenciales=await fetching.json()
 const credenciales=dataCredenciales.credenciales
 ---
 <tbody class="divide-y divide-gray-200 my-3 text-neutral-800 w-full">
-    {
-  
-    credenciales 
-      ?.map((credencial) => (
-<ItemsBodyTabla client:only="react" {credencial} />
-      ))}
+
+      {
+            credenciales?.map((credencial) => (
+              <ItemsBodyTabla  {credencial} />
+            ))}
       </tbody>
