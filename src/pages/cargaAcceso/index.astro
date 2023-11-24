@@ -1,15 +1,13 @@
 ---
+import MainDasboard from "../../components/MainDasboard.astro";
 import Layout from "../../layouts/Layout.astro";
 import Formulario from "./components/Formulario";
+import ContenedorFormulario from "../../components/ContenedorFormualrio.astro";
 ---
 
 <Layout title="Carga de credenciales Acceso">
-  <main
-    class="relative min-h-screen w-full flex flex-col gap-10 items-center justify-start mt-20"
-  >
-    <div
-      class="md:w-2/3 md:h-1/2 bg-white/80 backdrop-blur-sm flex flex-col p-5 rounded-lg items-center relative justify-normal"
-    >
+<MainDasboard>
+    <ContenedorFormulario>
       <a
         href="/credenciales"
         class="text-2xl  absolute top-4 left-4 rounded-full  bg-gray-200 border border-paleta1-primary hover:bg-gray-300 hover:text-gray-500 px-2 h-10 flex items-center justify-center  border-gray-700/50 hover:-translate-x-1 duration-300 hover:scale-105 active:scale-90 shadow-lg text-gray-700"
@@ -21,6 +19,6 @@ import Formulario from "./components/Formulario";
         </p>
       </div>
       <Formulario client:load />
-    </div>
-  </main>
+    </ContenedorFormulario>
+  </MainDasboard>
 </Layout>

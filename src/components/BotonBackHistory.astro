@@ -1,0 +1,19 @@
+---
+
+const {href,clase}=Astro.props
+
+---
+
+<button
+    
+    id="volverBoton"
+    class={` ${clase} text-2xl  absolute top-4 left-4 rounded-full  bg-gray-200 border border-paleta1-primary hover:bg-gray-300 hover:text-gray-500 px-2 h-10 flex items-center justify-center  border-gray-700/50 hover:-translate-x-1 duration-300 hover:scale-105 active:scale-90 shadow-lg text-gray-700`}
+    >←</a>
+</button>
+
+<script define:vars={{href}}>
+    const botonVolver=document.getElementById('volverBoton')
+    botonVolver.addEventListener('click',()=>{
+        window.location.href=href
+    })
+</script>
