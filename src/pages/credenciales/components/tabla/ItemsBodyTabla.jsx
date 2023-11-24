@@ -3,8 +3,9 @@ import React from 'react'
 export default function ItemsBodyTabla({credencial}) {
 
 
-    const captaruid=()=>{
-        
+    const captaruid=(e)=>{
+      console.log(credencial.uid)
+        window.location.href = '/credenciales/' + credencial.uid;
     }
   return (
     <tr

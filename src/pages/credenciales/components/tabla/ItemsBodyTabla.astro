@@ -1,0 +1,63 @@
+---
+const { credencial } = Astro.props;
+---
+<astro-greet data-credencial={credencial.uid}>
+  <tr
+    id="fila"
+    class="odd:bg-neutral-300/50 cursor-pointer hover:bg-zinc-400 hover:text-gray-50 duration-200"
+  >
+  <td class="whitespace-nowrap px-4 py-2 font-medium text-primary-text">
+    {credencial.nombreApellido}
+  </td>
+  <td class="whitespace-nowrap px-4 py-2 text-primary-text">
+    {credencial.dni}
+  </td>
+  <td class="whitespace-nowrap px-4 py-2 text-primary-text">
+    {credencial.invitados}
+  </td>
+  <td class="whitespace-nowrap px-4 py-2 text-primary-text">
+    {credencial.evento}
+  </td>
+  <td class="whitespace-nowrap px-4 py-2 text-primary-text">
+    {credencial.video}
+  </td>
+  <td class="whitespace-nowrap text-primary-text">
+    <p
+      class={credencial.activo == true
+        ? " bg-green-300/50 shadow-sm w-10/12  shadow-green-300 text-green-600 rounded-lg text-[10px] mx-auto text-center"
+        : " bg-red-300/50 shadow-sm w-10/12  shadow-red-300 text-red-600 rounded-lg text-xs mx-auto text-[10px] text-center"}
+    >
+      {credencial.activo == true ? "activo" : "inactivo"}
+    </p>
+  </td>
+  <td class="whitespace-nowrap text-primary-text">
+    <button id="boton" class="btn btn-primary">Haz clic aquí</button>
+  </td>
+</tr>
+</astro-greet>
+
+<script is:inline>
+  class AstroGreet extends HTMLElement {
+    constructor() {
+      super();
+      this.uidCredencial = this.dataset.credencial
+    }
+
+    getValor() {
+      return this.uidCredencial;
+    }
+  }
+
+  customElements.define('astro-greet', AstroGreet);
+
+  // Ahora puedes seleccionar la instancia de AstroGreet que ya está en el DOM
+  const astroGreet = document.querySelector('astro-greet');
+  const uidCredencial = astroGreet.getValor();
+
+  // Asegúrate de seleccionar el elemento 'tr' correcto
+  const filaCredencial = astroGreet.querySelector('tr');
+  const boton = filaCredencial.querySelector('#boton');
+  boton.addEventListener('click',()=>{
+    console.log(uidCredencial)
+  })
+</script>
