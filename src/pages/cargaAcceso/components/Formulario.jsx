@@ -221,7 +221,17 @@ export default function Form() {
             ))}
           </select>
         </div>
-
+        {isLoading && (
+          <span className="text-sm font-medium text-orange-500 animate-pulse">
+            cargando credencial...
+          </span>
+        )}
+        <button
+          disabled={isLoading}
+          className="disabled:bg-gray-200 cursor-pointer  border flex items-center justify-center hover:bg-blue-400 duration-200 hover:ring-2 bg-blue-500 text-white font-medium rounded-lg p-2 text-center w-2/3 gap-2 text-sm"
+        >
+          Cargar
+        </button>
         {qrImage && (
           <div className="p-2 my-5 space-y-4 flex flex-col items-center">
             <p className="text-xs font-medium">

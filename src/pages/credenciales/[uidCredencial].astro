@@ -1,168 +1,212 @@
 ---
+import MainDasboard from "../../components/MainDasboard.astro";
+import Layout from "../../layouts/Layout.astro";
 
-import MainDasboard from '../../components/MainDasboard.astro';
-import Layout from '../../layouts/Layout.astro'
-
-const {uidCredencial}=Astro.params
-const fetichingCredencial=await fetch(`http://localhost:4321/api/credencial/${uidCredencial}`)
-const fetichingEventos=await fetch(`http://localhost:4321/api/eventos`)
-const fetichingVideos=await fetch(`http://localhost:4321/api/listarvideos`)
+const { uidCredencial } = Astro.params;
+const fetichingCredencial = await fetch(
+  `http://localhost:4321/api/credencial/${uidCredencial}`
+);
+const fetichingEventos = await fetch(`http://localhost:4321/api/eventos`);
+const fetichingVideos = await fetch(`http://localhost:4321/api/listarvideos`);
 const data = await fetichingCredencial.json();
 const dataEventos = await fetichingEventos.json();
 const dataVideos = await fetichingVideos.json();
 const credencial = await data?.credencial;
-const videos= await dataVideos?.files
-console.log(videos)
-const eventos=await dataEventos?.eventos
-
+const videos = await dataVideos?.files;
+const eventos = await dataEventos?.eventos;
 ---
 
-
 <Layout title={`Credencial ${credencial.nombreApellido}`}>
-<MainDasboard>
-    <form
-  
-    class="flex flex-col items-center text-gray-700 relative"
-  >
-    <div class=" border flex flex-col gap-3 items-center justify-between bg-white rounded-lg p-5 w-full my-5 text-sm">
-
-      <label
-        for="nombreApellido"
-        class=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
+  <MainDasboard>
+    <form class="flex flex-col items-center text-gray-700 relative">
+      <div
+        class="border flex flex-col gap-3 items-center justify-between bg-white rounded-lg p-5 w-full my-5 text-sm"
       >
-        <p>Nombre y Apellido</p>
-        <input
-          type="text"
-          id="nombreApellido"
-          name="nombreApellido"
-          required
-          value={credencial.nombreApellido}
-          class="rounded-lg ring-0 border p-2"
-        />
-      </label>
-      <label
-        for="dni"
-        
-        class=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
-      >
-        <p>DNI</p>
-        <input
-          type="number"
-          value={credencial.dni}
-          id="dni"
-          name="dni"
-          required
-          class="rounded-lg ring-0 border p-2"
-        />
-      </label>
-      <label
-        for="celular"
-        class=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
-      >
-        <p>Celular</p>
-        <input
-        value={credencial.celular}
-          type="tel"
-          id="celular"
-          name="celular"
-          required
-          class="rounded-lg ring-0 border p-2"
-        />
-      </label>
-      <label
-        for="email"
-        class=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
-      >
-        <p>email</p>
-        <input
-        value={credencial.email}
-          type="email"
-          id="email"
-          name="email"
-          required
-          class="rounded-lg ring-0 border p-2"
-        />
-      </label>
-      <label
-        for="cantInvitados"
-        class=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
-      >
-        <p>Cantidad de Invitados</p>
-        <input
-        value={credencial.invitados}
-          type="number"
-          id="cantInvitados"
-          name="cantInvitados"
-          required
-          class="rounded-lg ring-0 border p-2"
-        />
-      </label>
-    </div>
-
-
-    {/* contenedores de eventos y videos  */}
-
-
-    <div class=" border flex flex-col gap-3 items-center justify-between bg-white rounded-lg p-5 w-full my-5 text-sm">
-      {/* selector de eventos */}
-      <select
-        name="eventoUID"
-        id="eventos"
-        value={credencial.evento}
-        required
-        class="p-2 text-xs rounded-lg my-3 ring-0 border "
-      >
-        <option
-          value="noSelect"
-          disabled
-          selected
-          class="text-sx p-2 rounded-lg font-medium text-gray-400"
-
+        <label
+          for="nombreApellido"
+          class="border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
         >
-          Relacionar un Evento
-        </option>
-        {eventos?.map((event) => (
-          <option value={event.uid}>{event.name}</option>
-        ))}
-      </select>
-      {/* selector de videos segun evento correspondiente */}
-      <select
-        name="eventoUID"
-        id="eventos"
-        value={credencial.video}
-        required
-        class="p-2 text-xs rounded-lg my-3 ring-0 border"
-      >
-        <option
-          value="noSelect"
-          disabled
-          selected
-          class="text-sx p-2 rounded-lg font-medium text-gray-400"
+          <p>Nombre y Apellido</p>
+          <input
+            type="text"
+            id="nombreApellido"
+            name="nombreApellido"
+            required
+            value={credencial.nombreApellido}
+            class="rounded-lg ring-0 border p-2"
+          />
+        </label>
+        <label
+          for="dni"
+          class="border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
         >
-          Relacionar un Video
-        </option>
-        {videos?.map((video) => (
-          <option value={video.id}>{video.name}</option>
-        ))}
-      </select>
-    </div>
-
-    {credencial?.QRCode && (
-      <div class="p-2 my-5 space-y-4 flex flex-col items-center">
-        <p class="text-xs font-medium">
-          Toca la imagen para descargar y usarla como quieras
-        </p>
-        <a
-          class=" mx-auto cursor-pointer"
-          href={credencial?.QRCode}
-          download={credencial.nombreApellido}
+          <p>DNI</p>
+          <input
+            type="number"
+            value={credencial.dni}
+            id="dni"
+            name="dni"
+            required
+            class="rounded-lg ring-0 border p-2"
+          />
+        </label>
+        <label
+          for="celular"
+          class="border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
         >
-          {" "}
-          <img alt="qrCode" src={credencial?.QRCode} width={100} height={100} />
-        </a>
+          <p>Celular</p>
+          <input
+            value={credencial.celular}
+            type="tel"
+            id="celular"
+            name="celular"
+            required
+            class="rounded-lg ring-0 border p-2"
+          />
+        </label>
+        <label
+          for="email"
+          class="border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
+        >
+          <p>email</p>
+          <input
+            value={credencial.email}
+            type="email"
+            id="email"
+            name="email"
+            required
+            class="rounded-lg ring-0 border p-2"
+          />
+        </label>
+        <label
+          for="cantInvitados"
+          class="border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
+        >
+          <p>Cantidad de Invitados</p>
+          <input
+            value={credencial.invitados}
+            type="number"
+            id="cantInvitados"
+            name="cantInvitados"
+            required
+            class="rounded-lg ring-0 border p-2"
+          />
+        </label>
       </div>
-    )}
-  
-  </form>
-</MainDasboard>
+
+      {/* contenedores de eventos y videos  */}
+
+      <div
+        class="border flex flex-col gap-3 items-center justify-between bg-white rounded-lg p-5 w-full my-5 text-sm"
+      >
+        {/* selector de eventos */}
+        <select
+          name="eventoUID"
+          id="eventos"
+          required
+          class="p-2 text-xs rounded-lg my-3 ring-0 border w-full"
+        >
+          <option
+            value="noSelect"
+            disabled
+            selected
+            class="text-sx p-2 rounded-lg font-medium text-gray-400"
+          >
+            Relacionar un Evento
+          </option>
+          {
+            eventos?.map((event) => (
+              <option value={event.uid}>{event.name}</option>
+            ))
+          }
+        </select>
+        {/* selector de videos segun evento correspondiente */}
+        <select
+          name="idVideos"
+          id="idVideos"
+          required
+          
+          class="p-2 text-xs rounded-lg my-3 ring-0 border w-full"
+        >
+          <option
+            value="noSelect"
+            disabled
+            selected
+            class="text-sx p-2 rounded-lg font-medium text-gray-400"
+          >
+            Relacionar un Video
+          </option>
+          {
+            videos?.filter((evento)=>evento.uid==credencial.evento)[0]?.videos?.map((video) => (
+              <option value={video.id}>{video.name}</option>
+            ))
+          }
+        </select>
+      </div>
+
+      {
+        credencial?.QRCode && (
+          <div class="p-2 my-5 space-y-4 flex flex-col items-center">
+            <p class="text-xs font-medium">
+              Toca la imagen para descargar y usarla como quieras
+            </p>
+            <a
+              class=" mx-auto cursor-pointer"
+              href={credencial?.QRCode}
+              download={credencial.nombreApellido}
+            >
+              {" "}
+              <img
+                alt="qrCode"
+                src={credencial?.QRCode}
+                width={100}
+                height={100}
+              />
+            </a>
+          </div>
+        )
+      }
+    </form>
+  </MainDasboard>
 </Layout>
+
+<script define:vars={{ videos, credencial }}>
+  const isEdit = false;
+
+  // Obtención de los elementos del DOM
+  const selectorEvento = document.getElementById("eventos");
+  const selectorVideo = document.getElementById("idVideos");
+
+  // Inicialización de la variable videosDelEvento
+  let videosDelEvento = [];
+
+  if (!isEdit) {
+    selectorEvento.value = credencial.evento;
+    selectorVideo.value=videos?.filter((evento)=>evento.uid==credencial.evento)[0]?.videos?.filter((video)=>video.id==credencial.video)[0]?.id
+  
+  }
+    // Función para filtrar los videos basado en el evento seleccionado
+    const selectorVideos = () => {
+      if (!credencial) {
+        return;
+      }
+    
+      videosDelEvento = videos.filter(
+        (video) => video.uid === selectorEvento.value
+      );
+
+      // Limpia las opciones existentes
+      selectorVideo.innerHTML = "";
+      // Añade las nuevas opciones al selector de videos
+      videosDelEvento[0]?.videos?.forEach((video) => {
+        const option = document.createElement("option");
+        option.value = video.id;
+        option.textContent = video.name;
+        selectorVideo.appendChild(option);
+      });
+    };
+
+    // Añade el evento change al selector de eventos
+    selectorEvento.addEventListener("change", selectorVideos);
+  
+</script>
