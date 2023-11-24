@@ -5,10 +5,15 @@ import Layout from '../../layouts/Layout.astro'
 
 const {uidCredencial}=Astro.params
 const fetichingCredencial=await fetch(`http://localhost:4321/api/credencial/${uidCredencial}`)
+const fetichingEventos=await fetch(`http://localhost:4321/api/eventos`)
+const fetichingVideos=await fetch(`http://localhost:4321/api/listarvideos`)
 const data = await fetichingCredencial.json();
+const dataEventos = await fetichingEventos.json();
+const dataVideos = await fetichingVideos.json();
 const credencial = await data?.credencial;
-const videos=[]
-const eventos=[]
+const videos= await dataVideos?.files
+console.log(videos)
+const eventos=await dataEventos?.eventos
 
 ---
 
@@ -17,7 +22,7 @@ const eventos=[]
 <MainDasboard>
     <form
   
-    class="flex flex-col items-center text-gray-700"
+    class="flex flex-col items-center text-gray-700 relative"
   >
     <div class=" border flex flex-col gap-3 items-center justify-between bg-white rounded-lg p-5 w-full my-5 text-sm">
 
@@ -31,16 +36,19 @@ const eventos=[]
           id="nombreApellido"
           name="nombreApellido"
           required
+          value={credencial.nombreApellido}
           class="rounded-lg ring-0 border p-2"
         />
       </label>
       <label
         for="dni"
+        
         class=" border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
       >
         <p>DNI</p>
         <input
           type="number"
+          value={credencial.dni}
           id="dni"
           name="dni"
           required
@@ -53,6 +61,7 @@ const eventos=[]
       >
         <p>Celular</p>
         <input
+        value={credencial.celular}
           type="tel"
           id="celular"
           name="celular"
@@ -66,6 +75,7 @@ const eventos=[]
       >
         <p>email</p>
         <input
+        value={credencial.email}
           type="email"
           id="email"
           name="email"
@@ -79,6 +89,7 @@ const eventos=[]
       >
         <p>Cantidad de Invitados</p>
         <input
+        value={credencial.invitados}
           type="number"
           id="cantInvitados"
           name="cantInvitados"
@@ -97,6 +108,7 @@ const eventos=[]
       <select
         name="eventoUID"
         id="eventos"
+        value={credencial.evento}
         required
         class="p-2 text-xs rounded-lg my-3 ring-0 border "
       >
@@ -117,6 +129,7 @@ const eventos=[]
       <select
         name="eventoUID"
         id="eventos"
+        value={credencial.video}
         required
         class="p-2 text-xs rounded-lg my-3 ring-0 border"
       >
@@ -142,7 +155,7 @@ const eventos=[]
         <a
           class=" mx-auto cursor-pointer"
           href={credencial?.QRCode}
-          download={credencial.name}
+          download={credencial.nombreApellido}
         >
           {" "}
           <img alt="qrCode" src={credencial?.QRCode} width={100} height={100} />
