@@ -9,10 +9,10 @@ const generateToken = (data) => {
   return token;
 };
 
-const verifyToken = (token) => {
+const verifyToken = async (token) => {
   try {
     // Verifica el token
-    const data = jwt.verify(token, secretKey);
+    const data = await jwt.verify(token, secretKey);
     return data;
   } catch (err) {
     console.error(err);

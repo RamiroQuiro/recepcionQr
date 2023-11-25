@@ -33,11 +33,6 @@ const generateQR = async (name, dni, invitados, evento, mesa) => {
   }
 };
 
-// Define la ruta del archivo
-const filePathData = path.join(process.cwd(), "public", "base", "base.json");
-// Lee el archivo y parsea el contenido a un array
-const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
-
 export const POST = async ({ request }) => {
   const data = await request.formData();
   const name = data.get("nombreApellido");
@@ -58,8 +53,16 @@ export const POST = async ({ request }) => {
       { status: 400 }
     );
   } else {
-
-    
+    // Define la ruta del archivo
+    const filePathData = path.join(
+      process.cwd(),
+      "public",
+      "base",
+      "base.json"
+    );
+    // Lee el archivo y parsea el contenido a un array
+    const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
+    console.log(dataBase);
     const qrCodeGenerado = await generateQR(
       name,
       dni,
@@ -67,7 +70,6 @@ export const POST = async ({ request }) => {
       evento,
       dni
     );
-
 
     const newData = {
       uid: uid,
@@ -78,16 +80,15 @@ export const POST = async ({ request }) => {
       invitados: cantInvitados,
       evento,
       video,
-      QRCode:qrCodeGenerado
+      QRCode: qrCodeGenerado,
     };
 
     dataBase?.credenciales?.push(newData);
 
     const jsonData = JSON.stringify(dataBase);
-
+    console.log(dataBase);
     // Escribe el array actualizado de vuelta al archivo
     await fs.writeFile(filePathData, jsonData);
-
 
     return new Response(
       JSON.stringify({
@@ -101,6 +102,10 @@ export const POST = async ({ request }) => {
 };
 
 export const GET = async () => {
+  // Define la ruta del archivo
+  const filePathData = path.join(process.cwd(), "public", "base", "base.json");
+  // Lee el archivo y parsea el contenido a un array
+  const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
   const credenciales = dataBase.credenciales;
 
   return new Response(
