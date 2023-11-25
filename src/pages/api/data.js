@@ -9,15 +9,20 @@ function generarUID() {
     .padStart(4, "0");
 }
 
-const generateQR = async (name, dni, invitados, evento, mesa) => {
+const generateQR = async (name,dni,invitados,evento,video,email,celular,uid) => {
   try {
     // Crear un objeto con los datos
     const data = {
-      name: name,
-      dni: dni,
-      invitados: invitados,
-      evento: evento,
-      mesa: mesa,
+      name,
+      dni,
+      invitados,
+      evento,
+      video,
+      
+      email,
+      uid,
+      celular,
+      estado: true,
     };
 
     // Convertir el objeto a una cadena de texto en formato JSON
@@ -62,14 +67,7 @@ export const POST = async ({ request }) => {
     );
     // Lee el archivo y parsea el contenido a un array
     const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
-    console.log(dataBase);
-    const qrCodeGenerado = await generateQR(
-      name,
-      dni,
-      cantInvitados,
-      evento,
-      dni
-    );
+    const qrCodeGenerado = await generateQR(name,dni,cantInvitados,evento,video,email,celular,uid);
 
     const newData = {
       uid: uid,
@@ -80,13 +78,13 @@ export const POST = async ({ request }) => {
       invitados: cantInvitados,
       evento,
       video,
+      estado:true,
       QRCode: qrCodeGenerado,
     };
 
     dataBase?.credenciales?.push(newData);
 
     const jsonData = JSON.stringify(dataBase);
-    console.log(dataBase);
     // Escribe el array actualizado de vuelta al archivo
     await fs.writeFile(filePathData, jsonData);
 
