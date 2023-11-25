@@ -1,38 +1,39 @@
 ---
-const { credencial } = Astro.props;
+const { credencial,evento,video } = Astro.props;
 
 const uidCredencial = credencial.uid;
-
 
 ---
 
 <tr
   id={uidCredencial}
-  class="odd:bg-neutral-300/50 cursor-pointer hover:bg-zinc-400 hover:text-gray-50 duration-200"
+  class="odd:bg-neutral-300/50 border-b cursor-pointer text-xs hover:bg-zinc-400 hover:text-gray-50 duration-200"
 >
   <td class="whitespace-nowrap px-4 py-2 font-medium text-primary-text">
     {credencial.nombreApellido}
   </td>
- 
+
   <td class="whitespace-nowrap px-4 py-2 text-primary-text">
     {credencial.invitados}
   </td>
   <td class="whitespace-nowrap px-4 py-2 text-primary-text">
-    {credencial.evento}
+    {evento}
   </td>
-  <td class="whitespace-nowrap px-4 py-2 text-primary-text">
-    {credencial.video}
+  <td class="whitespace-nowrap px-2 py-2 text-primary-text">
+    {credencial.estado == false ? "No Relacionado" : video}
   </td>
   <td class="whitespace-nowrap text-primary-text">
     <p
       class={credencial.estado == true
-        ? " bg-green-300/50 shadow-sm w-10/12  shadow-green-300 text-green-600 rounded-lg text-xs mx-auto text-center"
-        : " bg-red-300/50 shadow-sm w-10/12  shadow-red-300 text-red-600 rounded-lg text-xs mx-auto  text-center"}
+        ? " bg-green-300/50 shadow-sm w-8/12 py-1 shadow-green-300 text-green-600 rounded-lg text-xs mx-auto text-center"
+        : " bg-red-300/50 shadow-sm w-8/12 py-1  shadow-red-300 text-red-600 rounded-lg text-xs mx-auto  text-center"}
     >
       {credencial.estado == true ? "activo" : "inactivo"}
     </p>
   </td>
-  <td class="whitespace-nowrap px-4 py-2 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase">
+  <td
+    class="whitespace-nowrap px-4 py-2 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase"
+  >
     <buton class="text-red-500">❌eliminar</buton>
     <buton class="text-yellow-500">✖️suspender</buton>
   </td>

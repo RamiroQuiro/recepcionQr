@@ -3,11 +3,22 @@ import ItemsBodyTabla from './ItemsBodyTabla.astro'
 const fetching=await fetch('http://localhost:4321/api/data')
 const dataCredenciales=await fetching.json()
 const credenciales=dataCredenciales.credenciales
+const fetichingEventos = await fetch(`http://localhost:4321/api/eventos`);
+const fetichingVideos = await fetch(`http://localhost:4321/api/listarvideos`);
+const dataEventos = await fetichingEventos.json();
+const dataVideos = await fetichingVideos.json();
+const videos = await dataVideos?.files;
+const eventos = await dataEventos?.eventos;
+console.log(eventos)
 ---
 <tbody class="divide-y divide-gray-200 my-3 text-neutral-800 w-full">
 
       {
-            credenciales?.map((credencial) => (
-              <ItemsBodyTabla  {credencial} />
-            ))}
+            credenciales?.map((credencial) => {
+                  const indexEvento=eventos.findIndex((event)=>event.uid==credencial.evento)
+                  console.log(indexEvento)
+                  const nombreVideo=eventos[indexEvento].videos?.find((vid)=>vid.id==credencial.video)?.name
+                  return(
+              <ItemsBodyTabla  credencial={credencial} evento={eventos[indexEvento].name} video={nombreVideo} />
+            )})}
       </tbody>
