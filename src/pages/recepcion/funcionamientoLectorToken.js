@@ -182,8 +182,14 @@ const scan = async () => {
       })
       .then(response => response.json())
       .then(data => console.log(data));
+      await delay(300);
+    intentos++;
+    await scan(); // Volver a escanear
     } catch (error) {
       console.error(error);
+      await delay(300);
+    intentos++;
+    await scan(); // Volver a escanear
     }
   } else {
     // Si el código no es válido o no contiene datos, volver a escanear después de un delay
