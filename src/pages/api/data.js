@@ -105,7 +105,21 @@ export const GET = async () => {
   // Lee el archivo y parsea el contenido a un array
   const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
   const credenciales = dataBase.credenciales;
+  const eventosDatabase=dataBase.eventos;
 
+  // Para cada credencial, verificamos si el evento asociado existe en la base de datos de eventos
+  credenciales.forEach(credencial => {
+    const eventoExiste = eventosDatabase.some(evento => evento.uid === credencial.evento);
+    if (!eventoExiste) {
+      credencial.evento = false;
+    }
+  });
+
+  dataBase.credenciales = credenciales;
+  const jsonData = JSON.stringify(dataBase);
+  await fs.writeFile(filePathData, jsonData);
+
+console.log(credenciales)
   return new Response(
     JSON.stringify({
       status: 200,

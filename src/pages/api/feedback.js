@@ -25,7 +25,7 @@ export const POST = async ({ request }) => {
 
   const id = generarUID();
 
-  // Valida los datos - probablemente querrás hacer más que esto
+  // Valida los datos
   if (!name || !video || !evento) {
     return new Response(
       JSON.stringify({

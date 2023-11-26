@@ -1,28 +1,41 @@
 ---
-import ItemsBodyTabla from './ItemsBodyTabla.astro'
-const fetching=await fetch('http://localhost:4321/api/data')
-const dataCredenciales=await fetching.json()
-const credenciales=dataCredenciales.credenciales
+import ItemsBodyTabla from "./ItemsBodyTabla.astro";
+const fetching = await fetch("http://localhost:4321/api/data");
+const dataCredenciales = await fetching.json();
+const credenciales = dataCredenciales.credenciales;
 const fetichingEventos = await fetch(`http://localhost:4321/api/eventos`);
 const dataEventos = await fetichingEventos.json();
 const eventos = await dataEventos?.eventos;
 ---
-<tbody class="divide-y divide-gray-200 my-3 text-neutral-800 w-full">
 
-      {
-            credenciales?.map((credencial) => {
-                  if (!eventos || eventos.length === 0) {
-                        return
-                  }
-                  const indexEvento=eventos.findIndex((event)=>event.uid==credencial.evento)
-                  if (indexEvento === -1) {
-                        return
-                  }
-                  const nombreVideo=eventos[indexEvento].videos?.find((vid)=>vid.id==credencial.video)?.name
-                  if (!nombreVideo || nombreVideo.length === 0) {
-                        return
-                  }
-                  return(
-              <ItemsBodyTabla  credencial={credencial} evento={eventos[indexEvento].name} video={nombreVideo?nombreVideo:false} />
-            )})}
-      </tbody>
+<tbody class="divide-y divide-gray-200 my-3 text-neutral-800 w-full">
+  {
+    credenciales?.map((credencial) => {
+      let nombreVideo, nombreEvento;
+      if (!eventos) {
+        return;
+      }
+      const indexEvento = eventos.findIndex(
+        (event) => event.uid == credencial.evento
+      );
+
+      if (indexEvento == -1) {
+        nombreVideo = undefined;
+        nombreEvento = undefined;
+      } else {
+        nombreEvento = eventos[indexEvento].name;
+        nombreVideo = eventos[indexEvento].videos?.find(
+          (vid) => vid.id == credencial.video
+        )?.name;
+      }
+
+      return (
+        <ItemsBodyTabla
+          credencial={credencial}
+          evento={nombreEvento}
+          video={nombreVideo}
+        />
+      );
+    })
+  }
+</tbody>
