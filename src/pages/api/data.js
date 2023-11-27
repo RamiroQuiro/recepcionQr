@@ -119,7 +119,6 @@ export const GET = async () => {
   const jsonData = JSON.stringify(dataBase);
   await fs.writeFile(filePathData, jsonData);
 
-console.log(credenciales)
   return new Response(
     JSON.stringify({
       status: 200,

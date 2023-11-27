@@ -20,8 +20,8 @@ const eventos = await dataEventos?.eventos;
       );
 
       if (indexEvento == -1) {
-        nombreVideo = undefined;
-        nombreEvento = undefined;
+        nombreVideo = false;
+        nombreEvento = false;
       } else {
         nombreEvento = eventos[indexEvento].name;
         nombreVideo = eventos[indexEvento].videos?.find(

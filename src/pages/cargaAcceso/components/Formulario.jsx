@@ -68,7 +68,6 @@ export default function Form() {
     if (selectedEvent) {
       setVideos(selectedEvent.videos);
     }
-    console.log(eventos)
   }, [selectedEvent]);
 
 
