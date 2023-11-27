@@ -1,13 +1,13 @@
 ---
 
+import MainDasboard from "../../components/MainDasboard.astro";
 import Layout from "../../layouts/Layout.astro";
 import FormularioEventos from "./componets/FormularioEventos";
 
 ---
 
 <Layout title="Carga de Videos">
-   
-<main class=" min-h-screen w-full flex flex-col gap-10 items-center justify-start mt-20">
+<MainDasboard>
 <div class="md:w-1/2 md:h-1/2  bg-white/80  backdrop-blur-sm flex flex-col p-5 rounded-lg items-center justify-normal">
     <div class="text-center">
         <h2 class="mt-5 text-lg font-bold text-gray-700">
@@ -18,7 +18,7 @@ import FormularioEventos from "./componets/FormularioEventos";
 </div>
 
 
-</main>
+</MainDasboard>
 </Layout>
 
 

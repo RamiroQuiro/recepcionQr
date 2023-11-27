@@ -1,46 +1,53 @@
 ---
-const { credencial } = Astro.props;
+import BotonArchivarItems from "./BotonArchivarItems.astro";
+import BotonEliminarItems from "./BotonEliminarItems.astro";
+const { credencial,evento,video } = Astro.props;
 
 const uidCredencial = credencial.uid;
-
 
 ---
 
 <tr
   id={uidCredencial}
-  class="odd:bg-neutral-300/50 cursor-pointer hover:bg-zinc-400 hover:text-gray-50 duration-200"
+  class="odd:bg-neutral-300/50  border-b text-center cursor-pointer text-xs z-10 hover:bg-zinc-400 hover:text-gray-50 duration-200"
 >
-  <td class="whitespace-nowrap px-4 py-2 font-medium text-primary-text">
+  <td class="whitespace-nowrap px-2 py-2 font-medium text-primary-text">
     {credencial.nombreApellido}
   </td>
- 
-  <td class="whitespace-nowrap px-4 py-2 text-primary-text">
+
+  <td class="whitespace-nowrap px-2 py-2 text-primary-text">
     {credencial.invitados}
   </td>
-  <td class="whitespace-nowrap px-4 py-2 text-primary-text">
-    {credencial.evento}
+  <td class="whitespace-nowrap px-2 py-2 text-primary-text">
+    {evento == false ? "No Relacionado" : evento}
   </td>
-  <td class="whitespace-nowrap px-4 py-2 text-primary-text">
-    {credencial.video}
+  <td class="whitespace-nowrap px-2 py-2 text-primary-text">
+    {credencial.estado == false ? "No Relacionado" : video}
   </td>
   <td class="whitespace-nowrap text-primary-text">
     <p
-      class={credencial.activo == true
-        ? " bg-green-300/50 shadow-sm w-10/12  shadow-green-300 text-green-600 rounded-lg text-[10px] mx-auto text-center"
-        : " bg-red-300/50 shadow-sm w-10/12  shadow-red-300 text-red-600 rounded-lg text-xs mx-auto text-[10px] text-center"}
+      class={credencial.estado == true
+        ? " bg-green-300/50 shadow-sm w-8/12 py-1 shadow-green-300 text-green-600 rounded-lg text-xs mx-auto text-center"
+        : " bg-red-300/50 shadow-sm w-8/12 py-1  shadow-red-300 text-red-600 rounded-lg text-xs mx-auto  text-center"}
     >
-      {credencial.activo == true ? "activo" : "inactivo"}
+      {credencial.estado == true ? "activo" : "inactivo"}
     </p>
   </td>
-  <td class="whitespace-nowrap px-4 py-2 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase">
-    <buton class="text-red-500">❌eliminar</buton>
-    <buton class="text-yellow-500">✖️suspender</buton>
+  <td
+    class="whitespace-nowrap py-1 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 z-30 uppercase w-32"
+  >
+  <div class="flex md:flex-row flex-col items-center w-2/3">
+
+    <BotonArchivarItems/>
+    <BotonEliminarItems uidCredencial={uidCredencial}/>
+  </div>
+   
   </td>
 </tr>
-
+<!-- 
 <script define:vars={{ uidCredencial }}>
   const boton = document.getElementById(uidCredencial);
   boton.addEventListener("click", () => {
     window.location.href = `/credenciales/${uidCredencial}`;
   });
-</script>
+</script> -->

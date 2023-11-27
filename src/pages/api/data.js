@@ -9,15 +9,20 @@ function generarUID() {
     .padStart(4, "0");
 }
 
-const generateQR = async (name, dni, invitados, evento, mesa) => {
+const generateQR = async (name,dni,invitados,evento,video,email,celular,uid) => {
   try {
     // Crear un objeto con los datos
     const data = {
-      name: name,
-      dni: dni,
-      invitados: invitados,
-      evento: evento,
-      mesa: mesa,
+      name,
+      dni,
+      invitados,
+      evento,
+      video,
+      
+      email,
+      uid,
+      celular,
+      estado: true,
     };
 
     // Convertir el objeto a una cadena de texto en formato JSON
@@ -32,11 +37,6 @@ const generateQR = async (name, dni, invitados, evento, mesa) => {
     console.error(err);
   }
 };
-
-// Define la ruta del archivo
-const filePathData = path.join(process.cwd(), "public", "base", "base.json");
-// Lee el archivo y parsea el contenido a un array
-const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
 
 export const POST = async ({ request }) => {
   const data = await request.formData();
@@ -58,16 +58,16 @@ export const POST = async ({ request }) => {
       { status: 400 }
     );
   } else {
-
-    
-    const qrCodeGenerado = await generateQR(
-      name,
-      dni,
-      cantInvitados,
-      evento,
-      dni
+    // Define la ruta del archivo
+    const filePathData = path.join(
+      process.cwd(),
+      "public",
+      "base",
+      "base.json"
     );
-
+    // Lee el archivo y parsea el contenido a un array
+    const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
+    const qrCodeGenerado = await generateQR(name,dni,cantInvitados,evento,video,email,celular,uid);
 
     const newData = {
       uid: uid,
@@ -78,16 +78,15 @@ export const POST = async ({ request }) => {
       invitados: cantInvitados,
       evento,
       video,
-      QRCode:qrCodeGenerado
+      estado:true,
+      QRCode: qrCodeGenerado,
     };
 
     dataBase?.credenciales?.push(newData);
 
     const jsonData = JSON.stringify(dataBase);
-
     // Escribe el array actualizado de vuelta al archivo
     await fs.writeFile(filePathData, jsonData);
-
 
     return new Response(
       JSON.stringify({
@@ -101,7 +100,24 @@ export const POST = async ({ request }) => {
 };
 
 export const GET = async () => {
+  // Define la ruta del archivo
+  const filePathData = path.join(process.cwd(), "public", "base", "base.json");
+  // Lee el archivo y parsea el contenido a un array
+  const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
   const credenciales = dataBase.credenciales;
+  const eventosDatabase=dataBase.eventos;
+
+  // Para cada credencial, verificamos si el evento asociado existe en la base de datos de eventos
+  credenciales.forEach(credencial => {
+    const eventoExiste = eventosDatabase.some(evento => evento.uid === credencial.evento);
+    if (!eventoExiste) {
+      credencial.evento = false;
+    }
+  });
+
+  dataBase.credenciales = credenciales;
+  const jsonData = JSON.stringify(dataBase);
+  await fs.writeFile(filePathData, jsonData);
 
   return new Response(
     JSON.stringify({

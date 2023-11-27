@@ -22,7 +22,6 @@ export default function FormularioEventos() {
     formData.append('nombre', form.nombre);
     formData.append('foto', form.foto);
     formData.append('extencion',fileExtension)
-
     const response = await fetch('/api/eventos', {
       method: 'POST',
       body: formData,

@@ -11,7 +11,6 @@ export const POST = async ({ request }) => {
   const nombre = data.get("nombre");
   const foto = data.get("foto");
   const fileExtension=data.get("extencion")
-  console.log(fileExtension)
   const uid = generarUID();
   // Valida los datos - probablemente querrás hacer más que esto
   if (!nombre || !foto) {
