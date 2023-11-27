@@ -22,8 +22,7 @@ class AstroGreet extends HTMLElement {
 
 customElements.define('astro-greet', AstroGreet);
 const astroGreet = document.querySelector('astro-greet');
-const uidCliente=astroGreet.getMessage()
-
+const uidEvento=astroGreet.getMessage()
 
 // Función para obtener los medios conectados
 const obtenerMediosConectados = async () => {
@@ -87,63 +86,6 @@ cargarModulo()
   });
 
 
-  /**CODIGO MIO */
-// // Función para escanear el código QR
-// const scan = () => {
-//   // Crear un canvas y establecer su tamaño al tamaño del video
-//   const canvas = document.createElement("canvas");
-//   canvas.width = videoRef.videoWidth;
-//   canvas.height = videoRef.videoHeight;
-
-//   // Dibujar el video en el canvas
-//   const ctx = canvas.getContext("2d");
-//   ctx.drawImage(videoRef, 0, 0, canvas.width, canvas.height);
-
-//   // Obtener los datos de la imagen del canvas
-//   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-//   // Decodificar el código QR de los datos de la imagen
-//   const code = jsQR(imageData.data, imageData.width, imageData.height);
-
-//   // Si el código es válido y contiene datos
-//   if (code && code.data) {
-//     const hrefVideo = code.data;
-
-//     // Verificar si el hrefVideo existe en videosCargados
-//     if (!videosCargados.some((video) => video.path === hrefVideo)) {
-//       // Si el video no existe, mostrar un mensaje de error y volver a escanear
-//       const errorElement = document.createElement("p");
-//       errorElement.textContent = "El video no existe";
-//       errorElement.style.position="fixed"
-//       errorElement.style.top="20%"
-//       errorElement.style.left="30%"
-//       document.body.appendChild(errorElement);
-//       setTimeout(scan, 300); // Añadido un delay antes de volver a escanear
-//       return;
-//     }
-
-//     // Si el video existe, reproducirlo
-//     const contenedorVideo = document.getElementById("contenedorVideo");
-//     const videoQR = document.getElementById("videoRecepcion");
-//     videoQR.classList.add("aparecer");
-   
-//     videoQR.src = hrefVideo;
-//     videoQR.play();
-
-//     // Cuando el video termine, quitar la clase "videoActivo" y volver a escanear
-//     videoQR.onended = () => {
-//       videoQR.classList.remove("aparecer");
-    
-//       setTimeout(scan, 300); // Añadido un delay antes de volver a escanear
-//     };
-//   } else {
-//     // Si el código no es válido o no contiene datos, volver a escanear después de un delay
-//     setTimeout(scan, 300);
-//   }
-// };
-
-
-/**CODIGO CHAT CURSOR */
 
 // Antes de la función scan
 let scanning = true;
@@ -152,7 +94,6 @@ const maxIntentos = 800;
 // Función para escanear el código QR
 // Función para escanear el código QR
 const scan = async () => {
-  console.log(intentos)
   // if (!scanning || intentos >= maxIntentos) return;
   videEquivocado.classList.remove('videoError')
 
@@ -177,8 +118,8 @@ const scan = async () => {
       const token = code.data;
       const res = await fetch('http://localhost:4321/api/verify', {
         headers: {
-          'Authorization': 'Bearer ' + token
-        }
+          'Authorization': 'Bearer ' + token+'evento'+ uidEvento
+        },
       })
       .then(response => response.json())
       .then(data => console.log(data));

@@ -10,8 +10,11 @@ const getAuthToken = (authHeader) => {
   return null;
 };
 
+
 export const GET = async ({ request }) => {
   try {
+
+
     // Define la ruta del archivo
     const filePathData = path.join(process.cwd(),"public","base","base.json");
     // Lee el archivo y parsea el contenido a un array
@@ -28,23 +31,28 @@ export const GET = async ({ request }) => {
       );
     }
     const decodificacion = await verifyToken(token);
+    const eventos= dataBase.eventos
     const credencialEncontrada = dataBase?.credenciales.find((cred) => cred.uid == decodificacion.uid);
-    if (!credencialEncontrada) {
-      return new Response(
-        JSON.stringify({
-          status: 400,
-          message: "QR Invalido",
-        })
-      );
-    }
-    if (!credencialEncontrada.estado) {
-      return new Response(
-        JSON.stringify({
-          status: 500,
-          message: "QR ya Ingresado",
-        })
-      );  
-    }
+    // if (!credencialEncontrada) {
+    //   return new Response(
+    //     JSON.stringify({
+    //       status: 400,
+    //       message: "QR Invalido",
+    //     })
+    //   );
+    // }
+    // if (!credencialEncontrada.estado) {
+    //   return new Response(
+    //     JSON.stringify({
+    //       status: 500,
+    //       message: "QR ya Ingresado",
+    //     })
+    //   );  
+    // }
+
+    const isEvent=dataBase?.eventos?.some((evento)=>evento.uid==decodificacion.evento)
+    console.log(isEvent)
+    
     credencialEncontrada.estado = false;
     const jsonData = JSON.stringify(dataBase);
     // Escribe el array actualizado de vuelta al archivo
