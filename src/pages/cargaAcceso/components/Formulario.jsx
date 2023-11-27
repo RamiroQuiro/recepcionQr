@@ -7,8 +7,8 @@ export default function Form() {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [eventos, setEventos] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState({uid:undefined});
+  const [selectedVideo, setSelectedVideo] = useState(undefined);
   const [videos, setVideos] = useState([]);
   // funcion para cargar el fomulario
   async function submit(e) {

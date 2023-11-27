@@ -5,8 +5,8 @@ console.log(uidCredencial)
 ---
 
 <button
-  id={uidCredencial}
-  class="inline-flex items-center px-2.5 z-30 py-0.5 text-xs bg-red-600 hover:bg-red-700 text-white font-medium rounded-r-md"
+  id={`btnDelete${uidCredencial}`}
+  class="inline-flex items-center  px-2.5  py-0.5 text-xs bg-red-600 hover:bg-red-700 text-white font-medium rounded-r-md"
 >
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@ console.log(uidCredencial)
 
 
 <script define:vars={{uidCredencial}} is:inline>
-const btnEliminar=document.getElementById(uidCredencial)
+const btnEliminar=document.getElementById(`btnDelete${uidCredencial}`)
 
 
 async function eliminar(uidCredencials) {
