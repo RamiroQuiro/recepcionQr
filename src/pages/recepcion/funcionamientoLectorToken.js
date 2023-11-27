@@ -118,7 +118,7 @@ const scan = async () => {
       const token = code.data;
       const res = await fetch('http://localhost:4321/api/verify', {
         headers: {
-          'Authorization': 'Bearer ' + token+'evento'+ uidEvento
+          'Authorization': 'Bearer ' + token+' evento '+ uidEvento
         },
       })
       .then(response => response.json())

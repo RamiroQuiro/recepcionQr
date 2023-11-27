@@ -6,7 +6,13 @@ import fs from 'fs/promises'
 const getAuthToken = (authHeader) => {
   if (!authHeader) return null;
   const parts = authHeader.split(" ");
-  if (parts.length === 2 && parts[0] === "Bearer") return parts[1];
+  if (parts.length === 4 && parts[0] === "Bearer") return parts[1];
+  return null;
+};
+const getUidEvento = (authHeader) => {
+  if (!authHeader) return null;
+  const parts = authHeader.split(" ");
+  if (parts.length === 4) return parts[4];
   return null;
 };
 
@@ -22,6 +28,9 @@ export const GET = async ({ request }) => {
     // Obtén el encabezado de autorización
     const authHeader = request.headers.get("Authorization");
     const token = getAuthToken(authHeader);
+    const uidEvento =getUidEvento(authHeader);
+    console.log('uid evento',uidEvento)
+    console.log('token',token)
     if (!token) {
       return new Response(
         JSON.stringify({
@@ -33,26 +42,32 @@ export const GET = async ({ request }) => {
     const decodificacion = await verifyToken(token);
     const eventos= dataBase.eventos
     const credencialEncontrada = dataBase?.credenciales.find((cred) => cred.uid == decodificacion.uid);
-    // if (!credencialEncontrada) {
-    //   return new Response(
-    //     JSON.stringify({
-    //       status: 400,
-    //       message: "QR Invalido",
-    //     })
-    //   );
-    // }
-    // if (!credencialEncontrada.estado) {
-    //   return new Response(
-    //     JSON.stringify({
-    //       status: 500,
-    //       message: "QR ya Ingresado",
-    //     })
-    //   );  
-    // }
+    if (!credencialEncontrada) {
+      return new Response(
+        JSON.stringify({
+          status: 400,
+          message: "QR Invalido",
+        })
+      );
+    }
+    if (!credencialEncontrada.estado) {
+      return new Response(
+        JSON.stringify({
+          status: 500,
+          message: "QR ya Ingresado",
+        })
+      );  
+    }
 
-    const isEvent=dataBase?.eventos?.some((evento)=>evento.uid==decodificacion.evento)
-    console.log(isEvent)
-    
+  if (!credencialEncontrada.eveto===uidEvento) {
+    return new Response(
+      JSON.stringify({
+        status: 500,
+        message: "QR no corresponde a este evento",
+      })
+    );  
+      
+  }
     credencialEncontrada.estado = false;
     const jsonData = JSON.stringify(dataBase);
     // Escribe el array actualizado de vuelta al archivo
