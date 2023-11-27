@@ -1,4 +1,6 @@
 ---
+import BotonArchivarItems from "./BotonArchivarItems.astro";
+import BotonEliminarItems from "./BotonEliminarItems.astro";
 const { credencial,evento,video } = Astro.props;
 
 const uidCredencial = credencial.uid;
@@ -32,10 +34,11 @@ const uidCredencial = credencial.uid;
     </p>
   </td>
   <td
-    class="whitespace-nowrap px-4 py-2 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase"
+    class="whitespace-nowrap py-1 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase"
   >
-    <buton class="text-red-500">❌eliminar</buton>
-    <buton class="text-yellow-500">✖️suspender</buton>
+  <BotonArchivarItems/>
+  <BotonEliminarItems/>
+   
   </td>
 </tr>
 
