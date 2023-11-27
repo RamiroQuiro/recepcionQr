@@ -1,5 +1,6 @@
 ---
 import BotonArchivarItems from "./BotonArchivarItems.astro";
+import BotonEdtar from "./BotonEdtar.astro";
 import BotonEliminarItems from "./BotonEliminarItems.astro";
 const { credencial,evento,video } = Astro.props;
 
@@ -36,8 +37,9 @@ const uidCredencial = credencial.uid;
   <td
     class="whitespace-nowrap py-1 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1  uppercase "
   >
-  <div class="flex lg:flex-row flex-col items-center z-20 flex-shrink flex-wrap">
+  <div class="flex  items-center z-20 flex-shrink flex-wrap">
 
+    <BotonEdtar uidCredencial={uidCredencial}/>
     <BotonArchivarItems uidCredencial={uidCredencial} estado={credencial.estado}/>
     <BotonEliminarItems uidCredencial={uidCredencial}/>
   </div>
@@ -45,9 +47,4 @@ const uidCredencial = credencial.uid;
   </td>
 </tr>
 
-<script define:vars={{ uidCredencial }}>
-  const boton = document.getElementById(`bntCredencial${uidCredencial}`);
-  boton.addEventListener("click", () => {
-    window.location.href = `/credenciales/${uidCredencial}`;
-  });
-</script>
+
