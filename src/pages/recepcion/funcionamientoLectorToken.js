@@ -1,4 +1,5 @@
 import jsQR from "jsqr"; // Importamos la librería jsQR para leer códigos QR
+import isVideoOk from "./mandarVideo";
 let videoQR;
 let streamRef;
 let videoRef;
@@ -124,11 +125,13 @@ const scan = async () => {
       .then(response => response.json())
       .then(data => {
         console.log(data)
-
-        const isOk=data.status==200
+const {evento, video}=data.decodificacion
+        const isOk=data.status==200 || data.status==205
 
         if (isOk) {
           
+isVideoOk(evento, video)
+
         }
 
       });

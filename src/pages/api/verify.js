@@ -34,9 +34,10 @@ export const GET = async ({ request }) => {
 
     // Verifica el token
     const decodificacion = await verifyToken(token);
+
+
     // Busca la credencial en la base de datos
     const credencialEncontrada = dataBase?.credenciales.find((cred) => cred.uid == decodificacion.uid);
-
     // Verifica si la credencial existe
     if (!credencialEncontrada) {
       return new Response(
@@ -48,11 +49,12 @@ export const GET = async ({ request }) => {
     }
 
     // Verifica si el evento corresponde
-    if (credencialEncontrada.eveto !== uidEvento) {
+    if (credencialEncontrada.evento !== uidEvento) {
       return new Response(
         JSON.stringify({
           status: 500,
           message: "QR no corresponde a este evento",
+         
         })
       );  
     }
@@ -61,8 +63,14 @@ export const GET = async ({ request }) => {
     if (!credencialEncontrada.estado) {
       return new Response(
         JSON.stringify({
-          status: 500,
+          status: 205,
           message: "QR ya Ingresado",
+          decodificacion:{
+            evento:decodificacion.evento,
+            video:decodificacion.video,
+            nombreApellido:decodificacion.nombreApellido,
+            invitados:decodificacion.invitados
+          }
         })
       );  
     }
