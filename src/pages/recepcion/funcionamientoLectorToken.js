@@ -122,7 +122,17 @@ const scan = async () => {
         },
       })
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => {
+        console.log(data)
+
+        const isOk=data.status==200
+
+        if (isOk) {
+          
+        }
+
+      });
+
       await delay(300);
     intentos++;
     await scan(); // Volver a escanear

@@ -2,35 +2,27 @@ import { verifyToken } from "../../database/jsonwebtoken";
 import path from 'path'
 import fs from 'fs/promises'
 
-// Función para verificar el encabezado de autorización y extraer el token
+// Función para verificar el encabezado de autorización y extraer el token y exrtraer el uidEvento
 const getAuthToken = (authHeader) => {
   if (!authHeader) return null;
   const parts = authHeader.split(" ");
-  if (parts.length === 4 && parts[0] === "Bearer") return parts[1];
+  if (parts.length === 4 && parts[0] === "Bearer") return {token:parts[1],uidEvento:parts[3]};
   return null;
 };
-const getUidEvento = (authHeader) => {
-  if (!authHeader) return null;
-  const parts = authHeader.split(" ");
-  if (parts.length === 4) return parts[4];
-  return null;
-};
+
 
 
 export const GET = async ({ request }) => {
   try {
-
-
     // Define la ruta del archivo
     const filePathData = path.join(process.cwd(),"public","base","base.json");
     // Lee el archivo y parsea el contenido a un array
     const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
     // Obtén el encabezado de autorización
     const authHeader = request.headers.get("Authorization");
-    const token = getAuthToken(authHeader);
-    const uidEvento =getUidEvento(authHeader);
-    console.log('uid evento',uidEvento)
-    console.log('token',token)
+    const {token,uidEvento} = getAuthToken(authHeader);
+
+    // Verifica si el token existe
     if (!token) {
       return new Response(
         JSON.stringify({
@@ -39,9 +31,13 @@ export const GET = async ({ request }) => {
         })
       );
     }
+
+    // Verifica el token
     const decodificacion = await verifyToken(token);
-    const eventos= dataBase.eventos
+    // Busca la credencial en la base de datos
     const credencialEncontrada = dataBase?.credenciales.find((cred) => cred.uid == decodificacion.uid);
+
+    // Verifica si la credencial existe
     if (!credencialEncontrada) {
       return new Response(
         JSON.stringify({
@@ -50,6 +46,18 @@ export const GET = async ({ request }) => {
         })
       );
     }
+
+    // Verifica si el evento corresponde
+    if (credencialEncontrada.eveto !== uidEvento) {
+      return new Response(
+        JSON.stringify({
+          status: 500,
+          message: "QR no corresponde a este evento",
+        })
+      );  
+    }
+
+    // Verifica si la credencial ya fue usada
     if (!credencialEncontrada.estado) {
       return new Response(
         JSON.stringify({
@@ -59,19 +67,13 @@ export const GET = async ({ request }) => {
       );  
     }
 
-  if (!credencialEncontrada.eveto===uidEvento) {
-    return new Response(
-      JSON.stringify({
-        status: 500,
-        message: "QR no corresponde a este evento",
-      })
-    );  
-      
-  }
+    // Actualiza el estado de la credencial
     credencialEncontrada.estado = false;
+   
     const jsonData = JSON.stringify(dataBase);
     // Escribe el array actualizado de vuelta al archivo
     await fs.writeFile(filePathData, jsonData);
+    
     return new Response(
       JSON.stringify({
         status: 200,
