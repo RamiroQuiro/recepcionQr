@@ -1,0 +1,24 @@
+---
+import LayoutLector from '../../../layouts/LayoutLector.astro'
+import MainDashboard from '../../../components/MainDasboard.astro'
+import CardCheckIn from './componentes/CardCheckIn.astro';
+const {uidEvento}=Astro.params
+
+console.log(uidEvento)
+---
+
+
+<LayoutLector title="RecepcionQR">
+
+    <MainDashboard>
+<h1>Nombre De Evento</h1>
+
+<div class="p-10 flex mx-auto w-full items-center justify-center rounded shadow-sm bg-white min-h-[75vh]">
+ 
+    <ul class="flex flex-col bg-paleta1-secondary rounded-md  p-4 w-full">
+        <CardCheckIn/>
+       
+    </ul>
+</div>
+</MainDashboard>
+</LayoutLector>
