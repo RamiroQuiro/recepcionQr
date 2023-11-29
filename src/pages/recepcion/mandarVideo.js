@@ -1,4 +1,4 @@
-const isVideoOk=async (evento,video)=>{
+const isVideoOk=async (evento,video,delay,scan)=>{
 if(!video)return
 
  // Si el video existe, reproducirlo
