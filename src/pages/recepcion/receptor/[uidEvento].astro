@@ -4,7 +4,6 @@ import MainDashboard from '../../../components/MainDasboard.astro'
 import CardCheckIn from './componentes/CardCheckIn.astro';
 const {uidEvento}=Astro.params
 
-console.log(uidEvento)
 ---
 
 
@@ -24,12 +23,12 @@ console.log(uidEvento)
 </LayoutLector>
 
 
-<script is:inline>
-    // // Crear un nuevo objeto EventSource
-    // const source = new EventSource('http://localhost:4321/api/receptorInvitados');
+<script is:inline define:vars={{uidEvento}}>
+    // Crear un nuevo objeto EventSource
+    const source = new EventSource('http://localhost:8000/event-stream?uidEvento='+uidEvento);
   
-    // // Escuchar el evento 'message'
-    // source.onmessage = (event) => {
-    //   console.log(event.data);
-    // };
+    // Escuchar el evento 'message'
+    source.onmessage = (event) => {
+      console.log(event);
+    };
   </script>
