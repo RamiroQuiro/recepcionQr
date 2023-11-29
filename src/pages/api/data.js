@@ -9,7 +9,16 @@ function generarUID() {
     .padStart(4, "0");
 }
 
-const generateQR = async (name,dni,invitados,evento,video,email,celular,uid) => {
+const generateQR = async (
+  name,
+  dni,
+  invitados,
+  evento,
+  video,
+  email,
+  celular,
+  uid
+) => {
   try {
     // Crear un objeto con los datos
     const data = {
@@ -18,7 +27,6 @@ const generateQR = async (name,dni,invitados,evento,video,email,celular,uid) => 
       invitados,
       evento,
       video,
-      
       email,
       uid,
       celular,
@@ -67,7 +75,16 @@ export const POST = async ({ request }) => {
     );
     // Lee el archivo y parsea el contenido a un array
     const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
-    const qrCodeGenerado = await generateQR(name,dni,cantInvitados,evento,video,email,celular,uid);
+    const qrCodeGenerado = await generateQR(
+      name,
+      dni,
+      cantInvitados,
+      evento,
+      video,
+      email,
+      celular,
+      uid
+    );
 
     const newData = {
       uid: uid,
@@ -78,7 +95,7 @@ export const POST = async ({ request }) => {
       invitados: cantInvitados,
       evento,
       video,
-      estado:true,
+      estado: true,
       QRCode: qrCodeGenerado,
     };
 
@@ -105,11 +122,13 @@ export const GET = async () => {
   // Lee el archivo y parsea el contenido a un array
   const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
   const credenciales = dataBase.credenciales;
-  const eventosDatabase=dataBase.eventos;
+  const eventosDatabase = dataBase.eventos;
 
   // Para cada credencial, verificamos si el evento asociado existe en la base de datos de eventos
-  credenciales.forEach(credencial => {
-    const eventoExiste = eventosDatabase.some(evento => evento.uid === credencial.evento);
+  credenciales.forEach((credencial) => {
+    const eventoExiste = eventosDatabase.some(
+      (evento) => evento.uid === credencial.evento
+    );
     if (!eventoExiste) {
       credencial.evento = false;
     }
