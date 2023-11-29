@@ -15,11 +15,10 @@ http.createServer((req, res) => {
     // Obtener el uidEvento del cliente desde la URL
     const urlParams = new URLSearchParams(req.url.split('?')[1]);
     const uidEvento = urlParams.get('uidEvento');
-console.log(uidEvento)
     // Simular la lectura de la base de datos y enviar evento con el uidEvento al cliente
-    function simulateDatabaseRead() {
+    async function  simulateDatabaseRead() {
       // Aquí iría la lógica para leer la base de datos y obtener la información del evento
-      const eventData = obtenerInformacionDeLaBaseDeDatos(uidEvento); // Reemplaza esto con tu lógica real
+      const eventData =await obtenerInformacionDeLaBaseDeDatos(uidEvento); // Reemplaza esto con tu lógica real
 
       // Enviar la información al cliente a través del servidor SSE
       res.write(`data: ${JSON.stringify(eventData)}\n\n`);
