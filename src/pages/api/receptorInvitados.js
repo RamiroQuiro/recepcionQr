@@ -16,7 +16,7 @@ http.createServer((req, res) => {
     const urlParams = new URLSearchParams(req.url.split('?')[1]);
     const uidEvento = urlParams.get('uidEvento');
     // Simular la lectura de la base de datos y enviar evento con el uidEvento al cliente
-    async function  simulateDatabaseRead() {
+    async function  buscarBaseDeDatos() {
       // Aquí iría la lógica para leer la base de datos y obtener la información del evento
       const eventData =await obtenerInformacionDeLaBaseDeDatos(uidEvento); // Reemplaza esto con tu lógica real
 
@@ -25,7 +25,7 @@ http.createServer((req, res) => {
     }
 
     // Simular la lectura de la base de datos cada segundo
-    const intervalId = setInterval(simulateDatabaseRead, 10000);
+    const intervalId = setInterval(buscarBaseDeDatos, 5000);
 
     // Detener el intervalo cuando el cliente cierra la conexión
     req.on('close', () => {
