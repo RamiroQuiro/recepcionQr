@@ -40,6 +40,7 @@ export const POST = async ({ request }) => {
     nombre: nombre,
     path: `/upload/${uid}/portada.${fileExtension}`,
     videos: [],
+    checkIn:[]
   };
 
   // Define la ruta del archivo

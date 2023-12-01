@@ -130,7 +130,7 @@ const {evento, video}=data.decodificacion
 
         if (isOk) {
           
-isVideoOk(evento, video)
+isVideoOk(evento, video,delay,scan)
 
         }
 
