@@ -2,7 +2,12 @@
 import LayoutLector from '../../../layouts/LayoutLector.astro'
 import MainDashboard from '../../../components/MainDasboard.astro'
 import Listado from './componentes/Listado.jsx';
+import BotonBackHistory from '../../../components/BotonBackHistory.astro';
 const {uidEvento}=Astro.params
+const fetching = await fetch(`http://localhost:4321/api/${uidEvento}`);
+
+const data=await fetching.json()
+const evento=data.files
 
 ---
 
@@ -10,8 +15,17 @@ const {uidEvento}=Astro.params
 <LayoutLector title="RecepcionQR">
 
     <MainDashboard>
-<h1>Nombre De Evento</h1>
-
+        
+        <div class="w-full flex items-center bg-white p-1 justify-between ">
+<div class="relative">
+    
+    <BotonBackHistory clase="-top-5"/>
+</div>
+    <h1 class="bg-gradient-to-bl px-3 w-2/4 text-center py-1.5 shadow-lg  border-white  rounded-lg from-paleta1-primary to-paleta1-secondary text-2xl text-gray-700 capitalize font-bold ">{evento.nombre}</h1>
+<div class="text-gray-600">
+    scaner
+</div>
+</div>
 <Listado  uidEvento={uidEvento} client:load/>
 </MainDashboard>
 </LayoutLector>
