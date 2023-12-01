@@ -19,7 +19,7 @@ export default function Listado({uidEvento}) {
 
   return (
 
-      <div className="p-10 flex mx-auto w-full items-center justify-center rounded shadow-sm bg-white min-h-[75vh]">
+      <div className="p-10 flex mx-auto md:w-10/12 w-11/12 items-center justify-center rounded shadow-sm bg-white min-h-[75vh]">
         <ul className="flex flex-col bg-paleta1-secondary rounded-md  p-4 w-full">
        {checkIn?.map((credencial)=>(
         <CardCheckIn credencial={credencial} key={credencial.uid}/>

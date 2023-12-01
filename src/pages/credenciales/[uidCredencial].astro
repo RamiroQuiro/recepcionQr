@@ -5,9 +5,7 @@ import Layout from "../../layouts/Layout.astro";
 import Formulario from './components/Formulario.astro'
 import ContenedorFormulario from "../../components/ContenedorFormualrio.astro";
 const { uidCredencial } = Astro.params;
-const fetichingCredencial = await fetch(
-  `http://localhost:4321/api/credencial/${uidCredencial}`
-);
+const fetichingCredencial = await fetch(`http://localhost:4321/api/credencial/${uidCredencial}`);
 const fetichingEventos = await fetch(`http://localhost:4321/api/eventos`);
 const fetichingVideos = await fetch(`http://localhost:4321/api/listarvideos`);
 const data = await fetichingCredencial.json();

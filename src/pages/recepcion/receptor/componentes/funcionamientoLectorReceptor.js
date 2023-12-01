@@ -1,5 +1,4 @@
 import jsQR from "jsqr"; // Importamos la librería jsQR para leer códigos QR
-import isVideoOk from "./mandarVideo";
 let videoQR;
 let streamRef;
 let videoRef;
@@ -9,21 +8,8 @@ const videEquivocado = document.getElementById("videoEquivocado");
 
 /** Traer UID del cliente */
 
-class AstroGreet extends HTMLElement {
-  constructor() {
-    super();
-    // Lee el mensaje del atributo data.
-    this.message = this.dataset.uid;
-  }
 
-  getMessage() {
-    return this.message;
-  }
-}
 
-customElements.define("astro-greet", AstroGreet);
-const astroGreet = document.querySelector("astro-greet");
-const uidEvento = astroGreet.getMessage();
 
 // Función para obtener los medios conectados
 const obtenerMediosConectados = async () => {

@@ -24,7 +24,11 @@ const data = await objectEvento.json();
     <BotonReceptor/>
 
     <Portada  srcImage={data?.files?.path}/>
-   <Scaner/>
+    <div
+    class="w-[200px] absolute bottom-4  h-[200px] rounded-lg bg-white flex flex-col items-center justify-normal p-2 "
+    >
+   <Scaner/></div>
+   
   </main>
 </LayoutLector>
 

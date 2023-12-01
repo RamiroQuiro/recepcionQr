@@ -1,0 +1,35 @@
+---
+import SelectorCamara from "../../components/SelectorCamara.astro";
+const { uidCredencial } = Astro.props;
+---
+
+<div
+  class="w-full relative h-full rounded-lg flex flex-col items-center justify-normal"
+>
+  <h1
+    class="absolute top-3 z-30 opacity-70 bg-white px-3 rounded-lg text-sm font-bold text-gray-700"
+  >
+    Scanea tu codigo
+  </h1>
+  <!--  lector abajo -->
+  <div
+    class="h-full w-full absolute top-0 left-0 flex flex-col items-center justify-center"
+  >
+    <video
+      muted
+      autoplay
+      id="lectorQr"
+      class="w-auto camaraInactiva rounded h-full object-cover"></video>
+  </div>
+
+  <div class="absolute bottom-2 animate-bounce text-2xl">⬇️</div>
+  <div
+    id=""
+    class="flex-col items-center justify-center text-center absolute bottom-0 w-full font-thin text-sm   duration-700 gap-2"
+  >
+    <SelectorCamara name="camaraReceptor" id="selectorCamaraReceptor" />
+  </div>
+</div>
+
+<script define:vars={{ uidCredencial }} src="./funcionamientoLectorReceptor.js"
+></script>
