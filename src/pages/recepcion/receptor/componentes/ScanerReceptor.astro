@@ -1,11 +1,13 @@
 ---
 import SelectorCamara from "../../components/SelectorCamara.astro";
-const { uidCredencial } = Astro.props;
+const { uidEvento } = Astro.props;
+console.log('este es el uid',uidEvento)
 ---
 
 <div
   class="w-full relative h-full rounded-lg flex flex-col items-center justify-normal"
 >
+<astro-greet   data-uid={uidEvento}></astro-greet>
   <h1
     class="absolute top-3 z-30 opacity-70 bg-white px-3 rounded-lg text-sm font-bold text-gray-700"
   >
@@ -22,7 +24,7 @@ const { uidCredencial } = Astro.props;
       class="w-auto camaraInactiva rounded h-full object-cover"></video>
   </div>
 
-  <div class="absolute bottom-2 animate-bounce text-2xl">⬇️</div>
+  
   <div
     id=""
     class="flex-col items-center justify-center text-center absolute bottom-0 w-full font-thin text-sm   duration-700 gap-2"
@@ -31,5 +33,5 @@ const { uidCredencial } = Astro.props;
   </div>
 </div>
 
-<script define:vars={{ uidCredencial }} src="./funcionamientoLectorReceptor.js"
+<script  src="./funcionamientoLectorReceptor.js"
 ></script>
