@@ -95,7 +95,7 @@ const maxIntentos = 800;
 // Función para escanear el código QR
 const scan = async () => {
   // if (!scanning || intentos >= maxIntentos) return;
-  videEquivocado.classList.remove("qrEquivocado");
+  qrEquivocado.classList.remove("qrEquivocado");
 
   // Crear un canvas y establecer su tamaño al tamaño del video
   const canvas = document.createElement("canvas");
@@ -123,17 +123,21 @@ const scan = async () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          console.log(data)
           const { evento, video } = data.decodificacion;
           const isOk = data.status == 200 || data.status == 205;
 
           if (isOk) {
            modalLector.classList.remove('modal')
-          }else{
+          }
+          if (data.status==404 || data.status==500) {
+            
             qrEquivocado.style.visibility="visible"
             const mensajeError=document.getElementById('mensajeError');
-            mensajeError.textContent = data.message;
+            mensajeError.textContent(data.message)
           }
+          
+          
         });
 
       await delay(300);

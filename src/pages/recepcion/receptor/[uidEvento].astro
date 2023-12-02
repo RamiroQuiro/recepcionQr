@@ -31,6 +31,25 @@ const evento = data.files;
 </LayoutLector>
 
 
+
+<style>
+    .card-transition {
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: cardTransition 0.5s forwards;
+}
+
+@keyframes cardTransition {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
 <script>
     const btnLector=document.getElementById('btnLector')
 const modal=document.getElementById('modalLector')
