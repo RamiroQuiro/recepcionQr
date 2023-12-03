@@ -77,18 +77,18 @@ export const DELETE = async ({ request }) => {
 export const PUT = async ({ request }) => {
   try {
     const body = await request.json();  // Espera a que se resuelva la promesa
-    console.log(body)
     const { estado } = body;  // Ahora puedes desestructurar el cuerpo de la solicitud
+    console.log(body)
     const filePathData = path.join(process.cwd(), "public", "base", "base.json");
     const uidCredencial = request.url.split("/")[5];
     const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
-    const credenciales=dataBase.credenciales
+    const credenciales = dataBase.credenciales;
     
     const index = credenciales.findIndex((credencial) => credencial.uid == uidCredencial);
   
     if (index !== -1) {
       // Actualizar la credencial en la base de datos
-      credenciales[index].estado=!estado
+      credenciales[index].estado = !estado;
       const jsonData = JSON.stringify(dataBase);
       await fs.writeFile(filePathData, jsonData);
 

@@ -2,7 +2,7 @@
 import BotonBackHistory from "../../components/BotonBackHistory.astro";
 import MainDasboard from "../../components/MainDasboard.astro";
 import Layout from "../../layouts/Layout.astro";
-import Formulario from './components/Formulario.astro'
+import Formulario from './components/Formulario.jsx'
 import ContenedorFormulario from "../../components/ContenedorFormualrio.astro";
 const { uidCredencial } = Astro.params;
 const fetichingCredencial = await fetch(`http://localhost:4321/api/credencial/${uidCredencial}`);
@@ -26,7 +26,7 @@ const eventos = await dataEventos?.eventos;
       <div class="text-center">
         <h2 class="mt-5 text-lg font-bold text-gray-700">Carga Credencial</h2>
       </div>
-   <Formulario credencial={credencial} eventos={eventos} videos={videos}/>
+   <Formulario credencial={credencial} eventos={eventos} videos={videos} client:load/>
     </ContenedorFormulario>
   </MainDasboard>
 </Layout>
