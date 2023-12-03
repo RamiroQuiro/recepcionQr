@@ -1,11 +1,13 @@
 import {useState} from "react";
+import { showToast } from "../../toast";
+import { modalMensaje } from "../../modal";
 
 export default function Formulario({ credencial, eventos, videos }) {
 
 
     const [newData, setNewData] = useState(credencial)
 
-
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e) => {
         setNewData((newData) => ({
@@ -15,13 +17,15 @@ export default function Formulario({ credencial, eventos, videos }) {
     };
   const handleModificar = async (e, uidEvento) => {
     e.preventDefault();
-
+setIsLoading(true)
     try {
       const data = new FormData();
       data.append("nombreApellido", newData.nombreApellido);
       data.append("dni", newData.dni);
       data.append("email", newData.email);
       data.append("celular", newData.celular);
+      data.append("evento", newData.evento);
+      data.append("video", newData.video);
       data.append("invitados", newData.invitados);
       const fetiiching = await fetch(
         `http://localhost:4321/api/credencial/${credencial.uid}`,
@@ -35,7 +39,11 @@ export default function Formulario({ credencial, eventos, videos }) {
       );
 
       const dataRes = await fetiiching.json();
-      console.log(dataRes);
+    if (dataRes.status==200) {
+        setIsLoading(false)
+       modalMensaje('credencial modificada, QR regenerado')
+         
+    }
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
@@ -43,6 +51,8 @@ export default function Formulario({ credencial, eventos, videos }) {
     }
   };
   return (
+    <>
+
     <form className="flex flex-col items-center text-gray-700">
       <div className="border flex flex-col gap-3 items-center justify-between bg-white rounded-lg p-10 w-full my-5 text-sm">
         <label
@@ -127,7 +137,7 @@ export default function Formulario({ credencial, eventos, videos }) {
       <div className="border flex flex-col gap-3 items-center justify-between bg-white rounded-lg p-5 w-full my-5 text-sm">
         {/* selector de eventos */}
         <select
-          name="eventoUID"
+          name="evento"
           id="eventos"
           required
           onChange={handleChange}
@@ -175,20 +185,20 @@ export default function Formulario({ credencial, eventos, videos }) {
         </button>
       </div>
 
-      {newData?.QRCode && (
+      {credencial?.QRCode && (
         <div className="p-2 my-5 space-y-4 flex flex-col items-center">
           <p className="text-xs font-medium">
             Toca la imagen para descargar y usarla como quieras
           </p>
           <a
             className=" mx-auto cursor-pointer"
-            href={newData?.QRCode}
-            download={newData.nombreApellido}
+            href={credencial?.QRCode}
+            download={credencial.nombreApellido}
           >
             {" "}
             <img
               alt="qrCode"
-              src={newData?.QRCode}
+              src={credencial?.QRCode}
               width={100}
               height={100}
             />
@@ -196,5 +206,6 @@ export default function Formulario({ credencial, eventos, videos }) {
         </div>
       )}
     </form>
+    </>
   );
 }
