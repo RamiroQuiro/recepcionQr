@@ -78,7 +78,7 @@ export const PUT = async ({ request }) => {
   try {
     const body = await request.json();  // Espera a que se resuelva la promesa
     const { estado } = body;  // Ahora puedes desestructurar el cuerpo de la solicitud
-    console.log(body)
+
     const filePathData = path.join(process.cwd(), "public", "base", "base.json");
     const uidCredencial = request.url.split("/")[5];
     const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
@@ -87,8 +87,29 @@ export const PUT = async ({ request }) => {
     const index = credenciales.findIndex((credencial) => credencial.uid == uidCredencial);
   
     if (index !== -1) {
+
+
+
       // Actualizar la credencial en la base de datos
-      credenciales[index].estado = !estado;
+
+
+
+      // modificar solamente estado si en el body del endpoint exite el estado como variable
+      if(typeof estado === 'boolean'){
+       
+        credenciales[index].estado = !estado;
+        const jsonData = JSON.stringify(dataBase);
+        await fs.writeFile(filePathData, jsonData);
+        return new Response(
+          JSON.stringify({
+            status: 200,
+            message: "Credencial actualizada con éxito",
+          })
+        );
+      }
+      
+
+      credenciales[index] = {...credenciales[index], ...body};
       const jsonData = JSON.stringify(dataBase);
       await fs.writeFile(filePathData, jsonData);
 

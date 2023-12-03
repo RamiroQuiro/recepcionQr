@@ -22,7 +22,7 @@ export default function Formulario({ credencial, eventos, videos }) {
       data.append("dni", newData.dni);
       data.append("email", newData.email);
       data.append("celular", newData.celular);
-      data.append("cantInvitados", newData.cantInvitados);
+      data.append("invitados", newData.invitados);
       const fetiiching = await fetch(
         `http://localhost:4321/api/credencial/${credencial.uid}`,
         {
@@ -106,16 +106,16 @@ export default function Formulario({ credencial, eventos, videos }) {
           />
         </label>
         <label
-          htmlFor="cantInvitados"
+          htmlFor="invitados"
           className="border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"
         >
           <p>Cantidad de Invitados</p>
           <input
-            value={newData.cantInvitados}
+            value={newData.invitados}
             onChange={handleChange}
             type="number"
-            id="cantInvitados"
-            name="cantInvitados"
+            id="invitados"
+            name="invitados"
             required
             className="rounded-lg ring-0 border p-2"
           />
