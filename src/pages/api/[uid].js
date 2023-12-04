@@ -7,12 +7,14 @@ export const GET=async({request})=>{
    
     try {
         const data = JSON.parse(await fs.readFile(filePathData, 'utf8'));
+        const acreditaciones=data.credenciales.filter((credencial)=>credencial.evento===uid)
         const objectEvento=data.eventos.find(event=>event.uid==uid)
         
         return new Response(
           JSON.stringify({
             message: "¡Éxito!",
             files: objectEvento,
+            acreditaciones
           }),
           { status: 200 }
         );

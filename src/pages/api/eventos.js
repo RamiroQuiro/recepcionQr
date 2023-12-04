@@ -73,14 +73,14 @@ export const GET = async ({ request }) => {
 
   // Lee el archivo y parsea el contenido a un array
   const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
-
   let arrayEventos = dataBase.eventos?.map((element) => {
     return {
       name: element.nombre,
       uid: element.uid,
       portada:element.path,
       nVideos:element.videos.length,
-      videos:element.videos
+      videos:element.videos,
+      acreditaciones:dataBase.credenciales.filter((creden)=>creden.evento==element.uid)
     };
   });
   // Agrega los nuevos datos al array

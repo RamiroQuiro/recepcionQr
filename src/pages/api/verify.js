@@ -58,7 +58,7 @@ export const GET = async ({ request }) => {
     if (!credencialEncontrada) {
       return new Response(
         JSON.stringify({
-          status: 400,
+          status: 405,
           message: "QR Invalido",
         })
       );

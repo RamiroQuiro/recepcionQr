@@ -16,21 +16,38 @@ const { evento, videos } = Astro.props;
     <BotonEntrar uid={evento.uid} client:load />
   </div>
 
-  <h2 class="text-lg font-semibold capitalize rounded-lg z-">
+  <h2 class="text-lg font-semibold capitalize rounded-lg mb-5">
     {evento.name}
   </h2>
-  <div class="flex items-start text-left justify-around gap-5">
+
+  
+  <!-- numero de videos -->
+  <div class="flex items-start text-left justify-around ">
+    <div class="flex flex-col items-start gap-3 mb-3 justify-center">
+
     {
       evento.nVideos == 0 ? (
-        <p class="text-xs capitalize my-5 drop-shadow-[1px_1px_0px_#dd000050] bg-white/80 rounded px-1 py-0.5">
+        <p class="text-xs capitalize  drop-shadow-[1px_1px_0px_#dd000050] bg-white/80 rounded px-1 py-0.5">
           no tienes videos en este evento
         </p>
       ) : (
-        <p class="text-xs capitalize my-5  drop-shadow-[1px_1px_0px_#dd000050] bg-white/80 rounded px-1 py-0.5">
+        <p class="text-xs capitalize   drop-shadow-[1px_1px_0px_#dd000050] bg-white/80 rounded px-1 py-0.5">
           Tienes {evento.nVideos} video 🎞️ en este evento
         </p>
       )
     }
+      {
+        evento.acreditaciones.length == 0 ? (
+          <p class="text-xs capitalize  drop-shadow-[1px_1px_0px_#dd000050] bg-white/80 rounded px-1 py-0.5">
+            no tienes acreditaciones en este evento
+          </p>
+        ) : (
+          <p class="text-xs capitalize   drop-shadow-[1px_1px_0px_#dd000050] bg-white/80 rounded px-1 py-0.5">
+            Tienes {evento.acreditaciones.length} acreditaciones 👥 en este evento
+          </p>
+        )
+      }
+      </div>
     <img
       src={evento.portada}
       alt="portada"

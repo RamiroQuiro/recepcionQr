@@ -1,11 +1,12 @@
 import jsQR from "jsqr"; // Importamos la librería jsQR para leer códigos QR
-import isVideoOk from "./mandarVideo";
 let videoQR;
+let mandarVideo;
 let streamRef;
 let videoRef;
 let videosCargados;
-const selectorCamaras = document.getElementById("selectorCamara");
-const videEquivocado = document.getElementById("videoEquivocado");
+const selectorCamaras = document.getElementById("selectorCamaraReceptor");
+const modalLector=document.getElementById('modalLector')
+const qrEquivocado = document.getElementById("qrEquivocado");
 
 /** Traer UID del cliente */
 
@@ -17,6 +18,7 @@ class AstroGreet extends HTMLElement {
   }
 
   getMessage() {
+    console.log(this.message)
     return this.message;
   }
 }
@@ -24,7 +26,6 @@ class AstroGreet extends HTMLElement {
 customElements.define("astro-greet", AstroGreet);
 const astroGreet = document.querySelector("astro-greet");
 const uidEvento = astroGreet.getMessage();
-
 // Función para obtener los medios conectados
 const obtenerMediosConectados = async () => {
   try {
@@ -78,13 +79,13 @@ async function cargarModulo() {
   return await response.json();
 }
 
-cargarModulo()
-  .then((data) => {
-    videosCargados = data.data.flatMap((objeto) => objeto.videos);
-  })
-  .catch((e) => {
-    console.log("Hubo un error al cargar el módulo: " + e.message);
-  });
+// cargarModulo()
+//   .then((data) => {
+//     videosCargados = data.data.flatMap((objeto) => objeto.videos);
+//   })
+//   .catch((e) => {
+//     console.log("Hubo un error al cargar el módulo: " + e.message);
+//   });
 
 // Antes de la función scan
 let scanning = true;
@@ -94,7 +95,7 @@ const maxIntentos = 800;
 // Función para escanear el código QR
 const scan = async () => {
   // if (!scanning || intentos >= maxIntentos) return;
-  videEquivocado.classList.remove("videoError");
+  qrEquivocado.classList.remove("qrEquivocado");
 
   // Crear un canvas y establecer su tamaño al tamaño del video
   const canvas = document.createElement("canvas");
@@ -122,13 +123,21 @@ const scan = async () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          console.log(data)
           const { evento, video } = data.decodificacion;
           const isOk = data.status == 200 || data.status == 205;
 
           if (isOk) {
-            isVideoOk(evento, video, delay, scan);
+           modalLector.classList.remove('modal')
           }
+          if (data.status==404 || data.status==500) {
+            
+            qrEquivocado.style.visibility="visible"
+            const mensajeError=document.getElementById('mensajeError');
+            mensajeError.textContent(data.message)
+          }
+          
+          
         });
 
       await delay(300);

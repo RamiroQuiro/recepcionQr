@@ -14,17 +14,17 @@ if (Astro.request.method === "PUT") {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ estado: 'nuevoEstado' })  // Reemplazar 'nuevoEstado' con el nuevo estado deseado
+      body: JSON.stringify(data)  // Reemplazar 'nuevoEstado' con el nuevo estado deseado
     });
 
-    console.log(fetiiching.json())
+    const dataRes=await fetiiching.json()
+    console.log(dataRes)
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message);
     }
   }
 }
-
 ---
 
 <form
@@ -154,7 +154,9 @@ class="flex flex-col items-center text-gray-700">
           ))
       }
     </select>
-    <button>Enviar</button>
+    <button 
+    class="disabled:bg-gray-200 cursor-pointer  border flex items-center justify-center hover:bg-blue-400 duration-200 hover:ring-2 bg-blue-500 text-white font-medium rounded-lg p-2 text-center w-2/3 gap-2 text-sm"
+  >Modificar</button>
   </div>
 
   {

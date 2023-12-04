@@ -1,31 +1,59 @@
 ---
-import LayoutLector from '../../../layouts/LayoutLector.astro'
-import MainDashboard from '../../../components/MainDasboard.astro'
-import Listado from './componentes/Listado.jsx';
-import BotonBackHistory from '../../../components/BotonBackHistory.astro';
-const {uidEvento}=Astro.params
+import LayoutLector from "../../../layouts/LayoutLector.astro";
+import MainDashboard from "../../../components/MainDasboard.astro";
+import Listado from "./componentes/Listado.jsx";
+import BotonBackHistory from "../../../components/BotonBackHistory.astro";
+import ModalLector from './componentes/ModalLector.astro'
+const { uidEvento } = Astro.params;
 const fetching = await fetch(`http://localhost:4321/api/${uidEvento}`);
-
-const data=await fetching.json()
-const evento=data.files
-
+const data = await fetching.json();
+const evento = data.files;
 ---
 
-
 <LayoutLector title="RecepcionQR">
-
-    <MainDashboard>
-        
-        <div class="w-full flex items-center bg-white p-1 justify-between ">
-<div class="relative">
     
-    <BotonBackHistory clase="-top-5"/>
-</div>
-    <h1 class="bg-gradient-to-bl px-3 w-2/4 text-center py-1.5 shadow-lg  border-white  rounded-lg from-paleta1-primary to-paleta1-secondary text-2xl text-gray-700 capitalize font-bold ">{evento.nombre}</h1>
-<div class="text-gray-600">
-    scaner
-</div>
-</div>
-<Listado  uidEvento={uidEvento} client:load/>
-</MainDashboard>
+  <MainDashboard>
+    <div class="md:w-10/12 rounded flex items-center bg-white px-1 py-2 justify-between gap-5">
+      <div class="relative">
+        <BotonBackHistory clase="-top-5" />
+      </div>
+      <h2 class=" text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r to-fuchsia-500 from-pink-800 drop-shadow-[1px_1px_.5px_#1C212850]">
+        {evento?.nombre}
+      </h1>
+      <div class="text-gray-600">
+        <button id="btnLector">🚀</button>
+      </div>
+    </div>
+    <Listado uidEvento={uidEvento} client:load />
+    
+  </MainDashboard>
+<ModalLector uidEvento={uidEvento}/>
 </LayoutLector>
+
+
+
+<style>
+    .card-transition {
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: cardTransition 0.5s forwards;
+}
+
+@keyframes cardTransition {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+<script>
+    const btnLector=document.getElementById('btnLector')
+const modal=document.getElementById('modalLector')
+    btnLector.addEventListener('click',()=>{
+modal.classList.add('modal')
+    })
+</script>

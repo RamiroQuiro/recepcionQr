@@ -2,20 +2,20 @@
 ---
 
 <div
-class="w-[200px] absolute bottom-4 h-[200px] rounded-lg bg-white flex flex-col items-center justify-normal p-2 "
+class="w-full relative  h-full rounded-lg flex flex-col items-center justify-normal  "
 >
 <h1
-  class="absolute top-3 bg-white px-3 rounded-lg text-sm font-bold text-gray-700"
+  class="absolute top-3 z-30 opacity-70 bg-white px-3 rounded-lg text-sm font-bold text-gray-700"
 >
   Scanea tu codigo
 </h1>
 <!--  lector abajo -->
-<div class="h-full w-full flex flex-col items-center justify-center ">
+<div class="h-full w-full absolute top-0 left-0  flex flex-col items-center justify-center ">
   <video
     muted
     autoplay
     id="lectorQr"
-    class="w-auto camaraInactiva h-full object-cover"></video>
+    class="w-auto camaraInactiva  rounded h-full object-cover"></video>
 </div>
 
 <div class="absolute bottom-2 animate-bounce text-2xl">⬇️</div>
