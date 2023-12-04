@@ -96,7 +96,7 @@ export const GET = async ({ request }) => {
       uid: generarUID(),
       nombreApellido: decodificacion.name,
       uidInvitado: decodificacion.uid,
-      hora: new Date,
+      hora: new Date().toLocaleTimeString(),
       invitados: decodificacion.invitados
     });
 
