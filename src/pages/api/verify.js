@@ -32,7 +32,7 @@ export const GET = async ({ request }) => {
     // Obtén el encabezado de autorización
     const authHeader = request.headers.get("Authorization");
     const { token, uidEvento } = getAuthToken(authHeader);
-
+console.log('endpoint -> otken:',token, '    uidEvento->',uidEvento)
     // Verifica si el token existe
     if (!token) {
       return new Response(

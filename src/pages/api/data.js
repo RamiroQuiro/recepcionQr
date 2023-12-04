@@ -9,6 +9,17 @@ function generarUID() {
     .padStart(4, "0");
 }
 
+const options = {
+  errorCorrectionLevel: 'H',
+  type: 'image/jpeg',
+  rendererOpts: {
+    quality: 0.8
+  },
+  margin: 2,
+  color: {
+    dark: '#ff0000ff'
+  }
+};
 const generateQR = async (
   name,
   dni,
@@ -39,7 +50,7 @@ const generateQR = async (
     const dataString = generateToken(data);
 
     // Generar el código QR
-    const qr = await QRCode.toDataURL(dataString);
+    const qr = await QRCode.toDataURL(dataString,options);
     return qr;
   } catch (err) {
     console.error(err);
