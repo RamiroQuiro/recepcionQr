@@ -157,7 +157,7 @@ setIsLoading(true)
         </select>
         {/* selector de videos segun evento correspondiente */}
         <select
-          name="idVideos"
+          name="video"
           id="idVideos"
           required
           onChange={handleChange}
