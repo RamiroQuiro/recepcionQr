@@ -12,6 +12,10 @@ const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
 const data = await objectEvento.json();
 const evento = data.files;
 const acreditaciones = data.acreditaciones;
+
+
+
+
 ---
 
 <Layout title={evento?.nombre}>
@@ -30,12 +34,17 @@ const acreditaciones = data.acreditaciones;
       <StatDanger uidEvento={uid} client:load />
 
       <!-- stat de videos -->
-      <StatVideos evento={evento} />
+      <StatVideos evento={evento}  />
       <!-- stat de credenciales -->
-      <StatCredenciales acreditaciones={acreditaciones} />
+      <StatCredenciales evento={evento} acreditaciones={acreditaciones} />
     </div>
+<div class="w-10/12 flex flex-col items-stretch justify-normal">
 
-    <slot />
+  <slot >
+
+
+  </slot>
+</div>
   </MainDasboard>
 </Layout>
 

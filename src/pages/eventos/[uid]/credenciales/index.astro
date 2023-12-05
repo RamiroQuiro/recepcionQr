@@ -1,0 +1,17 @@
+---
+
+import LayoutEvento from "../../layout/LayoutEvento.astro";
+const { uid } = Astro.params;
+import CardVideos from "../../components/CardVideos.astro";
+
+const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
+const data = await objectEvento.json();
+const evento = data.files;
+const acreditaciones=data.acreditaciones
+
+
+---
+
+<LayoutEvento >
+ 
+</LayoutEvento>

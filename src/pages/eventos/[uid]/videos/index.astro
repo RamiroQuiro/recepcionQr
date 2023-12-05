@@ -1,12 +1,36 @@
 ---
-import MainDasboard from "../../../../components/MainDasboard.astro";
-import Layout from "../../../../layouts/Layout.astro";
+
+import BotonModificarPortada from "../../components/BotonModificarPortada";
 import LayoutEvento from "../../layout/LayoutEvento.astro";
-const {uidEvento}=Astro.params
+const { uid } = Astro.params;
+import CardVideos from "../../components/CardVideos.astro";
+
+const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
+const data = await objectEvento.json();
+const evento = data.files;
+const acreditaciones=data.acreditaciones
+
 
 ---
 
-<LayoutEvento>
-aui van a ir los videos
-
+<LayoutEvento >
+    {
+        evento?.videos?.length > 0 ? (
+          <div class="flex items-center flex-wrap justify-evenly w-full gap-5 ">
+            
+            {evento.videos?.map((video) => (
+              <CardVideos video={video} uidEvento={evento?.uid} />
+            ))}
+          </div>
+        ) : (
+          <div class="text-left">
+          
+            <h2 class="mt-5 text-3xl font-bold text-gray-700">Sube un Video!</h2>
+            <p class="mt-2 text-sm text-gray-900 font-medium">
+              No hay videos que mostrar, para realizar una carga, dirigete a
+              cargar Videos
+            </p>
+          </div>
+        )
+      }
 </LayoutEvento>
