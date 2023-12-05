@@ -11,14 +11,21 @@ const generateToken = (data) => {
 
 const verifyToken = async (token) => {
   try {
-    // Verifica el token
     const data = await jwt.verify(token, secretKey);
     return data;
   } catch (err) {
-    console.error(err);
+    if (err instanceof jwt.TokenExpiredError) {
+      console.error("Token expirado");
+      // Aquí puedes manejar el error de token expirado
+    } else if (err instanceof jwt.JsonWebTokenError) {
+      console.error("Error en el token");
+      // Aquí puedes manejar otros errores de token
+    } else {
+      console.error(err);
+      // Aquí puedes manejar cualquier otro error
+    }
     return null;
   }
 };
-
 
 export {generateToken,verifyToken}

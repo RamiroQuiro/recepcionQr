@@ -125,4 +125,20 @@ export const PUT = async ({ request }) => {
       })
     );
   }
+  if(accion=="resetInvitaciones"){
+    credenciales.forEach(credencial => {
+      if (credencial.evento==uidEvento){
+        credencial.evento = 0;
+      }
+    });
+    const jsonData = JSON.stringify({ credenciales, eventos });
+    // Escribe el array actualizado de vuelta al archivo
+    await fs.writeFile(filePathData, jsonData);
+    return new Response(
+      JSON.stringify({
+        status: 200,
+        message: "invitaciones vaciadas exitosamente",
+      })
+    );
+  }
 };
