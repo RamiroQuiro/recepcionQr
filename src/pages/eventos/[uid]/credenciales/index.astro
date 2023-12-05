@@ -1,8 +1,8 @@
 ---
 
 import LayoutEvento from "../../layout/LayoutEvento.astro";
+import Tabla from '../../../credenciales/components/tabla/TablaCredenciales.astro'
 const { uid } = Astro.params;
-import CardVideos from "../../components/CardVideos.astro";
 
 const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
 const data = await objectEvento.json();
@@ -13,5 +13,7 @@ const acreditaciones=data.acreditaciones
 ---
 
 <LayoutEvento >
- 
+ <Tabla/>
+
+
 </LayoutEvento>

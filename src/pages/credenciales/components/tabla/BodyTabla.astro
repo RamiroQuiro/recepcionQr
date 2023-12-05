@@ -1,11 +1,21 @@
 ---
 import ItemsBodyTabla from "./ItemsBodyTabla.astro";
 const fetching = await fetch("http://localhost:4321/api/data");
+const {uid}=Astro.params
 const dataCredenciales = await fetching.json();
-const credenciales = dataCredenciales.credenciales;
+const credenciales = dataCredenciales.credenciales.filter((credencial)=>{
+if(!uid){
+  return credencial
+}
+ return credencial.evento==uid
+
+})
 const fetichingEventos = await fetch(`http://localhost:4321/api/eventos`);
 const dataEventos = await fetichingEventos.json();
 const eventos = await dataEventos?.eventos;
+
+
+
 ---
 
 <tbody class="divide-y divide-gray-200 my-3 text-neutral-800 w-full">
