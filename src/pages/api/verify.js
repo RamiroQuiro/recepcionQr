@@ -32,7 +32,6 @@ export const GET = async ({ request }) => {
     // Obtén el encabezado de autorización
     const authHeader = request.headers.get("Authorization");
     const { token, uidEvento } = getAuthToken(authHeader);
-console.log('endpoint -> otken:',token, '    uidEvento->',uidEvento)
     // Verifica si el token existe
     if (!token) {
       return new Response(
@@ -92,9 +91,10 @@ console.log('endpoint -> otken:',token, '    uidEvento->',uidEvento)
 
     // Actualiza el estado de la credencial
     credencialEncontrada.estado = false;
+
     eventoCorrespontiente.checkIn.push({
       uid: generarUID(),
-      nombreApellido: decodificacion.name,
+      nombreApellido: decodificacion.nombreApellido,
       uidInvitado: decodificacion.uid,
       hora: new Date().toLocaleTimeString(),
       invitados: decodificacion.invitados

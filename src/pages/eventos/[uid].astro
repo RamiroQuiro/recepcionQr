@@ -3,6 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import BotonModificarPortada from "./components/BotonModificarPortada";
 const { uid } = Astro.params;
 import CardVideos from "./components/CardVideos.astro";
+import LimpiarAsistencia from "./components/LimpiarAsistencia";
 import StatCredenciales from "./components/StatCredenciales.astro";
 import StatVideos from "./components/StatVideos.astro";
 const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
@@ -27,7 +28,7 @@ const acreditaciones=data.acreditaciones
       </h1>
       
     </div>
-
+<LimpiarAsistencia uidEvento={uid} client:load/>
     <!-- stat de videos -->
    <StatVideos evento={evento}/>
     <!-- stat de credenciales -->

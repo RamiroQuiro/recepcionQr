@@ -19,7 +19,7 @@ const evento = data.files;
         <BotonBackHistory clase="-top-5" />
       </div>
       <h2
-        class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r to-fuchsia-500 from-pink-800 drop-shadow-[1px_1px_.5px_#1C212850]"
+        class="text-3xl font-thin text-transparent bg-clip-text bg-gradient-to-r to-yellow-300 from-amber-700 drop-shadow-[1px_1px_.5px_#00000050]"
       >
         {evento?.nombre}
       </h2>
@@ -43,61 +43,57 @@ const evento = data.files;
         </button>
       </div>
     </div>
-    <input type="text" name="lectorQr" id="lectorQr" class="text-gray-800" />
     <Listado uidEvento={uidEvento} client:load />
   </MainDashboard>
-  <!-- <ModalLector uidEvento={uidEvento} /> -->
+  <ModalLector uidEvento={uidEvento} />
 </LayoutLector>
 
-<script define:vars={{uidEvento}}  >
-// Declara 'code' fuera de la función del evento
-let token = "";
-console.log('este es el uidEvento ->',uidEvento)
-window.addEventListener("keydown", async function (event) {
-
-  // Asegúrate de que el evento no sea una tecla especial (por ejemplo, shift, ctrl, alt, etc.)
-  if (event.key.length === 1) {
-    // Agrega la tecla presionada al valor de entrada
-    token += event.key;
-   
-  }
-
-  // Si se presiona la tecla Enter, asume que el escaneo del código de barras ha terminado
-  if (event.key === "Enter") {
-    try {
-      const res = await fetch("http://localhost:4321/api/verify", {
-        headers: {
-          Authorization: "Bearer " + token + " evento " + uidEvento,
-        },
-      });
-
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-
-      const data = await res.json();
-      console.log(data);
-      const { evento, video } = data.decodificacion;
-      const isOk = data.status == 200 || data.status == 205;
-
-      if (isOk) {
-        modalLector.classList.remove("modal");
-      }
-      if (data.status == 404 || data.status == 500) {
-        qrEquivocado.style.visibility = "visible";
-        const mensajeError = document.getElementById("mensajeError");
-        mensajeError.textContent = data.message;
-      }
-    } catch (error) {
-      console.error(error);
+<!-- <script define:vars={{ uidEvento }}>
+  // Declara 'code' fuera de la función del evento
+  let token = "";
+  console.log("este es el uidEvento ->", uidEvento);
+  window.addEventListener("keydown", async function (event) {
+    // Asegúrate de que el evento no sea una tecla especial (por ejemplo, shift, ctrl, alt, etc.)
+    if (event.key.length === 1) {
+      // Agrega la tecla presionada al valor de entrada
+      token += event.key;
     }
 
-    // Limpia el valor de 'code' para el próximo escaneo
-    code = "";
-  }
-});
+    // Si se presiona la tecla Enter, asume que el escaneo del código de barras ha terminado
+    if (event.key === "Enter") {
+      try {
+        const res = await fetch("http://localhost:4321/api/verify", {
+          headers: {
+            Authorization: "Bearer " + token + " evento " + uidEvento,
+          },
+        });
 
-</script>
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        console.log(data);
+        const { evento, video } = data.decodificacion;
+        const isOk = data.status == 200 || data.status == 205;
+
+        if (isOk) {
+          modalLector.classList.remove("modal");
+        }
+        if (data.status == 404 || data.status == 500) {
+          qrEquivocado.style.visibility = "visible";
+          const mensajeError = document.getElementById("mensajeError");
+          mensajeError.textContent = data.message;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+      // Limpia el valor de 'code' para el próximo escaneo
+      code = "";
+    }
+  });
+</script> -->
 
 <style>
   .card-transition {
@@ -117,3 +113,10 @@ window.addEventListener("keydown", async function (event) {
     }
   }
 </style>
+<script>
+  const btnLector = document.getElementById("btnLector");
+  const modal = document.getElementById("modalLector");
+  btnLector.addEventListener("click", () => {
+    modal.classList.add("modal");
+  });
+</script>

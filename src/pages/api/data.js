@@ -16,9 +16,7 @@ const options = {
     quality: 0.8
   },
   margin: 2,
-  color: {
-    dark: '#ff0000ff'
-  }
+ 
 };
 const generateQR = async (
   name,
