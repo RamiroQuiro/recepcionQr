@@ -1,42 +1,18 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import LayoutEvento from './layout/LayoutEvento.astro'
 import BotonModificarPortada from "./components/BotonModificarPortada";
 const { uid } = Astro.params;
 import CardVideos from "./components/CardVideos.astro";
-import LimpiarAsistencia from "./components/LimpiarAsistencia";
-import StatCredenciales from "./components/StatCredenciales.astro";
-import StatDanger from "./components/StatDanger.jsx";
-import StatVideos from "./components/StatVideos.astro";
+
 const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
 const data = await objectEvento.json();
 const evento = data.files;
 const acreditaciones=data.acreditaciones
+
+
 ---
 
-<Layout title={evento.nombre}>
-  <main
-    class="min-h-screen w-10/12 container flex flex-col pt-10 items-start justify-normal"
-  >
-  <div class="flex w-full items-center justify-between gap-5">
-
-    <div class="flex items-center justify-start md:w-1/3 w-full gap-10">
-      <a
-      href="/"
-      class="text-2xl rounded-full bg-paleta1-primary/80  px-2 h-10 flex items-center justify-center border border-gray-700/50 hover:-translate-x-1 duration-300 hover:scale-105 active:scale-90 shadow-lg text-gray-700"
-      >←</a>
-      <h1 class="text-xl font-thin capitalize text-gray-700 my-10">
-        {evento?.nombre}
-      </h1>
-      
-    </div>
-    <StatDanger uidEvento={uid} client:load/>
-
-    <!-- stat de videos -->
-   <StatVideos evento={evento}/>
-    <!-- stat de credenciales -->
-   <StatCredenciales acreditaciones={acreditaciones}/>
-  </div>
-
+<LayoutEvento>
     {
       evento?.videos?.length > 0 ? (
         <div class="flex items-center flex-wrap justify-evenly w-full gap-5 ">
@@ -73,5 +49,4 @@ const acreditaciones=data.acreditaciones
       )
     }
   </main>
-</Layout>
-./components/StatDanger.jsx
+</LayoutEvento>
