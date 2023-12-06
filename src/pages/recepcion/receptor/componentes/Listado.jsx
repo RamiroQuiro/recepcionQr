@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import CardCheckIn from "./CardCheckIn";
 
-export default function Listado({uidEvento}) {
+export default function Listado({uidEvento,eventoName}) {
 
 
   const [checkIn, setCheckIn] = useState([]);
@@ -22,7 +22,7 @@ export default function Listado({uidEvento}) {
       <div className="p-10 flex mx-auto md:w-10/12 w-11/12 items-stretch justify-center rounded shadow-sm bg-white min-h-[75vh]">
         <ul className="flex flex-col bg-paleta1-secondary rounded-md  p-4 w-full">
        {checkIn?.map((credencial)=>(
-        <CardCheckIn credencial={credencial} key={credencial.uid}/>
+        <CardCheckIn credencial={credencial} key={credencial.uid} eventoName={eventoName}/>
        ))}
         </ul>
       </div>

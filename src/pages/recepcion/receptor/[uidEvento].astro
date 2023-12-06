@@ -16,7 +16,7 @@ const evento = data.files;
       class="md:w-10/12 rounded flex items-center bg-white px-1 py-2 justify-between gap-5"
     >
       <div class="relative">
-        <BotonBackHistory clase="-top-5" />
+        <BotonBackHistory href="/" clase="-top-5" />
       </div>
       <h2
         class="text-3xl font-thin text-transparent bg-clip-text bg-gradient-to-r to-yellow-300 from-amber-700 drop-shadow-[1px_1px_.5px_#00000050]"
@@ -43,7 +43,7 @@ const evento = data.files;
         </button>
       </div>
     </div>
-    <Listado uidEvento={uidEvento} client:load />
+    <Listado uidEvento={uidEvento} eventoName={evento?.nombre} client:load />
   </MainDashboard>
   <ModalLector uidEvento={uidEvento} />
 </LayoutLector>

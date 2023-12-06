@@ -125,4 +125,3 @@ export const GET = async ({ request }) => {
     console.error(error);  // Maneja cualquier error
   }
 };
-```

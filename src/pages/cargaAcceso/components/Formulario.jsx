@@ -168,6 +168,8 @@ export default function Form() {
               id="cantInvitados"
               name="cantInvitados"
               required
+              defaultValue={1}
+              min={1}
               className="rounded-lg ring-0 border p-2"
             />
           </label>
