@@ -1,9 +1,12 @@
 ---
+import ListadoCredencialesCheckIn from './components/ListadoCredencialesCheckIn'
 import LayoutEvento from './layout/LayoutEvento.astro'
-
+const {uid}=Astro.props
 ---
 
 <LayoutEvento>
 
-  
+  <div>
+    <ListadoCredencialesCheckIn client:load uid={uid}/>
+  </div>
 </LayoutEvento>

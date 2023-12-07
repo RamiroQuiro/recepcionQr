@@ -2,12 +2,8 @@
 import LayoutEvento from "../../layout/LayoutEvento.astro";
 import Tabla from "../../../credenciales/components/tabla/TablaCredenciales.astro";
 import BotonCargaCredencial from "../../../../components/BotonCargaCredencial.astro";
-const { uid } = Astro.params;
 
-const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
-const data = await objectEvento.json();
-const evento = data.files;
-const acreditaciones = data.acreditaciones;
+
 ---
 
 <LayoutEvento>
