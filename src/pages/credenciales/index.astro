@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import TablaCredenciales from "./components/tabla/TablaCredenciales.astro";
 import MainDashboard from '../../components/MainDasboard.astro'
+import BotonCargaCredencial from "../../components/BotonCargaCredencial.astro";
 ---
 
 <Layout title="Credenciales">
@@ -11,7 +12,7 @@ import MainDashboard from '../../components/MainDasboard.astro'
     <div
       class="md:w-11/12 md:min-h-[50vh] relative bg-white/80 backdrop-blur-sm flex flex-col p-5 rounded-lg items-center justify-normal"
     ><div class="absolute top-5 right-5 + hover:scale-105 active:scale-90 duration-300 rounded-full">
-        <a href="/cargaAcceso" class="text-2xl text-gray-800 px-2">+</a>
+     <BotonCargaCredencial/>
       </div>
       <div class="text-center my-5">
         <h2 class="mt-5 text-lg font-bold text-gray-700">Credenciales</h2>

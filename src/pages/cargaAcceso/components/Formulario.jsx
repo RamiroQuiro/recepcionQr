@@ -95,7 +95,7 @@ export default function Form() {
               <div></div>
             </div>
             <p className="mx-auto animate-pulse text-xs font-medium text-green-500">
-              espera, estamos cargando tu video ⌛
+              espera, estamos cargando tu credencial ⌛
             </p>
           </div>
         </div>

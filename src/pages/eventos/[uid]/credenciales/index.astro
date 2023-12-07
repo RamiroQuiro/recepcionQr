@@ -1,23 +1,21 @@
 ---
-
 import LayoutEvento from "../../layout/LayoutEvento.astro";
-import Tabla from '../../../credenciales/components/tabla/TablaCredenciales.astro'
+import Tabla from "../../../credenciales/components/tabla/TablaCredenciales.astro";
+import BotonCargaCredencial from "../../../../components/BotonCargaCredencial.astro";
 const { uid } = Astro.params;
 
 const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
 const data = await objectEvento.json();
 const evento = data.files;
-const acreditaciones=data.acreditaciones
-
-
+const acreditaciones = data.acreditaciones;
 ---
 
-<LayoutEvento >
-
-    <div class="bg-white p-1 rounded-lg">
-
-        <Tabla/>
-    </div>
-
-
+<LayoutEvento>
+    
+    <div class="bg-white p-1 b border-b border-b-orange-500 rounded-lg relative pt-16">
+      <div class="w-10 top-2 absolute right-2 z-10">
+        <BotonCargaCredencial />
+      </div>
+    <Tabla />
+  </div>
 </LayoutEvento>
