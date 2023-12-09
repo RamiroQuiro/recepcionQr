@@ -12,9 +12,10 @@ const handleResetAsistencia = async (uidEvento) => {
         })
     });
     const respuesta=await res.json()
-    console.log(respuesta.status)
+
     if (respuesta.status === 200) {
         showToast('CheckIn Limpio');
+        window.location.reload();
     }
 }
   return (

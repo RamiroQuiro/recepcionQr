@@ -39,6 +39,9 @@ export default function ItemsBodyTabla({credencial}) {
                 {credencial.activo == true ? "activo" : "inactivo"}
               </p>
             </td>
+            <td className="whitespace-nowrap  text-primary-text">
+              dsd
+            </td>
           </tr>
   )
 }

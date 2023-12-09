@@ -32,13 +32,18 @@ const cabeceras = [
     id: 6,
     name: "accion",
   },
+  {
+    key: 7,
+    id: 7,
+    name: "QR",
+  },
 ];
 ---
 
 <thead
   class="text-left ltr:text-left rtl:text-right bg-zinc-600 rounded-lg py-2 sticky top-0 left-0"
 >
-  <tr class="px-2 ">
+  <tr class="px-1 ">
     {
       cabeceras?.map((item, i) => (
         <ItemCabeceraTabla key={item.key} id={item.id} label={item.name} />

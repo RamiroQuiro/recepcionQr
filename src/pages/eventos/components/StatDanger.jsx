@@ -6,7 +6,7 @@ export default function StatDanger({ uidEvento }) {
 const [isHabilitado, setIsHabilitado] = useState(true)
 
 const handleHabilitar=(e)=>{
-  console.log(e.target.checked);
+
   setIsHabilitado((state)=>(e.target.checked));
 }
 

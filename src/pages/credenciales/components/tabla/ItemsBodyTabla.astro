@@ -2,15 +2,14 @@
 import BotonArchivarItems from "./BotonArchivarItems.astro";
 import BotonEdtar from "./BotonEdtar.astro";
 import BotonEliminarItems from "./BotonEliminarItems.astro";
-const { credencial,evento,video } = Astro.props;
+const { credencial, evento, video } = Astro.props;
 
 const uidCredencial = credencial.uid;
-
 ---
 
 <tr
   id={`bntCredencial${uidCredencial}`}
-  class="odd:bg-neutral-300/50  border-b text-center cursor-pointer text-xs z-10 hover:bg-zinc-400 hover:text-gray-50 duration-200"
+  class="odd:bg-neutral-300/50 border-b text-center cursor-pointer text-xs z-10 hover:bg-zinc-400 hover:text-gray-50 duration-200"
 >
   <td class="whitespace-nowrap px-2 py-2 font-medium text-primary-text">
     {credencial.nombreApellido}
@@ -34,17 +33,22 @@ const uidCredencial = credencial.uid;
       {credencial.estado == true ? "activo" : "inactivo"}
     </p>
   </td>
-  <td
-    class="whitespace-nowrap py-1 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1  uppercase "
-  >
-  <div class="flex  items-center z-20 flex-shrink flex-wrap">
-
-    <BotonEdtar uidCredencial={uidCredencial}/>
-    <BotonArchivarItems uidCredencial={uidCredencial} estado={credencial.estado}/>
-    <BotonEliminarItems uidCredencial={uidCredencial}/>
-  </div>
-   
+  <td class="whitespace-nowrap py-1 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase">
+    <div class="flex items-center z-20 flex-shrink flex-wrap">
+      <BotonEdtar uidCredencial={uidCredencial} />
+      <BotonArchivarItems
+        uidCredencial={uidCredencial}
+        estado={credencial.estado}
+      />
+      <BotonEliminarItems uidCredencial={uidCredencial} />
+    </div>
+  </td>
+  <td class="items-center text-center  uppercase" >
+  <a href={credencial.QRCode} download={credencial.nombreApellido}>
+    <img
+      src={credencial.QRCode}
+      class="w-8 h-8 object-cover mx-auto" 
+      alt={`qr${credencial.nombreApellido}`}
+    /></a>
   </td>
 </tr>
-
-
