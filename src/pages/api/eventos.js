@@ -89,6 +89,7 @@ export const GET = async ({ request }) => {
       acreditaciones: dataBase.credenciales.filter(
         (creden) => creden.evento == element.uid
       ),
+      checkIn:element.checkIn
     };
   });
   // Agrega los nuevos datos al array
