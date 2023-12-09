@@ -4,30 +4,42 @@ export default function ListadoCredencialesCheckIn({ uid }) {
 
 const [dataEvento, setDataEvento] = useState({})
 const [widthContenedor, setWidthContenedor] = useState(0)
+const [porcentajeAcreditaciones, setPorcentajeAcreditaciones] = useState(0)
+const [porcentajeCheckIn, setPorcentajeCheckIn] = useState(0)
 const refContenedor = useRef();
 useEffect(() => {
   const fetching = async () => {
     const resCheckIn = await fetch(`http://localhost:4321/api/eventos`);
     const respuesta = await resCheckIn.json();
-    console.log(respuesta)
+    
     const evento = respuesta?.eventos?.find((evento) => evento.uid == uid);
+    
     setDataEvento({
       checkIn: evento.checkIn,
       acreditaciones: evento.acreditaciones,
     });
+   
   };
 
   fetching();
 
+
+}, []);
+
+useEffect(() => {
   if (refContenedor.current) {
     setWidthContenedor(refContenedor.current.clientWidth);
   }
-console.log(((dataEvento?.checkIn?.length / widthContenedor) * 100))
-console.log('whidth contenedor ',widthContenedor)
-console.log('length ',dataEvento)
-}, []);
 
+  if (widthContenedor > 0) {
+    const total = dataEvento?.acreditaciones?.length + dataEvento?.checkIn?.length;
+    setPorcentajeAcreditaciones((dataEvento?.acreditaciones?.length / total) * 100);
+    setPorcentajeCheckIn((dataEvento?.checkIn?.length / total) * 100)
 
+    console.log('Porcentaje de acreditaciones', porcentajeAcreditaciones);
+    console.log('Porcentaje de checkIn', porcentajeCheckIn);
+  }
+}, [widthContenedor,dataEvento,porcentajeAcreditaciones,porcentajeCheckIn]);
 
   return (
     <div className="bg-white rounded-lg w-full min-h-[50vh]  text-paleta1-gray p-4">
@@ -36,9 +48,11 @@ console.log('length ',dataEvento)
       <div
       ref={refContenedor} 
       className="w-full h-10 my-10 bg-white/50  cursor-pointer backdrop-blur-sm  rounded-lg  border-2 border-gray-500/50 flex items-center relative">
+
+        {/* contenedor de asistentes */}
         <div
         style={{
-          width: `calc(${((dataEvento?.checkIn?.length / widthContenedor) * 100) || 0}% - 2em)`,
+          width: `calc(${porcentajeCheckIn}% )`,
         }}
         className=" bg-gradient-to-tr from-blue-600/80 to-blue-400/80 rounded-l-md  backdrop-blur-sm w-1/3 absolute group top-0 left-0 h-full ">
           <div className="w-full h-full relative flex items-center">
@@ -54,7 +68,7 @@ console.log('length ',dataEvento)
         <div
 
         style={{
-          width: `calc(${((dataEvento?.acreditaciones?.length - dataEvento?.checkIn?.length) * 10) || 0}% - 2em)`
+          width: `calc(${porcentajeAcreditaciones}%)`
         }}
         className="bg-gradient-to-tr from-red-500/90 to-red-400/80 rounded-r-md backdrop-blur-sm group w-2/3 absolute top-0 right-0 h-full  border-l-2 border-white/80 ">
         <div className="w-full h-full  text-right relative flex items-center">

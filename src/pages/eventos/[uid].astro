@@ -1,5 +1,5 @@
 ---
-import ListadoCredencialesCheckIn from './components/ListadoCredencialesCheckIn.astro'
+import ListadoCredencialesCheckIn from './components/ListadoCredencialesCheckIn.jsx'
 import LayoutEvento from './layout/LayoutEvento.astro'
 const {uid}=Astro.params
 ---
@@ -7,6 +7,6 @@ const {uid}=Astro.params
 <LayoutEvento>
 
   <div>
-    <ListadoCredencialesCheckIn />
+    <ListadoCredencialesCheckIn client:load uid={uid}/>
   </div>
 </LayoutEvento>
