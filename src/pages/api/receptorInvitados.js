@@ -25,7 +25,7 @@ http.createServer((req, res) => {
     }
 
     // Simular la lectura de la base de datos cada segundo
-    const intervalId = setInterval(buscarBaseDeDatos, 5000);
+    const intervalId = setInterval(buscarBaseDeDatos, 2000);
 
     // Detener el intervalo cuando el cliente cierra la conexión
     req.on('close', () => {

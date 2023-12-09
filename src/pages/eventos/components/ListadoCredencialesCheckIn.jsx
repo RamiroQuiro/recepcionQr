@@ -3,7 +3,7 @@ import {useEffect,useState,useRef} from "react";
 export default function ListadoCredencialesCheckIn({ uid }) {
 
 const [dataEvento, setDataEvento] = useState({})
-const [widthContenedor, setWidthContenedor] = useState(0)
+const [sseCheckIn, setSseCheckIn] = useState([])
 const [porcentajeAcreditaciones, setPorcentajeAcreditaciones] = useState(0)
 const [porcentajeCheckIn, setPorcentajeCheckIn] = useState(0)
 const refContenedor = useRef();
@@ -15,7 +15,6 @@ useEffect(() => {
     const evento = respuesta?.eventos?.find((evento) => evento.uid == uid);
     
     setDataEvento({
-      checkIn: evento.checkIn,
       acreditaciones: evento.acreditaciones,
     });
    
@@ -25,6 +24,20 @@ useEffect(() => {
 
 
 }, []);
+useEffect(() => {
+  // Crear un nuevo objeto EventSource
+  const source = new EventSource('http://localhost:8000/event-stream?uidEvento=' + uid);
+
+  // Escuchar el evento 'message'
+  source.onmessage = (event) => {
+    console.log(event.data)
+    setSseCheckIn(JSON.parse(event.data))
+    localStorage.setItem('checkInData', JSON.stringify(JSON.parse(event.data)));
+  };
+  return () => {
+    source.close();
+  };
+}, [uid]);
 
 useEffect(() => {
 
@@ -35,14 +48,15 @@ useEffect(() => {
       setPorcentajeAcreditaciones(100)
     }else{
 
-      setPorcentajeAcreditaciones(((dataEvento?.acreditaciones?.length -dataEvento?.checkIn?.length) / total) * 100);
-      setPorcentajeCheckIn((dataEvento?.checkIn?.length / total) * 100)
+      setPorcentajeAcreditaciones(((dataEvento?.acreditaciones?.length -sseCheckIn?.length) / total) * 100);
+      setPorcentajeCheckIn((sseCheckIn?.length / total) * 100)
     }
 
-    console.log('Porcentaje de acreditaciones', porcentajeAcreditaciones);
-    console.log('Porcentaje de checkIn', porcentajeCheckIn);
+    // console.log('Porcentaje de acreditaciones', porcentajeAcreditaciones);
+    // console.log('Porcentaje de checkIn', porcentajeCheckIn);
+
   
-}, [dataEvento,porcentajeAcreditaciones,porcentajeCheckIn]);
+}, [dataEvento,porcentajeAcreditaciones,porcentajeCheckIn,sseCheckIn]);
 
   return (
     <div className="bg-white rounded-lg w-full min-h-[50vh]  text-paleta1-gray p-4">
@@ -61,7 +75,7 @@ useEffect(() => {
           <div className="w-full h-full relative flex items-center">
             <span className="z-10 mx-auto bg-white rounded-full text-sm font-bold py-1 px-2.5 border-2 ">
               {" "}
-              {dataEvento?.checkIn?.length || 0}
+              {sseCheckIn?.length || 0}
             </span>
             <span className="absolute bottom-full text-xs font-bold opacity-0 group-hover:opacity-100 group-hover:-translate-y-2 duration-300">
               Credenciales Ingresadas
@@ -77,7 +91,7 @@ useEffect(() => {
         <div className="w-full h-full  text-right relative flex items-center">
             <span className="z-10 mx-auto bg-white/70 rounded-full text-xs font-bold py-1 px-2 border-2  duration-300 ">
               {" "}
-              {(dataEvento?.acreditaciones?.length - dataEvento?.checkIn?.length) || 0}
+              {(dataEvento?.acreditaciones?.length - sseCheckIn?.length) || 0}
             </span>
             <span className="absolute bottom-full text-xs font-bold opacity-0 group-hover:opacity-100 group-hover:-translate-y-2 duration-300">
               Credenciales No Ingresadas
