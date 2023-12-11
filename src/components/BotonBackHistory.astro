@@ -11,6 +11,6 @@ const { href, clase } = Astro.props;
 <script define:vars={{ href }}>
   const botonVolver = document.getElementById("volverBoton");
   botonVolver.addEventListener("click", () => {
-    window.location.href = href;
+    window.history.back()
   });
 </script>

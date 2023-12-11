@@ -4,6 +4,7 @@ import BotonModificarPortada from "../../components/BotonModificarPortada";
 import LayoutEvento from "../../layout/LayoutEvento.astro";
 const { uid } = Astro.params;
 import CardVideos from "../../components/CardVideos.astro";
+import BotonCargarVideo from "./BotonCargarVideo.astro";
 
 const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
 const data = await objectEvento.json();
@@ -14,9 +15,15 @@ const acreditaciones=data.acreditaciones
 ---
 
 <LayoutEvento >
+   <div class="bg-white p-1 b border-b border-b-orange-500 rounded-lg relative py-16 px-5">
+    <div class="w-10 top-2 absolute right-2 z-10">
+<BotonCargarVideo/>
+    </div>
+ 
+  
     {
         evento?.videos?.length > 0 ? (
-          <div class="flex items-center flex-wrap justify-evenly w-full gap-5 ">
+          <div class="flex items-center flex-wrap justify-evenly w-full gap-5 bg ">
             
             {evento.videos?.map((video) => (
               <CardVideos video={video} uidEvento={evento?.uid} />
@@ -32,5 +39,5 @@ const acreditaciones=data.acreditaciones
             </p>
           </div>
         )
-      }
+      }  </div>
 </LayoutEvento>

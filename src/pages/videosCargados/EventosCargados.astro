@@ -1,34 +1,30 @@
 ---
-import CardEventos from './components/CardEventos.astro'
+import CardEventos from "./components/CardEventos.astro";
 
 const arrayEventos = await fetch("http://localhost:4321/api/eventos");
 
- const dataEventos =await arrayEventos.json()
-
+const dataEventos = await arrayEventos.json();
 ---
 
-
-    <div
-      class="  backdrop-blur-sm flex flex-col p-5 rounded-lg items-left justify-normal  w-full mx-auto py-10 min-h-screen "
-    >
-     { 
-     dataEventos?.eventos?.length>0?
-     
-     
+<div
+  class="backdrop-blur-sm flex flex-col p-5 rounded-lg items-left justify-normal w-full mx-auto py-10 min-h-screen"
+>
+  {
+    dataEventos?.eventos?.length > 0 ? (
       <div class="flex items-center flex-wrap justify-evenly w-full gap-2 ">
-          {dataEventos?.eventos?.map((evento) => (
-            <CardEventos evento={evento}/>
-              ))}
-            </div>
-          :
-          <div class="text-left">
-        <h2 class="mt-5 text-3xl font-bold text-gray-700 capitalize">crea un evento!</h2>
+        {dataEventos?.eventos?.map((evento) => (
+          <CardEventos evento={evento} />
+        ))}
+      </div>
+    ) : (
+      <div class="text-left">
+        <h2 class="mt-5 text-3xl font-bold text-gray-700 capitalize">
+          crea un evento!
+        </h2>
         <p class="mt-2 text-sm text-gray-900 font-medium">
           No hay eventos que mostrar, carga tu evento!
         </p>
       </div>
-          }
-      <!-- <ListadoVideos client:load/> -->
-    </div>
- 
-
+    )
+  }
+</div>

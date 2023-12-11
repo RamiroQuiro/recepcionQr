@@ -25,6 +25,8 @@ export const POST = async ({ request }) => {
 
   const id = generarUID();
 
+
+  console.log('este es el back',evento)
   // Valida los datos
   if (!name || !video || !evento) {
     return new Response(

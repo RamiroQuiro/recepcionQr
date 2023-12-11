@@ -1,26 +1,23 @@
 ---
 
-import MainDasboard from "../../components/MainDasboard.astro";
-import Layout from "../../layouts/Layout.astro";
+import LayoutEvento from '../../../layout/LayoutEvento.astro'
 import Formulario from "./components/Formulario";
-
+const {uid}=Astro.params
 ---
 
-<Layout title="Carga de Videos">
+<LayoutEvento title="Carga de Videos">
    
-<MainDasboard>
-<div class="md:w-2/3 md:h-1/2  bg-white/80  backdrop-blur-sm flex flex-col p-5 rounded-lg items-center justify-normal">
+<div class="md:w-2/3 mx-auto  bg-white/80  backdrop-blur-sm flex flex-col p-5 rounded-lg items-center justify-normal">
     <div class="text-center">
         <h2 class="mt-5 text-lg font-bold text-gray-700">
             Sube un video
         </h2>
-        <p class="mt-2 text-sm text-gray-400">Sube el video e indica el la mesa a relacionar</p>
+        <p class="mt-2 text-sm text-gray-400">Sube el video e indica la mesa a relacionar</p>
     </div>
-    <Formulario client:load/>
+    <Formulario client:load uidEvento={uid}>
 </div>
 
-</MainDasboard>
-</Layout>
+</LayoutEvento>
 
 
 <style>.lds-ellipsis {

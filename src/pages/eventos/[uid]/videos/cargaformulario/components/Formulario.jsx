@@ -1,23 +1,21 @@
 import { useEffect, useState } from "react";
-import { showToast } from "../../toast";
-
-export default function Form() {
-  const URL = import.meta.env.URLLOCAL;
+import { showToast } from "../../../../../toast";
+export default function Form({uidEvento}) {
+  console.log(uidEvento)
   const [responseMessage, setResponseMessage] = useState("");
   const [qrImage, setQrImage] = useState(null);
   const [videook, setVideook] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
-  const [eventos, setEventos] = useState([]);
 
   // funcion para cargar el fomulario
   async function submit(e) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    const eventoUID = formData.get("eventoUID");
+const eventoUid=formData.append('eventoUID',uidEvento)
     const videoName = formData.get("name");
-    if (!eventoUID || !videoName) {
+    if (!videoName) {
       setResponseMessage("completa todos los campos");
       return;
     } else {
@@ -57,19 +55,7 @@ export default function Form() {
     setVideook(e.target.files[0]);
   };
 
-  useEffect(() => {
-    const fetchEventos = async () => {
-      try {
-        const response = await fetch("api/eventos");
-        const data = await response.json();
-        setEventos(data.eventos);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
 
-    fetchEventos();
-  }, []);
 
   return (
     <>
@@ -92,28 +78,8 @@ export default function Form() {
         onSubmit={submit}
         className="flex flex-col items-center text-gray-700"
       >
-        <select
-          name="eventoUID"
-          id="eventos"
-          required
-          className="p-2 text-xs rounded-lg my-3 ring-0 border-none"
-          onChange={(e) => {
-            const selectedEvent = e.target.value;
-            formData.append("evento", selectedEvent);
-          }}
-        >
-          <option
-            value="noSelect"
-            disabled
-            selected
-            className="text-sx p-2 rounded-lg font-medium text-gray-400"
-          >
-            Selecciona un Evento
-          </option>
-          {eventos?.map((event) => (
-            <option value={event.uid}>{event.name}</option>
-          ))}
-        </select>
+
+         
         <label
           htmlFor="name"
           className="my-5 border flex items-center justify-between bg-white rounded-lg p-5 w-full gap-2 text-sm"

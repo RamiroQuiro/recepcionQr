@@ -26,8 +26,15 @@ export default function FormularioEventos() {
       method: 'POST',
       body: formData,
     });
-    showToast('👌 Evento Cargado',3000)
-    const data = await response.json();
+
+    console.log(response)
+    if(response.status===200){
+      showToast('👌 Evento Cargado',3000)
+      setTimeout(()=>{
+        window.location.href('/')
+      },3000)
+    }
+  
     setPreview(null)
     setForm({ nombre: '', foto: '' })
   }

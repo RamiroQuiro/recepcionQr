@@ -67,6 +67,7 @@ export const POST = async ({ request }) => {
   // Haz algo con los datos, luego devuelve una respuesta de éxito
   return new Response(
     JSON.stringify({
+      status:200,
       message: "¡Éxito!",
       nombre: nombre,
     })
