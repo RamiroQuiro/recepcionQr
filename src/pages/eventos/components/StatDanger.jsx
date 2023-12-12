@@ -11,14 +11,14 @@ const handleHabilitar=(e)=>{
 }
 
   return (
-    <div className="relative p-2 group flex flex-col items-stretch justify-between bg-clip-border rounded-xl bg-gradient-to-tr from-red-600 to-red-400 shadow-red-500/40   hover:shadow-lg duration-200 text-gray-200 shadow-md md:w-1/5 w-full">
+    <div className="relative p-2 group flex flex-col items-stretch justify-between bg-clip-border rounded-xl bg-gradient-to-tr from-red-600 to-red-400 shadow-red-500/40   hover:shadow-lg duration-200 text-gray-200 shadow-md w-1/3 md:w-full">
       <div className=" text-right w-full h-full flex flex-col items-center justify-between">
         <label
           htmlFor="isDanger"
           className="flex w-full cursor-pointer items-center justify-center gap-3 font-bold antialiased font-sans text-sm leading-normal  text-blue-gray-600"
         >
           Zona Danger  {isHabilitado?'❌':'🖋️'}
-          <input type="checkbox" name="isDanger" id="isDanger" className='hidden' onChange={handleHabilitar}/>
+          <input type="checkbox" name="isDanger" id="isDanger" className='hidden' onChange={handleHabilitar} checked={isHabilitado} />
         </label>
 {isHabilitado?
 (

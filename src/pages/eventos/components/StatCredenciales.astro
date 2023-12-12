@@ -3,8 +3,8 @@
 const {acreditaciones,evento}=Astro.props
 ---
 
-<div id={`credencialesEventosDe${evento?.uid}`} class="relative cursor-pointer flex flex-col group bg-clip-border rounded-xl hover:shadow-lg duration-200 bg-white text-gray-700 shadow-md md:w-1/4 w-full">
-    <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-pink-600 to-pink-400 text-white shadow-pink-500/40 shadow-lg absolute  -translate-y-2 group-hover:-translate-y-4 duration-300 grid h-16 w-16 place-items-center">
+<div id={`credencialesEventosDe${evento?.uid}`} class="relative cursor-pointer flex flex-col group bg-clip-border rounded-xl hover:shadow-lg duration-200 bg-white text-gray-700 shadow-md  w-1/4 md:w-full">
+    <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-pink-600 to-pink-400 text-white shadow-pink-500/40 shadow-lg absolute  md:-translate-y-2 -translate-x-8 md:group-hover:-translate-y-4 duration-300 grid md:h-16 md:w-16 w-10 h-10 md:top-0 bottom-0  place-items-center">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-6 h-6 text-white">
         <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd"></path>
       </svg>
