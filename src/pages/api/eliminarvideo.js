@@ -3,13 +3,20 @@
 import path from "path";
 import fs from "fs/promises";
 
+const DES = import.meta.env.URL_DESARROLLO;
+const PRODUC = import.meta.env.URL_PRODUCCION;
+const isDev = import.meta.env.DEV;
+
+// Define la ruta base dependiendo del entorno
+const basePath = !isDev  ? PRODUC : DES;
+
 export async function POST({ request }) {
   // Extraemos los datos necesarios de la solicitud JSON.
   const { idVideo, uidEvento } = await request.json();
 
   // Definimos las rutas de los directorios y archivos relevantes.
-  const directoryPath = path.join(process.cwd(), "public", "upload");
-  const filePathData = path.join(process.cwd(), "public", "base", "base.json");
+  const directoryPath = path.join(process.cwd(), basePath, "upload");
+  const filePathData = path.join(process.cwd(), basePath, "base", "base.json");
 
   // Leemos los archivos del directorio y el archivo de datos JSON.
   const files = await fs.readdir(directoryPath);

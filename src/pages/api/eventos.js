@@ -6,6 +6,14 @@ function generarUID() {
     .toString()
     .padStart(4, "0");
 }
+
+const DES = import.meta.env.URL_DESARROLLO;
+const PRODUC = import.meta.env.URL_PRODUCCION;
+const isDev = import.meta.env.DEV;
+
+// Define la ruta base dependiendo del entorno
+const basePath = !isDev  ? PRODUC : DES;
+
 export const POST = async ({ request }) => {
   const data = await request.formData();
   const nombre = data.get("nombre");
@@ -25,12 +33,12 @@ export const POST = async ({ request }) => {
   const byte = await foto.arrayBuffer();
   const buffer = Buffer.from(byte);
   try {
-    const dirPath = path.join(process.cwd(), "public", "upload", `${uid}`);
+    const dirPath = path.join(process.cwd(), basePath, "upload", `${uid}`);
     await fs.mkdir(dirPath, { recursive: true });
     const nombreArcivo = `portada.${fileExtension}`;
     const filePath = path.join(
       process.cwd(),
-      "public",
+      basePath,
       "upload",
       uid,
       nombreArcivo
@@ -50,7 +58,7 @@ export const POST = async ({ request }) => {
   };
 
   // Define la ruta del archivo
-  const filePathData = path.join(process.cwd(), "public", "base", "base.json");
+  const filePathData = path.join(process.cwd(), basePath, "base", "base.json");
 
   // Lee el archivo y parsea el contenido a un array
   const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
@@ -76,8 +84,9 @@ export const POST = async ({ request }) => {
 
 export const GET = async ({ request }) => {
   // Define la ruta del archivo
-  const filePathData = path.join(process.cwd(), "public", "base", "base.json");
+  const filePathData = path.join(process.cwd(), basePath, "base", "base.json");
 
+  console.log(filePathData)
   // Lee el archivo y parsea el contenido a un array
   const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
   let arrayEventos = dataBase.eventos?.map((element) => {
@@ -105,7 +114,7 @@ export const PUT = async ({ request }) => {
   const { accion, uidEvento } = await request.json();
 
   // Define la ruta del archivo
-  const filePathData = path.join(process.cwd(), "public", "base", "base.json");
+  const filePathData = path.join(process.cwd(), basePath, "base", "base.json");
 
   // Lee el archivo y parsea el contenido a un array
   const { credenciales, eventos } = JSON.parse(

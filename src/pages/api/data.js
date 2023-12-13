@@ -3,6 +3,14 @@ import path from "path";
 import fs from "fs/promises";
 import { generateToken } from "../../database/jsonwebtoken";
 
+
+const DES = import.meta.env.URL_DESARROLLO;
+const PRODUC = import.meta.env.URL_PRODUCCION;
+const isDev = import.meta.env.DEV;
+
+// Define la ruta base dependiendo del entorno
+const basePath = !isDev  ? PRODUC : DES;
+
 function generarUID() {
   return Math.floor(Math.random() * 10000)
     .toString()
@@ -56,6 +64,7 @@ const generateQR = async (
 };
 
 export const POST = async ({ request }) => {
+
   const data = await request.formData();
   const name = data.get("nombreApellido");
   const dni = data.get("dni");
@@ -78,7 +87,7 @@ export const POST = async ({ request }) => {
     // Define la ruta del archivo
     const filePathData = path.join(
       process.cwd(),
-      "public",
+      basePath,
       "base",
       "base.json"
     );
@@ -126,8 +135,9 @@ export const POST = async ({ request }) => {
 };
 
 export const GET = async () => {
+  
   // Define la ruta del archivo
-  const filePathData = path.join(process.cwd(), "public", "base", "base.json");
+  const filePathData = path.join(process.cwd(), basePath, "base", "base.json");
   // Lee el archivo y parsea el contenido a un array
   const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
   const credenciales = dataBase.credenciales;

@@ -17,6 +17,15 @@ const formatoQR = {
   scale: 4,
 };
 
+
+const DES = import.meta.env.URL_DESARROLLO;
+const PRODUC = import.meta.env.URL_PRODUCCION;
+const isDev = import.meta.env.DEV;
+
+// Define la ruta base dependiendo del entorno
+const basePath = !isDev  ? PRODUC : DES;
+
+
 export const POST = async ({ request }) => {
   const data = await request.formData();
   const name = data.get("name");
@@ -26,7 +35,7 @@ export const POST = async ({ request }) => {
   const id = generarUID();
 
 
-  console.log('este es el back',evento)
+
   // Valida los datos
   if (!name || !video || !evento) {
     return new Response(
@@ -36,9 +45,10 @@ export const POST = async ({ request }) => {
       { status: 400 }
     );
   }
+  
 
   // Define la ruta del archivo
-  const filePathData = path.join(process.cwd(), "public", "base", "base.json");
+  const filePathData = path.join(process.cwd(), basePath, "base", "base.json");
   // Lee el archivo y parsea el contenido a un array
   const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
 
@@ -67,7 +77,7 @@ export const POST = async ({ request }) => {
     // escirbiendo el video
     const filePath = path.join(
       process.cwd(),
-      "public",
+      basePath,
       `upload/${evento}/${id}.mp4`
     );
     await fs.writeFile(filePath, buffer);

@@ -1,5 +1,11 @@
 import fs from 'fs/promises'
 import path from 'path';
+const DES = import.meta.env.URL_DESARROLLO;
+const PRODUC = import.meta.env.URL_PRODUCCION;
+const isDev = import.meta.env.DEV;
+
+// Define la ruta base dependiendo del entorno
+const basePath = !isDev  ? PRODUC : DES;
 
 export async function POST({request}) {
     // Extraer los datos de la solicitud
@@ -9,8 +15,8 @@ export async function POST({request}) {
     const extension = data.get("extension");
 
     // Construir las rutas de los archivos
-    const filePathData = path.join(process.cwd(), "public", "base", "base.json");
-    const pathDirectory = path.join(process.cwd(), 'public', 'upload', uid);
+    const filePathData = path.join(process.cwd(), basePath, "base", "base.json");
+    const pathDirectory = path.join(process.cwd(), basePath, 'upload', uid);
     const pathPortada = path.join(pathDirectory, 'portada.' + extension);
 
     try {

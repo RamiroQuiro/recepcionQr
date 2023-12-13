@@ -1,6 +1,12 @@
 import { verifyToken } from "../../database/jsonwebtoken";
 import path from "path";
 import fs from "fs/promises";
+const DES = import.meta.env.URL_DESARROLLO;
+const PRODUC = import.meta.env.URL_PRODUCCION;
+const isDev = import.meta.env.DEV;
+
+// Define la ruta base dependiendo del entorno
+const basePath = !isDev  ? PRODUC : DES;
 
 function generarUID() {
   return Math.floor(Math.random() * 10000)
@@ -22,7 +28,7 @@ export const GET = async ({ request }) => {
     // Define la ruta del archivo
     const filePathData = path.join(
       process.cwd(),
-      "public",
+      basePath,
       "base",
       "base.json"
     );  // Ruta del archivo base.json

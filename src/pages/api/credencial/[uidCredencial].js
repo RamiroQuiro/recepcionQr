@@ -3,6 +3,13 @@ import fs from "fs/promises";
 import QRCode from "qrcode";
 import { generateToken } from "../../../database/jsonwebtoken";
 
+const DES = import.meta.env.URL_DESARROLLO;
+const PRODUC = import.meta.env.URL_PRODUCCION;
+const isDev = import.meta.env.DEV;
+
+// Define la ruta base dependiendo del entorno
+const basePath = !isDev  ? PRODUC : DES;
+
 const generateQR = async (credencial) => {
   try {
     // Crear un objeto con los datos
@@ -24,7 +31,7 @@ export const GET = async ({ request }) => {
   const uidCredencial = request.url.split("/")[5];
 
   // Define la ruta del archivo
-  const filePathData = path.join(process.cwd(), "public", "base", "base.json");
+  const filePathData = path.join(process.cwd(), basePath, "base", "base.json");
   // Lee el archivo y parsea el contenido a un array
   const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
 
@@ -58,7 +65,7 @@ export const DELETE = async ({ request }) => {
   try {
     const filePathData = path.join(
       process.cwd(),
-      "public",
+      basePath,
       "base",
       "base.json"
     );
@@ -105,7 +112,7 @@ export const PUT = async ({ request }) => {
 
     const filePathData = path.join(
       process.cwd(),
-      "public",
+      basePath,
       "base",
       "base.json"
     );
