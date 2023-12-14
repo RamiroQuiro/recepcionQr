@@ -2,12 +2,11 @@ import path from 'path'
 import fs from 'fs/promises'
 
 
-const DES = import.meta.env.URL_DESARROLLO;
-const PRODUC = import.meta.env.URL_PRODUCCION;
-const isDev = import.meta.env.DEV;
+
+const isDev = true
 
 // Define la ruta base dependiendo del entorno
-const basePath = !isDev  ? PRODUC : DES;
+const basePath = !isDev  ? 'client' : 'public';
 
 export const obtenerInformacionDeLaBaseDeDatos = async (uidEvento) => {
 
