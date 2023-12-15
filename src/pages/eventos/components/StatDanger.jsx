@@ -11,7 +11,7 @@ const handleHabilitar=(e)=>{
 }
 
   return (
-    <div className="relative p-2 group flex flex-col items-stretch justify-between bg-clip-border rounded-xl bg-gradient-to-tr from-red-600 to-red-400 shadow-red-500/40   hover:shadow-lg duration-200 text-gray-200 shadow-md w-1/3 md:w-full">
+    <div className="relative p-2 group flex flex-col items-stretch justify-between bg-clip-border rounded-xl bg-gradient-to-tr from-red-600 to-red-400 shadow-red-500/40   hover:shadow-lg duration-200 text-gray-200 shadow-md">
       <div className=" text-right w-full h-full flex flex-col items-center justify-between">
         <label
           htmlFor="isDanger"
