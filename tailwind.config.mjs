@@ -6,7 +6,7 @@ export default {
       colors: {
         paleta1: {
           primary: "#F4CFEB",
-          secondary: "#BFDAFE",
+          secondary: "#BFDAff",
           tertiary: "#FFFFFF",
           gray: "#808080",
           white: "#FFFFFF",
