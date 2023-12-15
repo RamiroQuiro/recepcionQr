@@ -1,7 +1,7 @@
 ---
 import MainDasboard from "../../../../components/MainDasboard.astro";
 import LayoutEvento from "../../layout/LayoutEvento.astro";
-import ContenedorImagen from './ContenedorImagen.jsx'
+import ContenedorImagen from './ContenedorImagen.astro'
 
 const uid=Astro.params
 
@@ -12,6 +12,6 @@ const uid=Astro.params
 
     <MainDasboard>
 
-       <ContenedorImagen client:load/>
+       <ContenedorImagen />
     </MainDasboard>
 </LayoutEvento>

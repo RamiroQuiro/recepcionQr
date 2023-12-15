@@ -2,35 +2,61 @@
 
 ---
 
-<div class='flex items-center justify-center flex-col w-full'>
-    <div class='h-[50vh] w-full bg-white flex flex-col items-center p-5 rounded-lg shadow-lg'>
-
-        <span>edita tu invitacion con el qr </span>
-<canvas id="canvas" class="border rounded-lg shadow-lg my-5 p-5"></canvas>
-
+<div class="flex items-center justify-center flex-col w-full">
+  <div
+    class="min-h-[50vh] w-full bg-white flex flex-col items-center p-5 rounded-lg shadow-lg relative"
+  >
+    <span>edita tu invitacion con el qr</span>
+    <input type="file" name="cargaImg" id="cargaImg" class="z-10" />
+    <div id="contenedorCanva" class="absolute w-full h-full top-0 left-0">
+      <canvas id="canvas" class="w-full h-full border"></canvas>
     </div>
+  </div>
 </div>
 
-<script is:inline>
-    // Importa la biblioteca Fabric.js
-    import {fabric} from 'fabric'
-    
-    // Crea un nuevo objeto fabric.Canvas
-    const canvas = new fabric.Canvas("canvas");
-    console.log(innerWidth)
-    // Establece el ancho y la altura del lienzo
-    canvas.setWidth(innerWidth - 100);
-    canvas.setHeight(innerHeight - 2 );
+<script>
+  // Importa la biblioteca Fabric.js
+  import { fabric } from "fabric";
+  const btnImg = document.getElementById("cargaImg");
+  const contenedor = document.getElementById("contenedorCanva");
 
-    // Crea un nuevo objeto fabric.Rect
-    let rect = new fabric.Rect({
-        left: 100, // Posición horizontal del rectángulo
-        top: 100, // Posición vertical del rectángulo
-        fill: "#ff0000", // Color de relleno del rectángulo
-        width: 60, // Ancho del rectángulo
-        height: 50 // Altura del rectángulo
-    });
-    
-    // Añade el rectángulo al lienzo
-    canvas.add(rect);
+  // Crea un nuevo objeto fabric.Canvas
+  const canvas = new fabric.Canvas("canvas");
+  let anchoContenedor = contenedor.clientWidth;
+  let altoContenedor = contenedor.clientHeight;
+
+  // Establece el ancho y la altura del lienzo
+  canvas.setWidth(anchoContenedor);
+  canvas.setHeight(altoContenedor);
+
+  // Crea un nuevo objeto fabric.Rect
+  let rect = new fabric.Rect({
+    left: 100, // Posición horizontal del rectángulo
+    top: 100, // Posición vertical del rectángulo
+    fill: "#ff0000", // Color de relleno del rectángulo
+    width: 60, // Ancho del rectángulo
+    height: 50, // Altura del rectángulo
+  });
+
+  // Añade el rectángulo al lienzo
+  canvas.add(rect);
+  btnImg.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  const url = URL.createObjectURL(file);
+  
+  fabric.Image.fromURL(url, function(img) {
+    // Ajusta la imagen al ancho y la altura del lienzo
+    img.scaleToWidth(canvas.width);
+    img.scaleToHeight(canvas.height - 50);
+
+    // Centra la imagen en el lienzo
+    canvas.centerObject(img);
+
+    // Añade la imagen al lienzo
+    canvas.add(img);
+
+    // Actualiza el lienzo
+    canvas.renderAll();
+  });
+});
 </script>
