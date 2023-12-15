@@ -1,0 +1,36 @@
+---
+
+---
+
+<div class='flex items-center justify-center flex-col w-full'>
+    <div class='h-[50vh] w-full bg-white flex flex-col items-center p-5 rounded-lg shadow-lg'>
+
+        <span>edita tu invitacion con el qr </span>
+<canvas id="canvas" class="border rounded-lg shadow-lg my-5 p-5"></canvas>
+
+    </div>
+</div>
+
+<script is:inline>
+    // Importa la biblioteca Fabric.js
+    import {fabric} from 'fabric'
+    
+    // Crea un nuevo objeto fabric.Canvas
+    const canvas = new fabric.Canvas("canvas");
+    console.log(innerWidth)
+    // Establece el ancho y la altura del lienzo
+    canvas.setWidth(innerWidth - 100);
+    canvas.setHeight(innerHeight - 2 );
+
+    // Crea un nuevo objeto fabric.Rect
+    let rect = new fabric.Rect({
+        left: 100, // Posición horizontal del rectángulo
+        top: 100, // Posición vertical del rectángulo
+        fill: "#ff0000", // Color de relleno del rectángulo
+        width: 60, // Ancho del rectángulo
+        height: 50 // Altura del rectángulo
+    });
+    
+    // Añade el rectángulo al lienzo
+    canvas.add(rect);
+</script>

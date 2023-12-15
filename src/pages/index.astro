@@ -1,20 +1,19 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import EventosCargados from './videosCargados/EventosCargados.astro'
-import BotonCargaEventos from './videosCargados/components/BotonCargaEventos.astro';
+import Layout from "../layouts/Layout.astro";
+import EventosCargados from "./videosCargados/EventosCargados.astro";
+import BotonCargaEventos from "./videosCargados/components/BotonCargaEventos.astro";
 
 // Crear una clase con la API EventSource
-
-
 ---
 
 <Layout title="Recepcion QR">
-	<main class=" min-h-screen md:w-10/12 w-full  container flex flex-col  pt-10 items-start justify-normal relative">
-		<h1 class="text-3xl font-bold text-gray-700">Estos son tus eventos</h1>
-		<div class="absolute right-0">
-			<BotonCargaEventos/>
-			</div>
-	<EventosCargados/>
-	</main>
+  <main
+    class="min-h-screen md:w-10/12 w-full container flex flex-col pt-10 items-start justify-normal relative"
+  >
+    <h1 class="text-3xl font-bold text-gray-700">Estos son tus eventos</h1>
+    <div class="absolute right-0">
+      <BotonCargaEventos />
+    </div>
+    <EventosCargados />
+  </main>
 </Layout>
-
