@@ -3,9 +3,8 @@
 
 <div class="flex items-center justify-center flex-col w-full">
   <div
-    class="min-h-[50vh] w-full bg-white flex flex-col items-center p-5 rounded-lg shadow-lg relative"
+    class="min-h-[85vh] w-full bg-paleta1-gray/50 justify-center flex flex-col items-center p-5 rounded-lg shadow-lg relative"
   >
-    <span>edita tu invitacion con el qr</span>
     <aside
       class="absolute top-0 left-0 w-[12%] bg-paleta1-gray/80 backdrop-blur-sm h-full z-10"
     >
@@ -40,6 +39,32 @@
           cargar
           <input type="file" name="cargaImg" id="cargaImg" class="hidden" />
         </label>
+        <!-- ctn agregar qr -->
+        <button
+        id="cargaQR"
+        class="border rounded-lg flex-col w-14 flex items-center justify-center text-xs font-thin hover:bg-white/50 duration-300 group p-1 cursor-pointer"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="w-8 fill-neutral-200"
+          xmlns="http://www.w3.org/2000/svg"
+          ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+            <path
+              opacity="0.5"
+              d="M22 16.0003V15.0003C22 12.1718 21.9998 10.7581 21.1211 9.8794C20.2424 9.00072 18.8282 9.00072 15.9998 9.00072H7.99977C5.17135 9.00072 3.75713 9.00072 2.87845 9.8794C2 10.7579 2 12.1711 2 14.9981V15.0003V16.0003C2 18.8287 2 20.2429 2.87868 21.1216C3.75736 22.0003 5.17157 22.0003 8 22.0003H16H16C18.8284 22.0003 20.2426 22.0003 21.1213 21.1216C22 20.2429 22 18.8287 22 16.0003Z"
+            ></path>
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M12 1.25C11.5858 1.25 11.25 1.58579 11.25 2L11.25 12.9726L9.56943 11.0119C9.29986 10.6974 8.82639 10.661 8.51189 10.9306C8.1974 11.2001 8.16098 11.6736 8.43054 11.9881L11.4305 15.4881C11.573 15.6543 11.781 15.75 12 15.75C12.2189 15.75 12.4269 15.6543 12.5694 15.4881L15.5694 11.9881C15.839 11.6736 15.8026 11.2001 15.4881 10.9306C15.1736 10.661 14.7001 10.6974 14.4305 11.0119L12.75 12.9726L12.75 2C12.75 1.58579 12.4142 1.25 12 1.25Z"
+            ></path>
+          </g></svg
+        >
+        descarga
+      </button>
         <!-- boton descraga -->
         <button
           id="descargaImg"
@@ -92,8 +117,12 @@
         </button>
       </div>
     </aside>
-    <div id="contenedorCanva" class="absolute w-full h-full top-0 left-0">
-      <canvas id="canvas" class="w-full h-full border shadow-[5px_5px_5px_1px_#c0c0c0] bg-white"></canvas>
+    <div
+      id="contenedorCanva"
+      class="flex items-center justify-center w-full h-full top-0 left-0"
+    >
+      <canvas id="canvas" class="w- border shadow-[5px_5px_5px_1px_#c0c0c0] "
+      ></canvas>
     </div>
   </div>
 </div>
@@ -102,12 +131,14 @@
   // Importa la biblioteca Fabric.js
   import { fabric } from "fabric";
   const btnImg = document.getElementById("cargaImg");
+  const btnCargaQR = document.getElementById("cargaQR");
   const contenedor = document.getElementById("contenedorCanva");
   const btnAddText = document.getElementById("addText");
   const btnDescarga = document.getElementById("descargaImg");
   // Crea un nuevo objeto fabric.Canvas
   const canvas = new fabric.Canvas("canvas");
-  let anchoContenedor =660;
+  contenedor.style.background = "transparent";
+  let anchoContenedor = 660;
   let altoContenedor = 520;
 
   // Establece el ancho y la altura del lienzo
@@ -123,41 +154,35 @@
       // Ajusta la imagen al ancho y la altura del lienzo
       img.scaleToWidth(canvas.width);
       img.scaleToHeight(canvas.height - 50);
+      // Obtiene las dimensiones de la imagen
+      const anchoImg = img.getScaledWidth();
+      const altoImg = img.getScaledHeight();
+
+      canvas.setWidth(anchoImg);
+      canvas.setHeight(altoImg);
 
       // Centra la imagen en el lienzo
       canvas.centerObject(img);
 
       // Añade la imagen al lienzo
       canvas.add(img);
-
-      // Actualiza el lienzo
-      canvas.renderAll();
     });
   });
 
-
-
   //   descarga iamgen
   btnDescarga.addEventListener("click", () => {
-  // Obtiene el objeto activo (la imagen que has añadido)
-  var objetoActivo = canvas.getActiveObject();
-
+    // Obtiene el objeto activo (la imagen que has añadido)
+   
     // Si hay un objeto activo, descarga solo esa parte del lienzo
-    if (objetoActivo) {
       var dataURL = canvas.toDataURL({
         format: "png",
         quality: 1,
-        left: objetoActivo.left,
-        top: objetoActivo.top,
-        width: objetoActivo.width * objetoActivo.scaleX,
-        height: objetoActivo.height * objetoActivo.scaleY,
       });
 
       const a = document.createElement("a");
       a.download = "RecepcionQr - RamaCode";
       a.href = dataURL;
       a.click();
-    }
   });
   // agregarText
   btnAddText.addEventListener("click", () => {
@@ -166,4 +191,32 @@
     // Activa el modo de edición
     texto.enterEditing();
   });
+
+      // Actualiza el lienzo
+      canvas.renderAll();
+// cargarQR
+btnCargaQR.addEventListener('click',(e)=>{
+const marco= new fabric.Rect({
+  width:200,
+  height:200,
+  name:"marcoQR",
+  fill:'transparent',
+  stroke:"gray",
+  strokeWidth:2,
+  borderRadius:"25%",
+})
+
+  // Añade la imagen al lienzo
+      canvas.add(marco);
+
+    })
+
+        canvas.on('object:moving', function(e) {
+     if(e.target.name=="marcoQR"){
+
+       var objetoActivo = e.target;
+       console.log('La imagen está en la posición (' + objetoActivo.left + ', ' + objetoActivo.top + ') en el lienzo.');
+     }
+});
+
 </script>
