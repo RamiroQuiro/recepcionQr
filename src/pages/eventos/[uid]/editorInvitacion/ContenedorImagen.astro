@@ -1,146 +1,24 @@
 ---
+import SidebarCanvas from "./componentes/SidebarCanvas.astro";
+const { uid } = Astro.params;
+
+const fetching = await fetch("http://localhost:4321/api/data");
+const dataCredenciales = await fetching.json();
+const credenciales =await JSON.stringify(dataCredenciales.credenciales.filter((credencial) => {
+  if (!uid) {
+    return credencial;
+  }
+  return credencial.evento == uid;
+}))
+
 ---
 
 <div class="flex items-center justify-center flex-col w-full">
   <div
     class="min-h-[85vh] w-full bg-paleta1-gray/50 justify-center flex flex-col items-center p-5 rounded-lg shadow-lg relative"
   >
-    <aside
-      class="absolute top-0 left-0 w-[12%] bg-paleta1-gray/80 backdrop-blur-sm h-full z-10"
-    >
-      <div class="flex flex-col items-center justify-normal w-full gap-10 py-5">
-        <!-- ctn agregar iamgen -->
-        <label
-          for="cargaImg"
-          class="border rounded-lg lowercase flex-col w-14 flex items-center justify-center text-xs font-thin hover:bg-white/50 duration-300 group p-1 cursor-pointer"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            class="w-8 fill-neutral-200"
-            xmlns="http://www.w3.org/2000/svg"
-            ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
-              id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
-              <path
-                opacity="0.5"
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M10 22H14C17.7712 22 19.6569 22 20.8284 20.8284C22 19.6569 22 17.7712 22 14V13.5629C22 12.6901 22 12.0344 21.9574 11.5001H18L17.9051 11.5001C16.808 11.5002 15.8385 11.5003 15.0569 11.3952C14.2098 11.2813 13.3628 11.0198 12.6716 10.3285C11.9803 9.63726 11.7188 8.79028 11.6049 7.94316C11.4998 7.16164 11.4999 6.19207 11.5 5.09497L11.5092 2.26057C11.5095 2.17813 11.5166 2.09659 11.53 2.01666C11.1214 2 10.6358 2 10.0298 2C6.23869 2 4.34315 2 3.17157 3.17157C2 4.34315 2 6.22876 2 10V14C2 17.7712 2 19.6569 3.17157 20.8284C4.34315 22 6.22876 22 10 22Z"
-              ></path>
-              <path
-                d="M7.98705 12.9528C8.27554 12.6824 8.72446 12.6824 9.01296 12.9528L11.013 14.8278C11.3151 15.1111 11.3305 15.5858 11.0472 15.888C10.7639 16.1901 10.2892 16.2054 9.98705 15.9222L9.25 15.2312L9.25 18.5C9.25 18.9142 8.91422 19.25 8.5 19.25C8.08579 19.25 7.75 18.9142 7.75 18.5L7.75 15.2312L7.01296 15.9222C6.71077 16.2055 6.23615 16.1901 5.95285 15.888C5.66955 15.5858 5.68486 15.1111 5.98705 14.8278L7.98705 12.9528Z"
-              ></path>
-              <path
-                d="M11.5092 2.2601L11.5 5.0945C11.4999 6.1916 11.4998 7.16117 11.6049 7.94269C11.7188 8.78981 11.9803 9.6368 12.6716 10.3281C13.3629 11.0193 14.2098 11.2808 15.057 11.3947C15.8385 11.4998 16.808 11.4997 17.9051 11.4996L21.9574 11.4996C21.9698 11.6552 21.9786 11.821 21.9848 11.9995H22C22 11.732 22 11.5983 21.9901 11.4408C21.9335 10.5463 21.5617 9.52125 21.0315 8.79853C20.9382 8.6713 20.8743 8.59493 20.7467 8.44218C19.9542 7.49359 18.911 6.31193 18 5.49953C17.1892 4.77645 16.0787 3.98536 15.1101 3.3385C14.2781 2.78275 13.862 2.50487 13.2915 2.29834C13.1403 2.24359 12.9408 2.18311 12.7846 2.14466C12.4006 2.05013 12.0268 2.01725 11.5 2.00586L11.5092 2.2601Z"
-              ></path>
-            </g></svg
-          >
-          cargar
-          <input type="file" name="cargaImg" id="cargaImg" class="hidden" />
-        </label>
-        <!-- ctn agregar iamgen -->
-        <label
-          for="btnQR"
-          class="border rounded-lg lowercase flex-col w-14 flex items-center justify-center text-xs font-thin hover:bg-white/50 duration-300 group p-1 cursor-pointer"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            class="w-8 fill-neutral-200"
-            xmlns="http://www.w3.org/2000/svg"
-            ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
-              id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
-              <path
-                opacity="0.5"
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M10 22H14C17.7712 22 19.6569 22 20.8284 20.8284C22 19.6569 22 17.7712 22 14V13.5629C22 12.6901 22 12.0344 21.9574 11.5001H18L17.9051 11.5001C16.808 11.5002 15.8385 11.5003 15.0569 11.3952C14.2098 11.2813 13.3628 11.0198 12.6716 10.3285C11.9803 9.63726 11.7188 8.79028 11.6049 7.94316C11.4998 7.16164 11.4999 6.19207 11.5 5.09497L11.5092 2.26057C11.5095 2.17813 11.5166 2.09659 11.53 2.01666C11.1214 2 10.6358 2 10.0298 2C6.23869 2 4.34315 2 3.17157 3.17157C2 4.34315 2 6.22876 2 10V14C2 17.7712 2 19.6569 3.17157 20.8284C4.34315 22 6.22876 22 10 22Z"
-              ></path>
-              <path
-                d="M7.98705 12.9528C8.27554 12.6824 8.72446 12.6824 9.01296 12.9528L11.013 14.8278C11.3151 15.1111 11.3305 15.5858 11.0472 15.888C10.7639 16.1901 10.2892 16.2054 9.98705 15.9222L9.25 15.2312L9.25 18.5C9.25 18.9142 8.91422 19.25 8.5 19.25C8.08579 19.25 7.75 18.9142 7.75 18.5L7.75 15.2312L7.01296 15.9222C6.71077 16.2055 6.23615 16.1901 5.95285 15.888C5.66955 15.5858 5.68486 15.1111 5.98705 14.8278L7.98705 12.9528Z"
-              ></path>
-              <path
-                d="M11.5092 2.2601L11.5 5.0945C11.4999 6.1916 11.4998 7.16117 11.6049 7.94269C11.7188 8.78981 11.9803 9.6368 12.6716 10.3281C13.3629 11.0193 14.2098 11.2808 15.057 11.3947C15.8385 11.4998 16.808 11.4997 17.9051 11.4996L21.9574 11.4996C21.9698 11.6552 21.9786 11.821 21.9848 11.9995H22C22 11.732 22 11.5983 21.9901 11.4408C21.9335 10.5463 21.5617 9.52125 21.0315 8.79853C20.9382 8.6713 20.8743 8.59493 20.7467 8.44218C19.9542 7.49359 18.911 6.31193 18 5.49953C17.1892 4.77645 16.0787 3.98536 15.1101 3.3385C14.2781 2.78275 13.862 2.50487 13.2915 2.29834C13.1403 2.24359 12.9408 2.18311 12.7846 2.14466C12.4006 2.05013 12.0268 2.01725 11.5 2.00586L11.5092 2.2601Z"
-              ></path>
-            </g></svg
-          >
-          cargar
-          <input type="file" name="btnQR" id="btnQR" class="hidden" />
-        </label>
-        <!-- ctn agregar qr -->
-        <button
-          id="cargaQR"
-          class="border rounded-lg flex-col w-14 flex lowercase items-center justify-center text-xs font-thin hover:bg-white/50 duration-300 group p-1 cursor-pointer"
-        >
-          <svg
-            class="w-8 fill-neutral-200"
-            viewBox="0 0 56 56"
-            xmlns="http://www.w3.org/2000/svg"
-            ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
-              id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"
-              ><path
-                d="M 8.3827 21.4023 C 9.6015 21.4023 10.2577 20.7227 10.2577 19.4805 L 10.2577 13.9492 C 10.2577 11.5118 11.5702 10.2696 13.9140 10.2696 L 19.5858 10.2696 C 20.8046 10.2696 21.4843 9.5898 21.4843 8.3711 C 21.4843 7.1758 20.8046 6.4961 19.5858 6.4961 L 13.8436 6.4961 C 8.9687 6.4961 6.4843 8.9102 6.4843 13.7383 L 6.4843 19.4805 C 6.4843 20.7227 7.1640 21.4023 8.3827 21.4023 Z M 47.6171 21.4023 C 48.8591 21.4023 49.5157 20.7227 49.5157 19.4805 L 49.5157 13.7383 C 49.5157 8.9102 47.0780 6.4961 42.1562 6.4961 L 36.4374 6.4961 C 35.1952 6.4961 34.5155 7.1758 34.5155 8.3711 C 34.5155 9.5898 35.1952 10.2696 36.4374 10.2696 L 42.1093 10.2696 C 44.4062 10.2696 45.7421 11.5118 45.7421 13.9492 L 45.7421 19.4805 C 45.7421 20.7227 46.4218 21.4023 47.6171 21.4023 Z M 26.9921 25.9727 L 26.9921 17.7930 C 26.9921 17.2305 26.5468 16.7617 25.9608 16.7617 L 17.8046 16.7617 C 17.2187 16.7617 16.7733 17.2305 16.7733 17.7930 L 16.7733 25.9727 C 16.7733 26.5352 17.2187 26.9805 17.8046 26.9805 L 25.9608 26.9805 C 26.5468 26.9805 26.9921 26.5352 26.9921 25.9727 Z M 31.0468 18.8008 L 37.1874 18.8008 L 37.1874 24.9414 L 31.0468 24.9414 Z M 35.4062 23.1602 L 35.4062 20.6055 L 32.8515 20.6055 L 32.8515 23.1602 Z M 23.1718 23.1602 L 23.1718 20.6055 L 20.5936 20.6055 L 20.5936 23.1602 Z M 18.8124 31.0586 L 24.9530 31.0586 L 24.9530 37.1992 L 18.8124 37.1992 Z M 38.9218 31.8555 L 38.9218 29.3008 L 36.3671 29.3008 L 36.3671 31.8555 Z M 31.8671 31.8555 L 31.8671 29.3008 L 29.3124 29.3008 L 29.3124 31.8555 Z M 23.1718 35.3945 L 23.1718 32.8398 L 20.5936 32.8398 L 20.5936 35.3945 Z M 35.4062 35.3945 L 35.4062 32.8398 L 32.8280 32.8398 L 32.8280 35.3945 Z M 36.4374 49.5039 L 42.1562 49.5039 C 47.0780 49.5039 49.5157 47.0664 49.5157 42.2383 L 49.5157 36.5196 C 49.5157 35.2774 48.8360 34.5977 47.6171 34.5977 C 46.3984 34.5977 45.7421 35.2774 45.7421 36.5196 L 45.7421 42.0508 C 45.7421 44.4883 44.4062 45.7305 42.1093 45.7305 L 36.4374 45.7305 C 35.1952 45.7305 34.5155 46.4102 34.5155 47.6289 C 34.5155 48.8242 35.1952 49.5039 36.4374 49.5039 Z M 13.8436 49.5039 L 19.5858 49.5039 C 20.8046 49.5039 21.4843 48.8242 21.4843 47.6289 C 21.4843 46.4102 20.8046 45.7305 19.5858 45.7305 L 13.9140 45.7305 C 11.5702 45.7305 10.2577 44.4883 10.2577 42.0508 L 10.2577 36.5196 C 10.2577 35.2774 9.5780 34.5977 8.3827 34.5977 C 7.1405 34.5977 6.4843 35.2774 6.4843 36.5196 L 6.4843 42.2383 C 6.4843 47.0898 8.9687 49.5039 13.8436 49.5039 Z M 31.8671 38.9336 L 31.8671 36.3789 L 29.3124 36.3789 L 29.3124 38.9336 Z M 38.9218 38.9336 L 38.9218 36.3789 L 36.3671 36.3789 L 36.3671 38.9336 Z M 39.2265 25.9727 L 39.2265 17.7930 C 39.2265 17.2305 38.7811 16.7617 38.1952 16.7617 L 30.0389 16.7617 C 29.4530 16.7617 29.0077 17.2305 29.0077 17.7930 L 29.0077 25.9727 C 29.0077 26.5352 29.4530 26.9805 30.0389 26.9805 L 38.1952 26.9805 C 38.7811 26.9805 39.2265 26.5352 39.2265 25.9727 Z M 18.8124 18.8008 L 24.9530 18.8008 L 24.9530 24.9414 L 18.8124 24.9414 Z M 26.9921 38.2070 L 26.9921 30.0274 C 26.9921 29.4649 26.5468 29.0196 25.9608 29.0196 L 17.8046 29.0196 C 17.2187 29.0196 16.7733 29.4649 16.7733 30.0274 L 16.7733 38.2070 C 16.7733 38.7696 17.2187 39.2383 17.8046 39.2383 L 25.9608 39.2383 C 26.5468 39.2383 26.9921 38.7696 26.9921 38.2070 Z"
-              ></path></g
-            ></svg
-          >
-          MarcoQR
-        </button>
-        <!-- boton descraga -->
-        <button
-          id="descargaImg"
-          class="border rounded-lg lowercase flex-col w-14 flex items-center justify-center text-xs font-thin hover:bg-white/50 duration-300 group p-1 cursor-pointer"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            class="w-8 fill-neutral-200"
-            xmlns="http://www.w3.org/2000/svg"
-            ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
-              id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
-              <path
-                opacity="0.5"
-                d="M22 16.0003V15.0003C22 12.1718 21.9998 10.7581 21.1211 9.8794C20.2424 9.00072 18.8282 9.00072 15.9998 9.00072H7.99977C5.17135 9.00072 3.75713 9.00072 2.87845 9.8794C2 10.7579 2 12.1711 2 14.9981V15.0003V16.0003C2 18.8287 2 20.2429 2.87868 21.1216C3.75736 22.0003 5.17157 22.0003 8 22.0003H16H16C18.8284 22.0003 20.2426 22.0003 21.1213 21.1216C22 20.2429 22 18.8287 22 16.0003Z"
-              ></path>
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M12 1.25C11.5858 1.25 11.25 1.58579 11.25 2L11.25 12.9726L9.56943 11.0119C9.29986 10.6974 8.82639 10.661 8.51189 10.9306C8.1974 11.2001 8.16098 11.6736 8.43054 11.9881L11.4305 15.4881C11.573 15.6543 11.781 15.75 12 15.75C12.2189 15.75 12.4269 15.6543 12.5694 15.4881L15.5694 11.9881C15.839 11.6736 15.8026 11.2001 15.4881 10.9306C15.1736 10.661 14.7001 10.6974 14.4305 11.0119L12.75 12.9726L12.75 2C12.75 1.58579 12.4142 1.25 12 1.25Z"
-              ></path>
-            </g></svg
-          >
-          descarga
-        </button>
-        <!-- boton agregar text -->
-        <button
-          id="addText"
-          class="border rounded-lg flex-col w-14 flex items-center justify-center text-xs font-thin hover:bg-white/50 duration-300 group p-1 cursor-pointer"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            class="w-8 fill-neutral-200"
-            xmlns="http://www.w3.org/2000/svg"
-            ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g
-              id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
-              <path
-                opacity="0.5"
-                d="M3.17157 5.17157C2 6.34315 2 8.22876 2 12C2 15.7712 2 17.6569 3.17157 18.8284C4.34315 20 6.22876 20 10 20H14C17.7712 20 19.6569 20 20.8284 18.8284C22 17.6569 22 15.7712 22 12C22 8.22876 22 6.34315 20.8284 5.17157C19.6569 4 17.7712 4 14 4H10C6.22876 4 4.34315 4 3.17157 5.17157Z"
-              ></path>
-              <path
-                d="M6.81782 7.78733C7.11779 7.74992 7.48429 7.74996 7.88383 7.75H10.1162C10.5157 7.74996 10.8822 7.74992 11.1822 7.78733C11.5109 7.82833 11.8612 7.9242 12.1624 8.19187C12.2138 8.23753 12.2625 8.28618 12.3081 8.33756C12.5758 8.63878 12.6717 8.98915 12.7127 9.31782C12.7501 9.61779 12.7501 9.98428 12.75 10.3838L12.75 10.425C12.75 10.8392 12.4142 11.175 12 11.175C11.5858 11.175 11.25 10.8392 11.25 10.425C11.25 9.97047 11.2486 9.69931 11.2242 9.50348C11.1998 9.30765 10.9965 9.2758 10.9965 9.2758C10.8007 9.25137 10.5295 9.25001 10.075 9.25001H9.75001V14.75H11C11.4142 14.75 11.75 15.0858 11.75 15.5C11.75 15.9142 11.4142 16.25 11 16.25H7.00001C6.58579 16.25 6.25001 15.9142 6.25001 15.5C6.25001 15.0858 6.58579 14.75 7.00001 14.75H8.25001V9.25001H7.925C7.47047 9.25001 7.19931 9.25137 7.00348 9.2758C7.00348 9.2758 6.80023 9.30765 6.7758 9.50348C6.75137 9.69931 6.75001 9.97047 6.75001 10.425C6.75001 10.8392 6.41422 11.175 6.00001 11.175C5.58579 11.175 5.25001 10.8392 5.25001 10.425L5.25 10.3838C5.24996 9.98428 5.24992 9.61779 5.28733 9.31782C5.32833 8.98915 5.4242 8.63878 5.69187 8.33756C5.73753 8.28618 5.78618 8.23753 5.83756 8.19187C6.13878 7.9242 6.48915 7.82833 6.81782 7.78733Z"
-              ></path>
-            </g></svg
-          >
-          Texto
-        </button>
-      </div>
-    </aside>
+  <astro-greet data-credenciales={credenciales}></astro-greet>
+    <SidebarCanvas />
     <div
       id="contenedorCanva"
       class="flex items-center justify-center w-full h-full top-0 left-0"
@@ -151,7 +29,21 @@
   </div>
 </div>
 
-<script>
+<script >
+
+class AstroGreet extends HTMLElement {
+  constructor() {
+    super();
+    // Lee el mensaje del atributo data.
+    this.message = this.dataset.credenciales;
+    
+  }
+
+}
+
+customElements.define('astro-greet', AstroGreet);
+const astroGreet = document.querySelector('astro-greet');
+const credenciales= JSON.parse(astroGreet.dataset.credenciales)
   // Importa la biblioteca Fabric.js
   import { fabric } from "fabric";
   const btnImg = document.getElementById("cargaImg");
@@ -160,13 +52,14 @@
   const btnQR = document.getElementById("btnQR");
   const btnAddText = document.getElementById("addText");
   const btnDescarga = document.getElementById("descargaImg");
-  let coordMarcos={
-    left:0,
-    top:0,
-    width:0,
-    height:0,
-    angulo:0
-  }
+  const btnGenerateQRS = document.getElementById("generateQRS");
+  let coordMarcos = {
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0,
+    angulo: 0,
+  };
   // Crea un nuevo objeto fabric.Canvas
   const canvas = new fabric.Canvas("canvas");
   contenedor.style.background = "transparent";
@@ -184,10 +77,10 @@
 
     fabric.Image.fromURL(url, function (img) {
       // Ajusta la imagen al ancho y la altura del lienzo
-    img.set({
-      left:coordMarcos.left,
-      top:coordMarcos.top
-    })
+      img.set({
+        left: coordMarcos.left,
+        top: coordMarcos.top,
+      });
       // Obtiene las dimensiones de la imagen
       const anchoImg = img.getScaledWidth();
       const altoImg = img.getScaledHeight();
@@ -228,7 +121,7 @@
 
   // Actualiza el lienzo
   canvas.renderAll();
-  // cargarQR
+  // mascar el cuadro
   btnCargaQR.addEventListener("click", (e) => {
     const marco = new fabric.Rect({
       width: 200,
@@ -248,63 +141,98 @@
     if (e.target.name == "marcoQR") {
       var objetoActivo = e.target;
 
-      coordMarcos.left=objetoActivo.left
-      coordMarcos.top=objetoActivo.top
-     coordMarcos.width=objetoActivo.getScaledWidth(),
-     coordMarcos.height=objetoActivo.getScaledHeight()
-     coordMarcos.angulo=objetoActivo.angle
-
+      coordMarcos.left = objetoActivo.left;
+      coordMarcos.top = objetoActivo.top;
+      (coordMarcos.width = objetoActivo.getScaledWidth()),
+        (coordMarcos.height = objetoActivo.getScaledHeight());
+      coordMarcos.angulo = objetoActivo.angle;
     }
   });
 
-  canvas.on("object:scaling",(e)=>{
+  canvas.on("object:scaling", (e) => {
     if (e.target.name == "marcoQR") {
       var objetoActivo = e.target;
 
-      coordMarcos.left=objetoActivo.left
-      coordMarcos.top=objetoActivo.top
-     coordMarcos.width=objetoActivo.getScaledWidth(),
-     coordMarcos.height=objetoActivo.getScaledHeight(),
-     coordMarcos.angulo=objetoActivo.angle
-
+      coordMarcos.left = objetoActivo.left;
+      coordMarcos.top = objetoActivo.top;
+      (coordMarcos.width = objetoActivo.getScaledWidth()),
+        (coordMarcos.height = objetoActivo.getScaledHeight()),
+        (coordMarcos.angulo = objetoActivo.angle);
     }
-  })
+  });
 
-  canvas.on('object:rotating',(e)=>{
+  canvas.on("object:rotating", (e) => {
     if (e.target.name == "marcoQR") {
       var objetoActivo = e.target;
+      coordMarcos.left = objetoActivo.left;
+      coordMarcos.top = objetoActivo.top;
+      (coordMarcos.width = objetoActivo.getScaledWidth()),
+        (coordMarcos.height = objetoActivo.getScaledHeight()),
+        (coordMarcos.angulo = objetoActivo.angle);
+    }
+  });
 
-      coordMarcos.left=objetoActivo.left
-      coordMarcos.top=objetoActivo.top
-     coordMarcos.width=objetoActivo.getScaledWidth(),
-     coordMarcos.height=objetoActivo.getScaledHeight(),
-     coordMarcos.angulo=objetoActivo.angle
-
-    }})
-
-
+  // cargar imagenQR
   btnQR.addEventListener("change", (e) => {
-  // Encuentra el marco en el lienzo por su nombre
-  const file = e.target.files[0];
-  const url = URL.createObjectURL(file);
+    // Encuentra el marco en el lienzo por su nombre
+    const file = e.target.files[0];
+    const url = URL.createObjectURL(file);
+    // Encuentra el marco en el lienzo por su nombre
+    // var miMarco = canvas.getObjects().find(obj => obj.name === 'marcoQR');
+    fabric.Image.fromURL(url, function (img) {
+      // Ajusta la imagen al ancho y la altura del marco
+      img.scaleToWidth(coordMarcos.width);
+      img.scaleToHeight(coordMarcos.height);
 
-  fabric.Image.fromURL(url, function (img) {
-    // Ajusta la imagen al ancho y la altura del marco
-    img.scaleToWidth(coordMarcos.width);
-    img.scaleToHeight(coordMarcos.height);
-
-    // Coloca la imagen en la posición del marco
-    img.set({
-      angle:coordMarcos.angulo,
-      left:coordMarcos.left,
-      top: coordMarcos.top
+      // Coloca la imagen en la posición del marco
+      img.set({
+        angle: coordMarcos.angulo,
+        left: coordMarcos.left,
+        top: coordMarcos.top,
+      });
+      // Añade la imagen al lienzo
+      canvas.add(img);
+      // Actualiza el lienzo
+      canvas.renderAll();
     });
+  });
 
-    // Añade la imagen al lienzo
-    canvas.add(img);
+  btnGenerateQRS.addEventListener("click", () => {
+  credenciales.forEach((credencial) => {
+    fabric.Image.fromURL(credencial.QRCode, function (img) {
+      // Ajusta la imagen al ancho y la altura del marco
+      img.scaleToWidth(coordMarcos.width);
+      img.scaleToHeight(coordMarcos.height);
 
-    // Actualiza el lienzo
-    canvas.renderAll();
+      // Coloca la imagen en la posición del marco
+      img.set({
+        angle: coordMarcos.angulo,
+        left: coordMarcos.left,
+        top: coordMarcos.top,
+      });
+
+      // Añade la imagen al lienzo
+      canvas.add(img);
+
+      // Actualiza el lienzo
+      canvas.renderAll();
+
+      // Genera la URL de datos y descarga la imagen
+      const downloadQR = () => {
+        var dataURL = canvas.toDataURL({
+          format: "png",
+          quality: 1,
+        });
+
+        const a = document.createElement("a");
+        a.download = "RecepcionQr - RamaCode";
+        a.href = dataURL;
+        a.click();
+      };
+
+      downloadQR();
+    });
   });
 });
+
 </script>
