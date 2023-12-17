@@ -1,7 +1,9 @@
 import { fabric } from "fabric";
+import JSZip from "jszip";
 
+const zip = new JSZip();
 // Declaración de constantes y variables
-const astroGreet = document.querySelector('astro-greet');
+const astroGreet = document.querySelector("astro-greet");
 const credenciales = JSON.parse(astroGreet.dataset.credenciales);
 const canvas = new fabric.Canvas("canvas");
 let coordMarcos = {
@@ -20,14 +22,14 @@ document.getElementById("cargaImg").addEventListener("change", cargarImagen);
 document.getElementById("descargaImg").addEventListener("click", descargarImagen);
 document.getElementById("addText").addEventListener("click", agregarTexto);
 document.getElementById("cargaQR").addEventListener("click", cargarMarcoQR);
+document.getElementById('btnQR').addEventListener('click',cargarElQR)
 document.getElementById("cargaQR").addEventListener("change", cargarImagenQR);
 document.getElementById("generateQRS").addEventListener("click", generarQRS);
 
 // Evento de movimiento de objeto
 canvas.on("object:moving", actualizarCoordenadas);
 canvas.on("object:rotating", actualizarCoordenadas);
-canvas.on('object:scaling',actualizarCoordenadas)
-
+canvas.on("object:scaling", actualizarCoordenadas);
 
 function configurarLienzo() {
   const contenedor = document.getElementById("contenedorCanva");
@@ -45,8 +47,8 @@ function cargarImagen(e) {
       left: coordMarcos.left,
       top: coordMarcos.top,
     });
+    img.scaleToHeight(canvas.getHeight())
     canvas.setWidth(img.getScaledWidth());
-    canvas.setHeight(img.getScaledHeight());
     canvas.centerObject(img);
     canvas.add(img);
   });
@@ -95,8 +97,7 @@ function actualizarCoordenadas(e) {
     coordMarcos.angulo = objetoActivo.angle;
   }
 }
-  
- 
+
 function cargarImagenQR(e) {
   const file = e.target.files[0];
   const url = URL.createObjectURL(file);
@@ -109,14 +110,38 @@ function cargarImagenQR(e) {
 }
 
 function generarQRS() {
-  credenciales.forEach((credencial) => {
-    fabric.Image.fromURL(credencial.QRCode, function (img) {
-      ajustarImagen(img);
-      canvas.add(img);
-      canvas.renderAll();
-      descargarQR();
+  const imgFolder = zip.folder("RecepcionQR Rama-Code");
+
+  // Crea un array de promesas
+  const promises = credenciales.map((credencial) => {
+    return new Promise((resolve, reject) => {
+      fabric.Image.fromURL(credencial.QRCode, function (img) {
+        ajustarImagen(img);
+        canvas.add(img);
+        canvas.renderAll();
+       
+        const dataURL = canvas.toDataURL({
+          format: "png",
+          quality: 1,
+        });
+
+        // Elimina la parte inicial de la URL de datos
+        const base64Data = dataURL.split(",")[1];
+
+        // Añade la imagen al archivo ZIP
+        imgFolder.file(
+          `Credencial-${credencial.nombreApellido}.jpg`,
+          base64Data,
+          { base64: true }
+        );
+        canvas.remove(img);
+        resolve();
+      });
     });
   });
+
+  // Espera a que todas las imágenes se hayan cargado antes de descargar el ZIP
+  Promise.all(promises).then(descargarQR);
 }
 
 function ajustarImagen(img) {
@@ -129,16 +154,17 @@ function ajustarImagen(img) {
   });
 }
 
-function descargarQR() {
-  const dataURL = canvas.toDataURL({
-    format: "png",
-    quality: 1,
-  });
+const cargarElQR=()=>{
 
-  const a = document.createElement("a");
-  a.download = "RecepcionQr - RamaCode";
-  a.href = dataURL;
-  a.click();
 }
 
-
+function descargarQR() {
+  zip.generateAsync({ type: "blob" }).then(function (content) {
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(content);
+    a.download = "RecepcionQR.zip";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  });
+}
