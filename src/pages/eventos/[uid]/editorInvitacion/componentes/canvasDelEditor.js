@@ -22,7 +22,6 @@ document.getElementById("cargaImg").addEventListener("change", cargarImagen);
 document.getElementById("descargaImg").addEventListener("click", descargarImagen);
 document.getElementById("addText").addEventListener("click", agregarTexto);
 document.getElementById("cargaQR").addEventListener("click", cargarMarcoQR);
-document.getElementById('btnQR').addEventListener('click',cargarElQR)
 document.getElementById("cargaQR").addEventListener("change", cargarImagenQR);
 document.getElementById("generateQRS").addEventListener("click", generarQRS);
 
