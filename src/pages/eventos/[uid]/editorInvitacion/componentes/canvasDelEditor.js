@@ -43,6 +43,8 @@ function cargarImagen(e) {
   const url = URL.createObjectURL(file);
 
   fabric.Image.fromURL(url, function (img) {
+
+    
     img.set({
       left: coordMarcos.left,
       top: coordMarcos.top,
