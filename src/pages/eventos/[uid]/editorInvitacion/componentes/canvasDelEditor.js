@@ -13,6 +13,13 @@ let coordMarcos = {
   height: 0,
   angulo: 0,
 };
+let coordMarcosText = {
+  left: 0,
+  top: 0,
+  width: 0,
+  height: 0,
+  angulo: 0,
+};
 
 // Configuración inicial del lienzo
 configurarLienzo();
@@ -22,6 +29,7 @@ document.getElementById("cargaImg").addEventListener("change", cargarImagen);
 document.getElementById("descargaImg").addEventListener("click", descargarImagen);
 document.getElementById("addText").addEventListener("click", agregarTexto);
 document.getElementById("cargaQR").addEventListener("click", cargarMarcoQR);
+document.getElementById('cargarMarcoTexto').addEventListener('click',agregarMarcoTexto);
 document.getElementById("cargaQR").addEventListener("change", cargarImagenQR);
 document.getElementById("generateQRS").addEventListener("click", generarQRS);
 
@@ -43,12 +51,13 @@ function cargarImagen(e) {
 
   fabric.Image.fromURL(url, function (img) {
 
-    
     img.set({
       left: coordMarcos.left,
       top: coordMarcos.top,
+      
     });
-    img.scaleToHeight(canvas.getHeight())
+ 
+    canvas.setHeight(img.getScaledHeight())
     canvas.setWidth(img.getScaledWidth());
     canvas.centerObject(img);
     canvas.add(img);
@@ -66,11 +75,46 @@ function descargarImagen() {
   a.href = dataURL;
   a.click();
 }
+let textoActual = null; // Variable para guardar el texto actual
 
-function agregarTexto() {
-  const texto = new fabric.Text("Hola mundo", { left: 10, top: 10 });
+
+function agregarTexto(credencial) {
+  eliminarObjetoPorNombre('marcoTexto')
+  if (textoActual) {
+    canvas.remove(textoActual); // Elimina el texto anterior
+  }
+  const texto = new fabric.Text(credencial.nombreApellido);
+  ajustarText(texto, credencial.nombreApellido.length);
   canvas.add(texto);
-  texto.enterEditing();
+  textoActual = texto; // Guarda el texto actual
+}
+
+
+const ajustarText=(text,length)=>{
+  const maxWidth = coordMarcosText.width;
+  const fontSize = maxWidth / length; // Ajusta el tamaño de la fuente en función de la longitud del texto
+  text.scaleToWidth(coordMarcosText.width);
+  text.scaleToHeight(coordMarcosText.height);
+  text.set({
+    fontFamily: 'Impact',
+    textAlign: 'left',
+    fontSize: fontSize,
+    angle: coordMarcosText.angulo,
+    left: coordMarcosText.left,
+    top: coordMarcosText.top,
+  });
+}
+function agregarMarcoTexto(){
+  const marcoTexto= new fabric.Rect({
+    width: 250,
+    height: 100,
+    name: "marcoTexto",
+    fill: "#cecece",
+    stroke: "gray",
+    strokeWidth: 2,
+  })
+  marcoTexto.name="marcoTexto"
+  canvas.add(marcoTexto)
 }
 
 function cargarMarcoQR() {
@@ -78,10 +122,9 @@ function cargarMarcoQR() {
     width: 200,
     height: 200,
     name: "marcoQR",
-    fill: "transparent",
+    fill: "#cecece",
     stroke: "gray",
     strokeWidth: 2,
-    borderRadius: "25%",
   });
 
   canvas.add(marco);
@@ -96,6 +139,15 @@ function actualizarCoordenadas(e) {
     coordMarcos.width = objetoActivo.getScaledWidth();
     coordMarcos.height = objetoActivo.getScaledHeight();
     coordMarcos.angulo = objetoActivo.angle;
+  }
+  if (e.target.name == "marcoTexto") {
+    const objetoActivo = e.target;
+
+    coordMarcosText.left = objetoActivo.left;
+    coordMarcosText.top = objetoActivo.top;
+    coordMarcosText.width = objetoActivo.getScaledWidth();
+    coordMarcosText.height = objetoActivo.getScaledHeight();
+    coordMarcosText.angulo = objetoActivo.angle;
   }
 }
 
@@ -115,7 +167,9 @@ function generarQRS() {
 
   // Crea un array de promesas
   const promises = credenciales.map((credencial) => {
+
     return new Promise((resolve, reject) => {
+      agregarTexto(credencial)
       fabric.Image.fromURL(credencial.QRCode, function (img) {
         ajustarImagen(img);
         canvas.add(img);
@@ -155,6 +209,7 @@ function ajustarImagen(img) {
   });
 }
 
+
 const cargarElQR=()=>{
 
 }
@@ -168,4 +223,15 @@ function descargarQR() {
     a.click();
     document.body.removeChild(a);
   });
+}
+
+// eliminar objetos dentro del canva por el nombre
+function eliminarObjetoPorNombre(nombre) {
+  const objetos = canvas.getObjects();
+  for (let i = 0; i < objetos.length; i++) {
+    if (objetos[i].name && objetos[i].name === nombre) {
+      canvas.remove(objetos[i]);
+      break;
+    }
+  }
 }
