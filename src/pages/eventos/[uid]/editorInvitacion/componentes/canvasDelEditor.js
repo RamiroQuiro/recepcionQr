@@ -26,10 +26,14 @@ configurarLienzo();
 
 // Eventos de los botones
 document.getElementById("cargaImg").addEventListener("change", cargarImagen);
-document.getElementById("descargaImg").addEventListener("click", descargarImagen);
+document
+  .getElementById("descargaImg")
+  .addEventListener("click", descargarImagen);
 document.getElementById("addText").addEventListener("click", agregarTexto);
 document.getElementById("cargaQR").addEventListener("click", cargarMarcoQR);
-document.getElementById('cargarMarcoTexto').addEventListener('click',agregarMarcoTexto);
+document
+  .getElementById("cargarMarcoTexto")
+  .addEventListener("click", agregarMarcoTexto);
 document.getElementById("cargaQR").addEventListener("change", cargarImagenQR);
 document.getElementById("generateQRS").addEventListener("click", generarQRS);
 
@@ -50,14 +54,12 @@ function cargarImagen(e) {
   const url = URL.createObjectURL(file);
 
   fabric.Image.fromURL(url, function (img) {
-
     img.set({
       left: coordMarcos.left,
       top: coordMarcos.top,
-      
     });
- 
-    canvas.setHeight(img.getScaledHeight())
+
+    canvas.setHeight(img.getScaledHeight());
     canvas.setWidth(img.getScaledWidth());
     canvas.centerObject(img);
     canvas.add(img);
@@ -77,9 +79,8 @@ function descargarImagen() {
 }
 let textoActual = null; // Variable para guardar el texto actual
 
-
 function agregarTexto(credencial) {
-  eliminarObjetoPorNombre('marcoTexto')
+  eliminarObjetoPorNombre("marcoTexto");
   if (textoActual) {
     canvas.remove(textoActual); // Elimina el texto anterior
   }
@@ -89,32 +90,31 @@ function agregarTexto(credencial) {
   textoActual = texto; // Guarda el texto actual
 }
 
-
-const ajustarText=(text,length)=>{
+const ajustarText = (text, length) => {
   const maxWidth = coordMarcosText.width;
   const fontSize = maxWidth / length; // Ajusta el tamaño de la fuente en función de la longitud del texto
   text.scaleToWidth(coordMarcosText.width);
   text.scaleToHeight(coordMarcosText.height);
   text.set({
-    fontFamily: 'Impact',
-    textAlign: 'left',
+    fontFamily: "Impact",
+    textAlign: "center",
     fontSize: fontSize,
     angle: coordMarcosText.angulo,
     left: coordMarcosText.left,
     top: coordMarcosText.top,
   });
-}
-function agregarMarcoTexto(){
-  const marcoTexto= new fabric.Rect({
+};
+function agregarMarcoTexto() {
+  const marcoTexto = new fabric.Rect({
     width: 250,
     height: 100,
     name: "marcoTexto",
     fill: "#cecece",
     stroke: "gray",
     strokeWidth: 2,
-  })
-  marcoTexto.name="marcoTexto"
-  canvas.add(marcoTexto)
+  });
+  marcoTexto.name = "marcoTexto";
+  canvas.add(marcoTexto);
 }
 
 function cargarMarcoQR() {
@@ -167,14 +167,13 @@ function generarQRS() {
 
   // Crea un array de promesas
   const promises = credenciales.map((credencial) => {
-
     return new Promise((resolve, reject) => {
-      agregarTexto(credencial)
       fabric.Image.fromURL(credencial.QRCode, function (img) {
+        agregarTexto(credencial);
         ajustarImagen(img);
         canvas.add(img);
         canvas.renderAll();
-       
+
         const dataURL = canvas.toDataURL({
           format: "png",
           quality: 1,
@@ -209,10 +208,7 @@ function ajustarImagen(img) {
   });
 }
 
-
-const cargarElQR=()=>{
-
-}
+const cargarElQR = () => {};
 
 function descargarQR() {
   zip.generateAsync({ type: "blob" }).then(function (content) {
