@@ -15,13 +15,13 @@ const credenciales =await JSON.stringify(dataCredenciales.credenciales.filter((c
 
 <div class="flex items-center justify-center flex-col w-full">
   <div
-    class="min-h-[85vh] w-full bg-paleta1-gray/50 justify-center flex flex-col items-center p-5 rounded-lg shadow-lg relative"
+    class="min-h-[85vh] w-full bg-white overflow-hidden justify-center flex flex-col items-center p-5 rounded-lg shadow-lg relative"
   >
   <astro-greet data-credenciales={credenciales}></astro-greet>
     <SidebarCanvas />
     <div
       id="contenedorCanva"
-      class="flex items-center justify-center w-full h-full top-0 left-0"
+      class="flex items-center justify-center w-full h-full py-20 top-0 left-0"
     >
       <canvas id="canvas" class="w- border shadow-[5px_5px_5px_1px_#c0c0c0]"
       ></canvas>
