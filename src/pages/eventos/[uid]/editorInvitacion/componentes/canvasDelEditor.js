@@ -197,11 +197,12 @@ function cargarImagenQR(e) {
 
 function generarQRS() {
   const imgFolder = zip.folder("RecepcionQR Rama-Code");
-
+eliminarObjetoPorNombre("marcoQR")
   // Crea un array de promesas
   const promises = credenciales.map((credencial) => {
     return new Promise((resolve, reject) => {
       fabric.Image.fromURL(credencial.QRCode, function (img) {
+
         agregarTexto(credencial);
         ajustarImagen(img);
         canvas.add(img);
