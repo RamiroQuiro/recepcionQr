@@ -106,11 +106,12 @@ class="absolute top-0 left-0 w-full bg-paleta1-gray/80 backdrop-blur-sm h- z-10"
     MarcoTexto
   </button>
     <!-- boton agregar text -->
-    <button
-    id="addText"
-    class="border rounded-lg flex-col w-16 flex items-center justify-center text-[11px] font-sans capitalize hover:bg-white/50 duration-300 group p-1 cursor-pointer"
+    <label
+    id="colorText"
+    class="border text-center leading-3 rounded-lg flex-col w-16 flex items-center justify-center text-[11px] font-sans capitalize hover:bg-white/50 duration-300 group p-1 cursor-pointer"
   >
     <svg
+    id="svgColorTexto"
       viewBox="0 0 24 24"
       class="w-8 fill-neutral-200"
       xmlns="http://www.w3.org/2000/svg"
@@ -127,8 +128,18 @@ class="absolute top-0 left-0 w-full bg-paleta1-gray/80 backdrop-blur-sm h- z-10"
         ></path>
       </g></svg
     >
-    Texto
-  </button>
+    Color Texto
+    <input type="color" name="colorText" id="colorText" class="hidden">
+  </label>
+    <!-- boton fontSize text -->
+    <label
+    for="fontSize"
+    class="border text-center leading-3 rounded-lg flex-col w-16 flex items-center justify-center text-[11px] font-sans capitalize hover:bg-white/50 duration-300 group p-1 cursor-pointer"
+  >
+
+  <input type="number" name="fontSize" id="fontSize" max="20" value="16" class="w-10 my-0.5 h-8 rounded-lg bg-paleta1-gray p-0.5 border ring-0  selection:ring-0 text-xs ">
+  tamaño
+  </label>
   <!-- boton descraga -->
   <button
     id="descargaImg"

@@ -24,12 +24,28 @@ let coordMarcosText = {
 // Configuración inicial del lienzo
 configurarLienzo();
 
+
+// configuraciones de Texto
+let colorText=""
+const colorTexto=(e)=>{
+  colorText=e.target.value
+  document.getElementById('svgColorTexto').style.fill=colorText
+  }
+
+  // obtener tamaño del texto
+let tamañoTexto=0
+  const obtenerFontSize=(e)=>{
+    tamañoTexto=e.target.value
+    console.log(tamañoTexto)
+    }
+
 // Eventos de los botones
 document.getElementById("cargaImg").addEventListener("change", cargarImagen);
 document
   .getElementById("descargaImg")
   .addEventListener("click", descargarImagen);
-document.getElementById("addText").addEventListener("click", agregarTexto);
+document.getElementById("colorText").addEventListener("change", colorTexto);
+document.getElementById("fontSize").addEventListener("change", obtenerFontSize);
 document.getElementById("cargaQR").addEventListener("click", cargarMarcoQR);
 document
   .getElementById("cargarMarcoTexto")
@@ -92,13 +108,14 @@ function agregarTexto(credencial) {
 
 const ajustarText = (text, length) => {
   const maxWidth = coordMarcosText.width;
-  const fontSize = maxWidth / length; // Ajusta el tamaño de la fuente en función de la longitud del texto
+  const fontSize = !tamañoTexto==0?tamañoTexto: maxWidth / length; // Ajusta el tamaño de la fuente en función de la longitud del texto
   text.scaleToWidth(coordMarcosText.width);
   text.scaleToHeight(coordMarcosText.height);
   text.set({
-    fontFamily: "Impact",
-    textAlign: "center",
+    fontFamily: "Arial",
     fontSize: fontSize,
+    fill: colorText, // Establece el color del texto
+    textAlign: 'center', // Alinea el texto al centro
     angle: coordMarcosText.angulo,
     left: coordMarcosText.left,
     top: coordMarcosText.top,
