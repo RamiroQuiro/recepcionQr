@@ -6,6 +6,10 @@ const zip = new JSZip();
 const astroGreet = document.querySelector("astro-greet");
 const credenciales = JSON.parse(astroGreet.dataset.credenciales);
 const canvas = new fabric.Canvas("canvas");
+let dimensionesImgOriginal = {
+  height: 0,
+  width: 0,
+};
 let coordMarcos = {
   left: 0,
   top: 0,
@@ -24,20 +28,19 @@ let coordMarcosText = {
 // Configuración inicial del lienzo
 configurarLienzo();
 
-
 // configuraciones de Texto
-let colorText=""
-const colorTexto=(e)=>{
-  colorText=e.target.value
-  document.getElementById('svgColorTexto').style.fill=colorText
-  }
+let colorText = "#1C2128";
+const colorTexto = (e) => {
+  colorText = e.target.value;
+  document.getElementById("svgColorTexto").style.fill = colorText;
+};
 
-  // obtener tamaño del texto
-let tamañoTexto=0
-  const obtenerFontSize=(e)=>{
-    tamañoTexto=e.target.value
-    console.log(tamañoTexto)
-    }
+// obtener tamaño del texto
+let tamañoTexto = 16;
+const obtenerFontSize = (e) => {
+  tamañoTexto = e.target.value;
+  console.log(tamañoTexto);
+};
 
 // Eventos de los botones
 document.getElementById("cargaImg").addEventListener("change", cargarImagen);
@@ -62,30 +65,49 @@ function configurarLienzo() {
   const contenedor = document.getElementById("contenedorCanva");
   contenedor.style.background = "transparent";
   canvas.setWidth(660);
-  canvas.setHeight(520);
+  canvas.setHeight(660);
 }
 // funciones de los botones
+let imgOriginal; // Variable para guardar la imagen original
+
 function cargarImagen(e) {
   const file = e.target.files[0];
   const url = URL.createObjectURL(file);
 
   fabric.Image.fromURL(url, function (img) {
+    // Guarda la imagen original
+    imgOriginal = fabric.util.object.clone(img);
+
+    // Escala la imagen para que se ajuste al lienzo
+    const scaleFactor = Math.min(
+      canvas.getWidth() / img.width,
+      canvas.getHeight() / img.height
+    );
+    img.scale(scaleFactor);
+
     img.set({
       left: coordMarcos.left,
       top: coordMarcos.top,
     });
-
-    canvas.setHeight(img.getScaledHeight());
-    canvas.setWidth(img.getScaledWidth());
+canvas.setWidth(img.getScaledWidth())
     canvas.centerObject(img);
     canvas.add(img);
+    canvas.renderAll();
   });
 }
 
 function descargarImagen() {
+  // Escala la imagen a su tamaño original
+  img.scaleToWidth(dimensionesImgOriginal.width);
+  img.scaleToHeight(dimensionesImgOriginal.height);
+
   const dataURL = canvas.toDataURL({
     format: "png",
     quality: 1,
+    left: 0,
+    top: 0,
+    width: dimensionesImgOriginal.with,
+    height: dimensionesImgOriginal.height,
   });
 
   const a = document.createElement("a");
@@ -100,27 +122,21 @@ function agregarTexto(credencial) {
   if (textoActual) {
     canvas.remove(textoActual); // Elimina el texto anterior
   }
-  const texto = new fabric.Text(credencial.nombreApellido);
-  ajustarText(texto, credencial.nombreApellido.length);
+  const texto = new fabric.Textbox(credencial.nombreApellido, {
+    height: coordMarcosText.height,
+    width: coordMarcosText.width, // Asegúrate de que el ancho del Textbox no sea mayor que el del marco
+    fontSize: coordMarcosText.width / credencial.nombreApellido.length,
+    fontFamily: "Arial",
+    fill: colorText,
+    textAlign: "center",
+    originY: "center",
+    left: coordMarcosText.left,
+    top: coordMarcosText.top + coordMarcosText.height / 2,
+  });
   canvas.add(texto);
   textoActual = texto; // Guarda el texto actual
 }
 
-const ajustarText = (text, length) => {
-  const maxWidth = coordMarcosText.width;
-  const fontSize = !tamañoTexto==0?tamañoTexto: maxWidth / length; // Ajusta el tamaño de la fuente en función de la longitud del texto
-  text.scaleToWidth(coordMarcosText.width);
-  text.scaleToHeight(coordMarcosText.height);
-  text.set({
-    fontFamily: "Arial",
-    fontSize: fontSize,
-    fill: colorText, // Establece el color del texto
-    textAlign: 'center', // Alinea el texto al centro
-    angle: coordMarcosText.angulo,
-    left: coordMarcosText.left,
-    top: coordMarcosText.top,
-  });
-};
 function agregarMarcoTexto() {
   const marcoTexto = new fabric.Rect({
     width: 250,
@@ -190,10 +206,14 @@ function generarQRS() {
         ajustarImagen(img);
         canvas.add(img);
         canvas.renderAll();
-
+       
         const dataURL = canvas.toDataURL({
           format: "png",
           quality: 1,
+          left: 0,
+          top: 0,
+          width: dimensionesImgOriginal.width,
+          height: dimensionesImgOriginal.height,
         });
 
         // Elimina la parte inicial de la URL de datos
