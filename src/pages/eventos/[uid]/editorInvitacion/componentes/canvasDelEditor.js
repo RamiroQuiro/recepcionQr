@@ -122,6 +122,7 @@ function agregarTexto(credencial) {
   if (textoActual) {
     canvas.remove(textoActual); // Elimina el texto anterior
   }
+  
   const texto = new fabric.Textbox(credencial.nombreApellido, {
     height: coordMarcosText.height,
     width: coordMarcosText.width, // Asegúrate de que el ancho del Textbox no sea mayor que el del marco
@@ -140,11 +141,20 @@ function agregarTexto(credencial) {
 function agregarMarcoTexto() {
   const marcoTexto = new fabric.Rect({
     width: 250,
-    height: 100,
+    height: 85,
     name: "marcoTexto",
-    fill: "#cecece",
-    stroke: "gray",
+    fill: "#cecece80",
+    stroke: "#F3D5EE", // Cambia el color del borde
     strokeWidth: 2,
+    rx: 10, // Agrega bordes redondeados
+    ry: 10, // Agrega bordes redondeados
+    hasControls: true, // Habilita las esquinas seleccionables
+    cornerColor: "#BFDAff", // Cambia el color de las esquinas seleccionables
+    cornerSize: 13, // Cambia el tamaño de las esquinas seleccionables
+    cornerStyle: 'circle',
+    cornerStrokeColor: "blue",
+    cornerDashArray: [2, 2],
+    transparentCorners:false
   });
   marcoTexto.name = "marcoTexto";
   canvas.add(marcoTexto);
@@ -155,9 +165,18 @@ function cargarMarcoQR() {
     width: 200,
     height: 200,
     name: "marcoQR",
-    fill: "#cecece",
-    stroke: "gray",
+    fill: "#cecece80",
+    stroke: "#F3D5EE", // Cambia el color del borde
     strokeWidth: 2,
+    rx: 10, // Agrega bordes redondeados
+    ry: 10, // Agrega bordes redondeados
+    hasControls: true, // Habilita las esquinas seleccionables
+    cornerColor: "#BFDAff", // Cambia el color de las esquinas seleccionables
+    cornerSize: 13, // Cambia el tamaño de las esquinas seleccionables
+    cornerStyle: 'circle',
+    cornerStrokeColor: "blue",
+    cornerDashArray: [2, 2],
+    transparentCorners:false
   });
 
   canvas.add(marco);
