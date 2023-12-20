@@ -1,11 +1,18 @@
 ---
 
 const {acreditaciones,evento}=Astro.props
+const url = Astro.url;
+const name = url.pathname.split("/");
+console.log(name[3]);
+
+const isPath = name[3] == "credenciales";
 ---
 
-<div id={`credencialesEventosDe${evento?.uid}`} class={`relative group cursor-pointer items-center justify-center py-2 px-4  hover:bg-paleta1-gray/80   flex flex-col bg-clip-border rounded-xl bg-white border hover:shadow-lg  text-gray-700 shadow-sm duration-200 l`}>
+<div id={`credencialesEventosDe${evento?.uid}`}   class={`${
+  isPath ? "bg-paleta1-gray/80 text-white  " : "bg-white text-paleta1-gray/80 "
+} relative group cursor-pointer items-center justify-center py-2 w-20  hover:bg-paleta1-gray/80   flex flex-col bg-clip-border rounded-xl  border hover:shadow-lg  text-gray-700 shadow-sm duration-200 l`}>
 
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-8 h-8 text-white group-hover:fill-white fill-paleta1-gray">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"   class={`w-8 h-8 text-white group-hover:fill-white ${  isPath ? " fill-white  " : " fill-paleta1-gray/80 "}`}>
         <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd"></path>
       </svg>
 

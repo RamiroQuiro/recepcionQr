@@ -122,8 +122,8 @@ function agregarTexto(credencial) {
   if (textoActual) {
     canvas.remove(textoActual); // Elimina el texto anterior
   }
-  
-  const texto = new fabric.Textbox(credencial.nombreApellido, {
+  let capitalize=credencial.nombreApellido.charAt(0).toUpperCase() + credencial.nombreApellido.slice(1);
+  const texto = new fabric.Textbox(capitalize, {
     height: coordMarcosText.height,
     width: coordMarcosText.width, // Asegúrate de que el ancho del Textbox no sea mayor que el del marco
     fontSize: coordMarcosText.width / credencial.nombreApellido.length,

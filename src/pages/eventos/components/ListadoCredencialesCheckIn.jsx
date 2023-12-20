@@ -87,7 +87,7 @@ useEffect(() => {
         style={{
           width: `calc(${porcentajeAcreditaciones}%)`
         }}
-        className={`${porcentajeAcreditaciones==0&&'hidden'} bg-gradient-to-tr from-red-500/90 to-red-400/80 rounded-r-md backdrop-blur-sm group duration-500  absolute top-0 right-0 h-full  border-l-2 border-white/80 `}>
+        className={`${porcentajeAcreditaciones==0&&'hidden'} bg-gradient-to-tr from-red-500/90 to-red-400/80 rounded-r-md backdrop-blur-sm group duration-500  absolute top-0 right-0 h-full  border-l-2 rounded-l-lg border-white/80 `}>
         <div className="w-full h-full  text-right relative flex items-center">
             <span className="z-10 mx-auto bg-white/70 rounded-full text-xs font-bold py-1 px-2 border-2  duration-300 ">
               {" "}
