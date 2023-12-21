@@ -1,4 +1,3 @@
-import fs from 'fs/promises'
 import { getTemplate, sendMailer } from "../../../nodemailer/nodemailer";
 
 export const POST=async({request})=>{
