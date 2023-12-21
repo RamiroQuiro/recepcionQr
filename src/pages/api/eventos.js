@@ -86,7 +86,6 @@ export const GET = async ({ request }) => {
   // Define la ruta del archivo
   const filePathData = path.join(process.cwd(), basePath, "base", "base.json");
 
-  console.log(filePathData)
   // Lee el archivo y parsea el contenido a un array
   const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
   let arrayEventos = dataBase.eventos?.map((element) => {

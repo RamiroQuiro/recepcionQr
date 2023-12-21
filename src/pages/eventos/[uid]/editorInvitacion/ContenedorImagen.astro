@@ -16,7 +16,7 @@ const credenciales =await JSON.stringify(dataCredenciales.credenciales.filter((c
   <div
     class="min-h-[85vh] w-full bg-white overflow-hidden justify-center flex flex-col items-center p-5 rounded-lg shadow-lg relative"
   >
-  <astro-greet data-credenciales={credenciales}></astro-greet>
+  <astro-greet data-credenciales={credenciales} data-uidevento={uid}></astro-greet>
     <SidebarCanvas />
     <div
       id="contenedorCanva"

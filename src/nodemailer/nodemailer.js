@@ -22,21 +22,27 @@ export const mailOptions = {
 
 
 
-export const sendMailer=async(email, subject,html)=>{
+export const sendMailer=async(email, subject,html,base64Image)=>{
       try {
         await transporter.sendMail({
           from:`ramiryexe@hotmail.com`,
           to:email,
           subject:subject,
           text:"Suscripcion a tu Sistema PEC",
-          html,
+          html, // Agrega la imagen a tu HTML
+          attachments: [{
+              filename: 'image.png',
+              content: base64Image,
+              encoding: 'base64',
+              cid: 'unique@nodemailer.com' //same cid value as in the html img src
+          }]
         })
       } catch (error) {
         console.log(error)
       }
 }
 
-export const getTemplate=(name,token)=>{
+export const getTemplate=(name,dataURL)=>{
 
   return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
   <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
@@ -76,10 +82,7 @@ export const getTemplate=(name,token)=>{
                        </tr>
                        <tr>
                         <td align="center" class="es-m-p0r es-m-p0l" style="Margin:0;padding-top:5px;padding-bottom:5px;padding-left:40px;padding-right:40px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px"><p>Para confirmar tu cuenta, ingresa al siguiente enlace</p>
-                          <a
-                              href="http://localhost:3000/api/auth/confirm/${token}"
-                              target="_blank"
-                          >Confirmar Cuenta</a></td>
+                        <img src="cid:unique@nodemailer.com"/>
                        </tr>
                        
                        <tr>
