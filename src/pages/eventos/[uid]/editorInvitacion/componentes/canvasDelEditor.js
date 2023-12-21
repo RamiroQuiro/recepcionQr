@@ -5,6 +5,7 @@ const zip = new JSZip();
 // Declaración de constantes y variables
 const astroGreet = document.querySelector("astro-greet");
 const credenciales = JSON.parse(astroGreet.dataset.credenciales);
+const uidEvento = JSON.parse(astroGreet.dataset.uidevento);
 const canvas = new fabric.Canvas("canvas");
 let dimensionesImgOriginal = {
   height: 0,
@@ -55,6 +56,9 @@ document
   .addEventListener("click", agregarMarcoTexto);
 document.getElementById("cargaQR").addEventListener("change", cargarImagenQR);
 document.getElementById("generateQRS").addEventListener("click", generarQRS);
+document
+  .getElementById("enviarMails")
+  .addEventListener("click", fetchingMandarMails);
 
 // Evento de movimiento de objeto
 canvas.on("object:moving", actualizarCoordenadas);
@@ -89,7 +93,7 @@ function cargarImagen(e) {
       left: coordMarcos.left,
       top: coordMarcos.top,
     });
-canvas.setWidth(img.getScaledWidth())
+    canvas.setWidth(img.getScaledWidth());
     canvas.centerObject(img);
     canvas.add(img);
     canvas.renderAll();
@@ -122,7 +126,9 @@ function agregarTexto(credencial) {
   if (textoActual) {
     canvas.remove(textoActual); // Elimina el texto anterior
   }
-  let capitalize=credencial.nombreApellido.charAt(0).toUpperCase() + credencial.nombreApellido.slice(1);
+  let capitalize =
+    credencial.nombreApellido.charAt(0).toUpperCase() +
+    credencial.nombreApellido.slice(1);
   const texto = new fabric.Textbox(capitalize, {
     height: coordMarcosText.height,
     width: coordMarcosText.width, // Asegúrate de que el ancho del Textbox no sea mayor que el del marco
@@ -151,10 +157,10 @@ function agregarMarcoTexto() {
     hasControls: true, // Habilita las esquinas seleccionables
     cornerColor: "#BFDAff", // Cambia el color de las esquinas seleccionables
     cornerSize: 13, // Cambia el tamaño de las esquinas seleccionables
-    cornerStyle: 'circle',
+    cornerStyle: "circle",
     cornerStrokeColor: "blue",
     cornerDashArray: [2, 2],
-    transparentCorners:false
+    transparentCorners: false,
   });
   marcoTexto.name = "marcoTexto";
   canvas.add(marcoTexto);
@@ -173,10 +179,10 @@ function cargarMarcoQR() {
     hasControls: true, // Habilita las esquinas seleccionables
     cornerColor: "#BFDAff", // Cambia el color de las esquinas seleccionables
     cornerSize: 13, // Cambia el tamaño de las esquinas seleccionables
-    cornerStyle: 'circle',
+    cornerStyle: "circle",
     cornerStrokeColor: "blue",
     cornerDashArray: [2, 2],
-    transparentCorners:false
+    transparentCorners: false,
   });
 
   canvas.add(marco);
@@ -216,17 +222,16 @@ function cargarImagenQR(e) {
 
 function generarQRS() {
   const imgFolder = zip.folder("RecepcionQR Rama-Code");
-eliminarObjetoPorNombre("marcoQR")
+  eliminarObjetoPorNombre("marcoQR");
   // Crea un array de promesas
   const promises = credenciales.map((credencial) => {
     return new Promise((resolve, reject) => {
       fabric.Image.fromURL(credencial.QRCode, function (img) {
-
         agregarTexto(credencial);
         ajustarImagen(img);
         canvas.add(img);
         canvas.renderAll();
-       
+
         const dataURL = canvas.toDataURL({
           format: "png",
           quality: 1,
@@ -286,5 +291,66 @@ function eliminarObjetoPorNombre(nombre) {
       canvas.remove(objetos[i]);
       break;
     }
+  }
+}
+
+// mandar emails de las invitaicones
+
+async function fetchingMandarMails() {
+  try {
+    // Send email with canvas to each email address in credenciales
+    const promises = credenciales.map((credencial) => {
+      return new Promise((resolve, reject) => {
+        fabric.Image.fromURL(credencial.QRCode, function (img) {
+          agregarTexto(credencial);
+          ajustarImagen(img);
+          canvas.add(img);
+          canvas.renderAll();
+
+          const dataURL = canvas.toDataURL({
+            format: "png",
+            quality: 1,
+            left: 0,
+            top: 0,
+            width: dimensionesImgOriginal.width,
+            height: dimensionesImgOriginal.height,
+          });
+          // Convertir la cadena base64 en un Blob
+          let byteCharacters = atob(dataURL.split(",")[1]);
+          let byteNumbers = new Array(byteCharacters.length);
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+          }
+          let byteArray = new Uint8Array(byteNumbers);
+          let blob = new Blob([byteArray], { type: "image/png" });
+
+          // Crear un objeto FormData y agregar el Blob como un archivo
+          let formData = new FormData();
+          formData.append("image", blob, "image.png");
+          formData.append("mail", credencial.email);
+          formData.append('uidEvento',uidEvento)
+          formData.append("nombreApellido", credencial.nombreApellido);
+
+          // Enviar el formulario multipart/form-data
+          fetch("http://localhost:4321/api/sendmailer/router", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((result) => {
+              console.log(result);
+              resolve();
+            })
+            .catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+        });
+      });
+    });
+
+    await Promise.all(promises);
+  } catch (error) {
+    // Handle any errors that occur during the fetch reques}}
   }
 }
