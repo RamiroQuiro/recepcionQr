@@ -14,8 +14,8 @@ export const transporter=nodemailer.createTransport({
   port:'587',
   secure:false,
   auth:{
-    user:'rama.exe.13@gmail.com',
-    pass:'yvpmpmdpwyjevcoz'
+    user:EMAIL,
+    pass:EMAIL_PASS
   }
 
 
@@ -36,7 +36,7 @@ export const mailOptions = {
 export const sendMailer=async(email, subject,html,base64Image)=>{
       try {
         await transporter.sendMail({
-          from:`ramiryexe@hotmail.com`,
+          from:EMAIL,
           to:email,
           subject:subject,
           text:"Suscripcion a tu Sistema PEC",
