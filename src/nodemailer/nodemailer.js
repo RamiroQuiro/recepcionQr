@@ -3,11 +3,22 @@ import nodemailer from "nodemailer";
 
 const{EMAIL,EMAIL_PASS}=import.meta.env
 export const transporter=nodemailer.createTransport({
-  service:'hotmail',
+  // service:'hotmail',
+  // auth:{
+  //   user:EMAIL,
+  //   pass:EMAIL_PASS
+  // },
+
+  service:'gmail',
+  host:'smtp.gmail.com',
+  port:'587',
+  secure:false,
   auth:{
-    user:EMAIL,
-    pass:EMAIL_PASS
+    user:'rama.exe.13@gmail.com',
+    pass:'yvpmpmdpwyjevcoz'
   }
+
+
         // host: "sandbox.smtp.mailtrap.io",
         // port: 2525,
         // auth: {
