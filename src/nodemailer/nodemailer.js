@@ -39,7 +39,7 @@ export const sendMailer=async(email, subject,html,base64Image)=>{
           from:EMAIL,
           to:email,
           subject:subject,
-          text:"Suscripcion a tu Sistema PEC",
+          text:"RecepcionQR Rama-Code",
           html, // Agrega la imagen a tu HTML
           attachments: [{
               filename: 'image.png',
@@ -92,7 +92,7 @@ export const getTemplate=(name,dataURL)=>{
                         <td align="center" class="es-m-txt-c" style="padding:0;Margin:0;padding-bottom:10px"><h1 style="Margin:0;line-height:46px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:26px;font-style:normal;font-weight:bold;color:#333333">Hola ${name}!!!&nbsp;</h1></td>
                        </tr>
                        <tr>
-                        <td align="center" class="es-m-p0r es-m-p0l" style="Margin:0;padding-top:5px;padding-bottom:5px;padding-left:40px;padding-right:40px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px"><p>Para confirmar tu cuenta, ingresa al siguiente enlace</p>
+                        <td align="center" class="es-m-p0r es-m-p0l" style="Margin:0;padding-top:5px;padding-bottom:5px;padding-left:40px;padding-right:40px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px"><p>RecepcionQR - RamaCode</p>
                         <img src="cid:unique@nodemailer.com"/>
                        </tr>
                        
