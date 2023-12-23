@@ -48,7 +48,6 @@ const colorTexto = (e) => {
 let tamañoTexto = 16;
 const obtenerFontSize = (e) => {
   tamañoTexto = e.target.value;
-  console.log(tamañoTexto);
 };
 
 // Eventos de los botones
