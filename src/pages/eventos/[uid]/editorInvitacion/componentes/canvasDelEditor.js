@@ -1,5 +1,6 @@
 import { fabric } from "fabric";
 import JSZip from "jszip";
+import { mandarToast } from "../../../components/toastShow";
 
 const zip = new JSZip();
 // Declaración de constantes y variables
@@ -14,7 +15,6 @@ const fetcehingEventos=async()=>{
 
 const credenciales= await fetcehingEventos()
 const canvas = new fabric.Canvas("canvas");
-import { showToast } from '../../../../toast';
 let dimensionesImgOriginal = {
   height: 0,
   width: 0,
@@ -346,7 +346,8 @@ async function fetchingMandarMails() {
             .then((response) => response.json())
             .then((result) => {
              if (result.status==200) {
-              showToast('enviado a ->',result.email)
+              console.log(result)
+              mandarToast(`enviado a ->${result.email}`)
              }
               resolve();
             })

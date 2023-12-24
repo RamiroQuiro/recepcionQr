@@ -11,7 +11,6 @@ export default function LimpiarCredenciales({uidEvento}) {
             })
         });
         const respuesta=await res.json()
-       console.log(respuesta)
         if (respuesta.status === 200) {
             showToast('CheckIn Limpio');
             window.location.reload(true);

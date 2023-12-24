@@ -1,12 +1,8 @@
 ---
 import MainDasboard from "../../../components/MainDasboard.astro";
 import Layout from "../../../layouts/Layout.astro";
-import BotonModificarPortada from "../components/BotonModificarPortada";
 const { uid } = Astro.params;
-import CardVideos from "../components/CardVideos.astro";
-import LimpiarAsistencia from "../components/LimpiarAsistencia";
 import StatCredenciales from "../components/StatCredenciales.astro";
-import StatDanger from "../components/StatDanger.jsx";
 import StatInvitacion from "../components/StatInvitacion.astro";
 import StatVideos from "../components/StatVideos.astro";
 import Toast from "../components/Toast.astro";
@@ -17,7 +13,7 @@ const acreditaciones = data.acreditaciones;
 ---
 
 <Layout title={evento?.nombre}>
- <Toast mensaje={'jpla'}/>
+ <Toast/>
   <MainDasboard>
     <div
       class="flex flex-col w-11/12 items- justify-between md:flex-row gap-x-3 md:gap-x-5"

@@ -1,6 +1,5 @@
 ---
 
-import BotonModificarPortada from "../../components/BotonModificarPortada";
 import LayoutEvento from "../../layout/LayoutEvento.astro";
 const { uid } = Astro.params;
 import CardVideos from "../../components/CardVideos.astro";
@@ -9,7 +8,7 @@ import BotonCargarVideo from "./BotonCargarVideo.astro";
 const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
 const data = await objectEvento.json();
 const evento = data.files;
-const acreditaciones=data.acreditaciones
+// const acreditaciones=data.acreditaciones
 
 
 ---

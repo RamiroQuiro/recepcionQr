@@ -9,7 +9,6 @@ const [fileExtension, setFileExtension] = useState(false)
     const file=e.target.files[0]
     setFileExtension(file.name.split('.').pop())
     setSelectFile(file)
-    console.log(file)
   }
   const handleEdit = async (e) => {
     try {

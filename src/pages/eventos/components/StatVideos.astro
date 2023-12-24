@@ -3,7 +3,6 @@
 const {evento}=Astro.props
 const url = Astro.url;
 const name = url.pathname.split("/");
-console.log(name[3]);
 
 const isPath = name[3] == "videos";
 ---

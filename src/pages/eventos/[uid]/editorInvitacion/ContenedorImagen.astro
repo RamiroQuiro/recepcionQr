@@ -1,7 +1,7 @@
 ---
+import SidebarCanvas from './componentes/sidebarCanvas.astro'
 const { uid } = Astro.params;
-<<<<<<< HEAD
-import SidebarCanvas from './componentes/SidebarCanvas.astro'
+
 const fetching = await fetch("http://localhost:4321/api/data");
 const dataCredenciales = await fetching.json();
 const credenciales =await JSON.stringify(dataCredenciales.credenciales.filter((credencial) => {
@@ -10,10 +10,7 @@ const credenciales =await JSON.stringify(dataCredenciales.credenciales.filter((c
   }
   return credencial.evento == uid;
 }))
-=======
 
-
->>>>>>> 9987b3c5c6eb4828b2a2aa3454d0c16e1105db4b
 
 ---
 

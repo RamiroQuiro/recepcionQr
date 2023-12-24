@@ -16,15 +16,15 @@ export const POST=async({request})=>{
         const base64Image = Buffer.from(imageBuffer).toString('base64');
 
         const template = getTemplate(nombreApellido, base64Image);
-        sendMailer(email, 'prueba', template, base64Image);
+        sendMailer(email, 'RecepcionQR - Invitacion', template, base64Image);
         return new Response(JSON.stringify({
             status: 200,
-            message: email,
+            email: email,
         }));
     } catch (error) {
         return new Response(JSON.stringify({
             status: 500,
-            message: email,
+            email: email,
         }));
     }
 }
