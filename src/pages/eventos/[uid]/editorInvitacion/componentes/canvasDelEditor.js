@@ -4,9 +4,17 @@ import JSZip from "jszip";
 const zip = new JSZip();
 // Declaración de constantes y variables
 const astroGreet = document.querySelector("astro-greet");
-const credenciales = JSON.parse(astroGreet.dataset.credenciales);
+// const credenciales = JSON.parse(astroGreet.dataset.credenciales);
 const uidEvento = JSON.parse(astroGreet.dataset.uidevento);
+const fetcehingEventos=async()=>{
+  const resCheckIn = await fetch(`http://localhost:4321/api/eventos/${uidEvento}`);
+  const respuesta = await resCheckIn.json();
+  return respuesta.acreditaciones[0].acreditaciones
+}
+
+const credenciales= await fetcehingEventos()
 const canvas = new fabric.Canvas("canvas");
+import { showToast } from '../../../../toast';
 let dimensionesImgOriginal = {
   height: 0,
   width: 0,
@@ -40,7 +48,6 @@ const colorTexto = (e) => {
 let tamañoTexto = 16;
 const obtenerFontSize = (e) => {
   tamañoTexto = e.target.value;
-  console.log(tamañoTexto);
 };
 
 // Eventos de los botones
@@ -338,7 +345,9 @@ async function fetchingMandarMails() {
           })
             .then((response) => response.json())
             .then((result) => {
-              console.log(result);
+             if (result.status==200) {
+              showToast('enviado a ->',result.email)
+             }
               resolve();
             })
             .catch((error) => {
