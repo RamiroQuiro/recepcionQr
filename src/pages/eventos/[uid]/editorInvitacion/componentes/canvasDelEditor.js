@@ -347,12 +347,13 @@ async function fetchingMandarMails() {
             .then((result) => {
              if (result.status==200) {
               console.log(result)
-              mandarToast(`enviado a ->${result.email}`)
-             }
-              resolve();
-            })
-            .catch((error) => {
-              console.log(error);
+              mandarToast(`✅,  emails enviados correctamente`)
+            }
+            resolve();
+          })
+          .catch((error) => {
+            console.log(error);
+            mandarToast(`🚫, error al enviar los emails`)
               reject(error);
             });
         });
