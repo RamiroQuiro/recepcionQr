@@ -378,10 +378,7 @@ async function fetchingMandarMails() {
     });
 
     await Promise.all(promises).then(()=>{
-      mandarToast(`📤✅ Emails enviados correctamente`,{
-        size:'20px',
-        color:'red'
-      })
+      mandarToast(`📤✅ Emails enviados correctamente`)
     });
   } catch (error) {
     // Handle any errors that occur during the fetch reques}}
