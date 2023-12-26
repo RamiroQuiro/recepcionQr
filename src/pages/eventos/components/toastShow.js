@@ -6,8 +6,9 @@ const mandarToast = ({text,time}) => {
     setTimeout(()=>{
       toast.style.transition = "opacity 0.5s, transform 0.5s";
       toast.style.opacity = 0;
-      toast.style.transform= "translatey(-50px)";
+      toast.style.transform= "translateY(-50px)";
       setTimeout(() => {
+        toast.innerHTML ='';
         toast.style.display = "none";
       }, 500);
     },tiempo);

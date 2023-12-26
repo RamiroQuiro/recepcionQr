@@ -365,7 +365,6 @@ async function fetchingMandarMails() {
             .then((result) => {
              if (result.status==200) {
               console.log(result)
-              mandarToast({text:`📤✅ Emails enviados correctamente`})
             }
             resolve();
           })
@@ -378,7 +377,9 @@ async function fetchingMandarMails() {
       });
     });
 
-    await Promise.all(promises);
+    await Promise.all(promises).then(()=>{
+      mandarToast({text:`📤✅ Emails enviados correctamente`})
+    });
   } catch (error) {
     // Handle any errors that occur during the fetch reques}}
   }
