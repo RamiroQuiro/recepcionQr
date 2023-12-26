@@ -16,7 +16,7 @@ const {mensaje}=Astro.props
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 4px;
-    animation: slideInDown 0.5s ease-in-out, slideOutUp 1s ease-in-out 2s;
+    animation: slideInDown 0.5s ease-in-out;
   }
 
 
@@ -34,16 +34,5 @@ const {mensaje}=Astro.props
     }
   }
 
-  @keyframes slideOutUp {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10%);
-    }
-    100% {
-      transform: translateY(-100%);
-      display: hidden;
-    }
-  }
+  
 </style>

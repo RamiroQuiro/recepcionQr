@@ -228,17 +228,27 @@ function cargarImagenQR(e) {
 }
 
 function generarQRS() {
+  // Crea una carpeta en el archivo zip para los códigos QR
   const imgFolder = zip.folder("RecepcionQR Rama-Code");
+
+  // Elimina cualquier objeto existente con el nombre "marcoQR"
   eliminarObjetoPorNombre("marcoQR");
-  // Crea un array de promesas
+
+  // Crea un array de promesas, una para cada credencial
   const promises = credenciales.map((credencial) => {
     return new Promise((resolve, reject) => {
       fabric.Image.fromURL(credencial.QRCode, function (img) {
+        // Añade texto a la credencial
         agregarTexto(credencial);
+
+        // Ajusta el tamaño de la imagen
         ajustarImagen(img);
+
+        // Añade la imagen al lienzo y la renderiza
         canvas.add(img);
         canvas.renderAll();
 
+        // Convierte el lienzo en una URL de datos
         const dataURL = canvas.toDataURL({
           format: "png",
           quality: 1,
@@ -248,23 +258,31 @@ function generarQRS() {
           height: dimensionesImgOriginal.height,
         });
 
-        // Elimina la parte inicial de la URL de datos
+        // Elimina la parte inicial de la URL de datos para obtener los datos en base64
         const base64Data = dataURL.split(",")[1];
 
-        // Añade la imagen al archivo ZIP
+        // Añade la imagen al archivo zip
         imgFolder.file(
           `Credencial-${credencial.nombreApellido}.jpg`,
           base64Data,
           { base64: true }
         );
+
+        // Elimina la imagen del lienzo
         canvas.remove(img);
+
+        // Resuelve la promesa
         resolve();
       });
     });
   });
 
-  // Espera a que todas las imágenes se hayan cargado antes de descargar el ZIP
-  Promise.all(promises).then(descargarQR);
+  // Espera a que todas las imágenes se hayan cargado antes de descargar el archivo zip
+  Promise.all(promises).then(() => {
+    // Muestra una notificación toast aquí para informar al usuario que se está descargando el archivo zip
+    mandarToast({text:"📥 Descargando el archivo ZIP...",time:5000});
+    descargarQR();
+  });
 }
 
 function ajustarImagen(img) {
@@ -347,13 +365,13 @@ async function fetchingMandarMails() {
             .then((result) => {
              if (result.status==200) {
               console.log(result)
-              mandarToast(`✅,  emails enviados correctamente`)
+              mandarToast({text:`📤✅ Emails enviados correctamente`})
             }
             resolve();
           })
           .catch((error) => {
             console.log(error);
-            mandarToast(`🚫, error al enviar los emails`)
+            mandarToast({text:`🚫 Error al enviar los emails`})
               reject(error);
             });
         });
