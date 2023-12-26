@@ -1,4 +1,5 @@
 import { showToast } from "./toast";
+import {mandarToast} from './eventos/components/toastShow'
 
 const modalMensaje = (mensaje, uidEvento, idVideo) => {
   const container = document.getElementById('mensaje-modal');
@@ -38,7 +39,7 @@ const modalMensaje = (mensaje, uidEvento, idVideo) => {
         }),
       });
 
-      showToast("Elemento Eliminado", 25000);
+      mandarToast("Elemento Eliminado");
       setTimeout(() => {
         window.location.reload();
       }, 1200);
