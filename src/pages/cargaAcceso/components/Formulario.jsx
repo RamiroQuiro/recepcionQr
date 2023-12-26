@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { showToast } from "../../toast";
+import { mandarToast } from "../../eventos/components/toastShow";
 
 export default function Form() {
   const [responseMessage, setResponseMessage] = useState("");
@@ -32,7 +33,7 @@ export default function Form() {
         if (data.message && data.name) {
           setIsLoading(false);
           setQrImage(data.qr);
-          showToast(`🎞️ Video Cargado`, 3000);
+          mandarToast(`💳 Credencial Cargado`, {time:3000});
           setResponseMessage(false);
           e.target.reset();
           setTimeout(() => {

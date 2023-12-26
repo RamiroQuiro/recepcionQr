@@ -1,4 +1,4 @@
-import {showToast} from '../../toast'
+import { mandarToast } from './toastShow';
 
 export default function LimpiarCredenciales({uidEvento}) {
 
@@ -12,7 +12,7 @@ export default function LimpiarCredenciales({uidEvento}) {
         });
         const respuesta=await res.json()
         if (respuesta.status === 200) {
-            showToast('CheckIn Limpio');
+            mandarToast('CheckIn Limpio');
             window.location.reload(true);
         }
     }

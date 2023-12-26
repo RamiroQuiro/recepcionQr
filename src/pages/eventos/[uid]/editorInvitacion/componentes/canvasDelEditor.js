@@ -280,7 +280,7 @@ function generarQRS() {
   // Espera a que todas las imágenes se hayan cargado antes de descargar el archivo zip
   Promise.all(promises).then(() => {
     // Muestra una notificación toast aquí para informar al usuario que se está descargando el archivo zip
-    mandarToast({text:"📥 Descargando el archivo ZIP...",time:5000});
+    mandarToast("📥 Descargando el archivo ZIP...",{time:5000});
     descargarQR();
   });
 }
@@ -370,7 +370,7 @@ async function fetchingMandarMails() {
           })
           .catch((error) => {
             console.log(error);
-            mandarToast({text:`🚫 Error al enviar los emails`})
+            mandarToast(`🚫 Error al enviar los emails`)
               reject(error);
             });
         });
@@ -378,7 +378,10 @@ async function fetchingMandarMails() {
     });
 
     await Promise.all(promises).then(()=>{
-      mandarToast({text:`📤✅ Emails enviados correctamente`})
+      mandarToast(`📤✅ Emails enviados correctamente`,{
+        size:'20px',
+        color:'red'
+      })
     });
   } catch (error) {
     // Handle any errors that occur during the fetch reques}}
