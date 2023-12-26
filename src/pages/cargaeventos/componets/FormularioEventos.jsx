@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { showToast } from '../../toast';
+import { mandarToast } from '../../eventos/components/toastShow';
 
 export default function FormularioEventos() {
   const [form, setForm] = useState({ nombre: '', foto: '' });
@@ -17,27 +18,33 @@ export default function FormularioEventos() {
   }
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
     const formData = new FormData();
     formData.append('nombre', form.nombre);
     formData.append('foto', form.foto);
-    formData.append('extencion',fileExtension)
-    const response = await fetch('/api/eventos', {
-      method: 'POST',
-      body: formData,
-    });
-
-    console.log(response)
-    if(response.status===200){
-      showToast('👌 Evento Cargado',3000)
-      setTimeout(()=>{
-        window.location.href('/')
-      },3000)
+    formData.append('extencion', fileExtension);
+  
+    try {
+      const response = await fetch('/api/eventos', {
+        method: 'POST',
+        body: formData,
+      });
+  
+      console.log(response);
+      if (response.status === 200) {
+        mandarToast('👌 Evento Cargado', { time: 3000 });
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 3000);
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
   
-    setPreview(null)
-    setForm({ nombre: '', foto: '' })
+    setPreview(null);
+    setForm({ nombre: '', foto: '' });
   }
+  
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col items-center text-gray-700">
