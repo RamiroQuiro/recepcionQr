@@ -1,4 +1,5 @@
 ---
+import ImportacionExcel from './components/ImportacionExcel.astro';
 import ListadoCredencialesCheckIn from './components/ListadoCredencialesCheckIn.jsx'
 import LayoutEvento from './layout/LayoutEvento.astro'
 const {uid}=Astro.params
@@ -6,7 +7,9 @@ const {uid}=Astro.params
 
 <LayoutEvento>
 
-  <div>
+  <div class="bg-white rounded-lg w-full min-h-[50vh]  text-paleta1-gray p-4 flex flex-col items-center w">
     <ListadoCredencialesCheckIn client:load uid={uid}/>
+
+<ImportacionExcel uidEvento={uid}/>
   </div>
 </LayoutEvento>

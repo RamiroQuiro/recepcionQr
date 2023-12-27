@@ -35,4 +35,19 @@ export const GET = async ({ request }) => {
       })
     );
   };
-  
+
+  export const PUT = async ({ request }) => {
+    const data = await request
+    const url=await request.url.split('/')[5]
+    console.log(data)
+    const filePathData = path.join(process.cwd(), basePath, "base", "base.json");
+    const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
+
+
+
+    return new Response(
+      JSON.stringify({
+        acreditaciones: 'ok',
+      })
+    );
+  };
