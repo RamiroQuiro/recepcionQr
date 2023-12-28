@@ -41,43 +41,54 @@ export const GET = async ({ request }) => {
 };
 
 export const PUT = async ({ request }) => {
+  // Leer la base de datos existente
+  const filePathData = path.join(process.cwd(), basePath, "base", "base.json");
+  const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
+  const credenciales = dataBase.credenciales;
   try {
     // Parsear el cuerpo de la solicitud
     const body = await request.json();
     const data = await body.data;
     const url = await request.url.split("/")[5];
-    
+
     // Mapear los datos a un nuevo formato
-    let newData = data.map(({ nombreApellido, dni, email, celular, evento }) => {
-      const uid = generarUID();
-      return {
-        uid,
-        nombreApellido,
-        dni,
-        email,
-        celular,
-        invitados: 1,
-        video: undefined,
-        estado: true,
-        evento: url,
-      };
-    });
+    let newData = data.map(
+      ({ nombreApellido, dni, email, celular, evento }) => {
+        const uid = generarUID();
+        return {
+          uid,
+          nombreApellido,
+          dni,
+          email,
+          celular,
+          invitados: 1,
+          video: undefined,
+          estado: true,
+          evento: url,
+        };
+      }
+    );
 
     // Generar códigos QR para cada credencial
-    const promise = newData.map((credencial) => {
-      return new Promise(async(resolve, reject) => {
-        const newQR = await generateQR(credencial);
-        credencial.QRCode = newQR;
-        resolve(credencial);
+    const promise = newData.map(async (credencial) => {
+      return new Promise(async (resolve, reject) => {
+        let verificacion = credenciales.some(
+          (cred) => Number(cred.dni) == Number(credencial.dni)
+        );
+      
+          try {
+            const newQR = await generateQR(credencial);
+            credencial.QRCode = newQR;
+            resolve(credencial);
+          } catch (error) {
+            reject(error);
+          }
+        
       });
     });
 
     // Esperar a que todas las promesas se resuelvan
     let newCredenciales = await Promise.all(promise);
-    
-    // Leer la base de datos existente
-    const filePathData = path.join(process.cwd(), basePath, "base", "base.json");
-    const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
 
     // Agregar las nuevas credenciales a la base de datos
     dataBase.credenciales.push(...newCredenciales);
@@ -91,7 +102,7 @@ export const PUT = async ({ request }) => {
       JSON.stringify({
         status: 200,
         acreditaciones: "ok",
-      }), 
+      })
     );
   } catch (error) {
     // Manejar cualquier error que pueda ocurrir
@@ -99,8 +110,8 @@ export const PUT = async ({ request }) => {
     return new Response(
       JSON.stringify({
         status: 500,
-        error: 'Ha ocurrido un error en el servidor',
-      }), 
+        error: "Ha ocurrido un error en el servidor",
+      })
     );
   }
 };

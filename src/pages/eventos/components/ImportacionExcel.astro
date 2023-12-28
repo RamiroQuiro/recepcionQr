@@ -3,6 +3,7 @@ const { uidEvento } = Astro.props;
 ---
 
 <div>
+    <astro-greet data-uidevento={uidEvento}></astro-greet>
   <input type="file" name="excel" id="excel" />
 
   <button class="bg-gray-200 px-5 py-2 rounded-lg" id="btnImportar"
@@ -13,6 +14,13 @@ const { uidEvento } = Astro.props;
 <script>
   import { read, utils } from "xlsx";
   import { mandarToast } from "./toastShow";
+  // Declaración de constantes y variables
+const astroGreet = document.querySelector("astro-greet");
+// const credenciales = JSON.parse(astroGreet.dataset.credenciales);
+const uidEvento = JSON.parse(astroGreet.dataset.uidevento);
+
+
+// 
   const inputFile = document.getElementById("excel");
   const btnImportar = document.getElementById("btnImportar");
   let importacionData = [""];
@@ -36,7 +44,7 @@ const { uidEvento } = Astro.props;
 
   btnImportar.addEventListener("click", async () => {
     try {
-      const response = await fetch("/api/eventos/" + 3248, {
+      const response = await fetch("/api/eventos/" + uidEvento, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -44,8 +52,14 @@ const { uidEvento } = Astro.props;
         body: JSON.stringify({ data: importacionData }),
       });
       const data = await response.json();
+      console.log(data)
       if (data.status == 200) {
         mandarToast("Importacion Correcta");
+        setTimeout(()=>{
+            window.location.reload()
+        },2000)
+      } else if (data.status==505) {
+        mandarToast('Credencial ya existente en el evento')
       } else {
         mandarToast("Error al Importar");
       }
