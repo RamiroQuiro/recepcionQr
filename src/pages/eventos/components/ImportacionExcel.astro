@@ -1,49 +1,56 @@
 ---
-const {uidEvento}=Astro.props
+const { uidEvento } = Astro.props;
 ---
 
 <div>
   <input type="file" name="excel" id="excel" />
 
-
-  <button class="bg-gray-200 px-5 py-2 rounded-lg " id="btnImportar">importar</button>
+  <button class="bg-gray-200 px-5 py-2 rounded-lg" id="btnImportar"
+    >importar</button
+  >
 </div>
 
 <script>
-    import {read,utils} from 'xlsx'
-    const inputFile = document.getElementById("excel");
-    const btnImportar = document.getElementById("btnImportar");
-    let importacionData=['']
-    inputFile.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const data = new Uint8Array(e.target.result);
-            const workbook = read(data, {type: 'array'});
-            
-            // Iterar sobre cada hoja de cálculo en el libro
-            for (const sheetName of workbook.SheetNames) {
-                // Convertir la hoja de cálculo a JSON
-                const jsonData = utils.sheet_to_json(workbook.Sheets[sheetName]);
-                importacionData=jsonData
-            }
-        };
-        reader.readAsArrayBuffer(file);
-    });
-    
-    btnImportar.addEventListener('click',async()=>{
-        try {
-            const response = await fetch('/api/eventos/'+3248,{
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({data:importacionData}),
-            });
-            const data = await response.json();
-            console.log(data);
-        } catch (error) {
-            console.error(error);
-        }
-    })
-    </script>
+  import { read, utils } from "xlsx";
+  import { mandarToast } from "./toastShow";
+  const inputFile = document.getElementById("excel");
+  const btnImportar = document.getElementById("btnImportar");
+  let importacionData = [""];
+  inputFile.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const data = new Uint8Array(e.target.result);
+      const workbook = read(data, { type: "array" });
+
+      // Iterar sobre cada hoja de cálculo en el libro
+      for (const sheetName of workbook.SheetNames) {
+        // Convertir la hoja de cálculo a JSON
+        const jsonData = utils.sheet_to_json(workbook.Sheets[sheetName]);
+        console.log(jsonData);
+        importacionData = jsonData;
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  });
+
+  btnImportar.addEventListener("click", async () => {
+    try {
+      const response = await fetch("/api/eventos/" + 3248, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data: importacionData }),
+      });
+      const data = await response.json();
+      if (data.status == 200) {
+        mandarToast("Importacion Correcta");
+      } else {
+        mandarToast("Error al Importar");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  });
+</script>

@@ -6,7 +6,7 @@ function generarUID() {
     .toString()
     .padStart(4, "0");
 }
-
+export {generarUID}
 const DES = import.meta.env.URL_DESARROLLO;
 const PRODUC = import.meta.env.URL_PRODUCCION;
 const isDev = import.meta.env.DEV;
