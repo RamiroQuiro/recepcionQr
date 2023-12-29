@@ -49,7 +49,7 @@ const uidEvento = JSON.parse(astroGreet.dataset.uidevento);
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data: importacionData }),
+        body: JSON.stringify({ data: importacionData,uidEvento }),
       });
       const data = await response.json();
       console.log(data)

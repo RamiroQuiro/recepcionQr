@@ -22,7 +22,7 @@ const acreditaciones = data.acreditaciones;
           class="text-2xl cursor-pointer rounded-full bg-paleta1-primary/80 px-2 h-10 flex items-center justify-center border border-gray-700/50 hover:-translate-x-1 duration-300 hover:scale-105 active:scale-90 shadow-lg text-gray-700"
           >←</a
         >
-        <h1 class="text-xl font-thin capitalize text-gray-700 md:my-10">
+        <h1 id={`btn${evento.uid}`} class="text-xl hover:tracking-widest cursor-pointer hover:drop-shadow-[1px_1px_1px_#0c0c0c50] duration-150 font-thin capitalize text-gray-700 md:my-10">
           {evento?.nombre}
         </h1>
       </div>
@@ -43,9 +43,15 @@ const acreditaciones = data.acreditaciones;
   </MainDasboard>
 </Layout>
 
-<script>
+<script define:vars={{evento}}>
+const btnEvento=document.getElementById(`btn${evento.uid}`)
+
   const btnBack = document.getElementById("volver");
   btnBack.addEventListener("click", () => {
     history.back();
   });
+
+  btnEvento.addEventListener('click',()=>{
+    document.location.href=`/eventos/${evento.uid}`
+  })
 </script>

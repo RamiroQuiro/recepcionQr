@@ -49,13 +49,16 @@ export const PUT = async ({ request }) => {
     // Parsear el cuerpo de la solicitud
     const body = await request.json();
     const data = await body.data;
+    const uidEvento = await body.uidEvento
     const url = await request.url.split("/")[5];
 
-    // Mapear los datos a un nuevo formato
-    let newData = data.map(
-      ({ nombreApellido, dni, email, celular, evento }) => {
+    let newData = data.reduce((acc, { nombreApellido, dni, email, celular, evento }) => {
+      let verificacion = credenciales.some(
+        (cred) => Number(cred.dni) === Number(dni) && Number(cred.evento) === Number(uidEvento)
+      );
+      if (!verificacion) {
         const uid = generarUID();
-        return {
+        acc.push({
           uid,
           nombreApellido,
           dni,
@@ -65,25 +68,21 @@ export const PUT = async ({ request }) => {
           video: undefined,
           estado: true,
           evento: url,
-        };
+        });
       }
-    );
-
+      return acc;
+    }, []);
+    console.log(newData)
     // Generar códigos QR para cada credencial
     const promise = newData.map(async (credencial) => {
       return new Promise(async (resolve, reject) => {
-        let verificacion = credenciales.some(
-          (cred) => Number(cred.dni) == Number(credencial.dni)
-        );
-      
-          try {
-            const newQR = await generateQR(credencial);
-            credencial.QRCode = newQR;
-            resolve(credencial);
-          } catch (error) {
-            reject(error);
-          }
-        
+        try {
+          const newQR = await generateQR(credencial);
+          credencial.QRCode = newQR;
+          resolve(credencial);
+        } catch (error) {
+          reject(error);
+        }
       });
     });
 
