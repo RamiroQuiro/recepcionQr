@@ -59,7 +59,9 @@ useEffect(() => {
 }, [dataEvento,porcentajeAcreditaciones,porcentajeCheckIn,sseCheckIn]);
 
   return (
-    <div className="">
+
+    <div className="w-full">
+
       <h1>Total de Credenciales {dataEvento?.acreditaciones?.length || 0}</h1>
 
       <div

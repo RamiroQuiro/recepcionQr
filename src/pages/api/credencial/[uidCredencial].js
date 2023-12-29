@@ -178,3 +178,5 @@ export const PUT = async ({ request }) => {
     );
   }
 };
+
+  export {generateQR}
