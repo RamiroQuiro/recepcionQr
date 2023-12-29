@@ -1,4 +1,3 @@
-import { showToast } from "./toast";
 import {mandarToast} from './eventos/components/toastShow'
 
 const modalMensaje = (mensaje, uidEvento, idVideo) => {

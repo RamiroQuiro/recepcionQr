@@ -11,7 +11,7 @@ const dataEventos = await arrayEventos.json();
 >
   {
     dataEventos?.eventos?.length > 0 ? (
-      <div class="flex items-center flex-wrap justify-evenly w-full gap-2 ">
+      <div class="flex items-center flex-wrap justify-evenly w-full gap-x-2 gap-y-10 ">
         {dataEventos?.eventos?.map((evento) => (
           <CardEventos evento={evento} />
         ))}
