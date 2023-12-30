@@ -15,7 +15,7 @@ http.createServer((req, res) => {
     // Obtener el uidEvento del cliente desde la URL
     const urlParams = new URLSearchParams(req.url.split('?')[1]);
     const uidEvento = urlParams.get('uidEvento');
-    // Simular la lectura de la base de datos y enviar evento con el uidEvento al cliente
+    // hacer la lectura de la base de datos y enviar evento con el uidEvento al cliente
     async function  buscarBaseDeDatos() {
       // Aquí iría la lógica para leer la base de datos y obtener la información del evento
       const eventData =await obtenerInformacionDeLaBaseDeDatos(uidEvento); // Reemplaza esto con tu lógica real

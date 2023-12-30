@@ -15,6 +15,5 @@ export const obtenerInformacionDeLaBaseDeDatos = async (uidEvento) => {
     // Leemos los archivos del directorio y el archivo de datos JSON.
     const data = JSON.parse(await fs.readFile(filePathData, "utf8"));
     const eventoEncontrado = data.eventos.find((event) => Number(event.uid) === Number(uidEvento));
-
     return eventoEncontrado.checkIn;
 }

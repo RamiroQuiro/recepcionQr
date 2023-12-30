@@ -3,7 +3,7 @@ import BotonImprimir from './BotonImprimir'
 
 export default function CardCheckIn({ credencial,eventoName }) {
 
-
+console.log(credencial)
 
   return (
     <li className="border-gray-100 flex flex-row text-paleta1-gray mb-2 card-transition">

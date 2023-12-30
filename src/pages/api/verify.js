@@ -110,7 +110,7 @@ export const GET = async ({ request }) => {
 
     dataBase?.eventos[indexEventoCorrespontiente].checkIn.push({
       uid: generarUID(),  // Genera un identificador único para el check-in
-      nombreApellido: decodificacion.name,
+      nombreApellido: decodificacion.nombreApellido,
       uidInvitado: decodificacion.uid,
       hora: new Date().toLocaleTimeString(),  // Obtiene la hora actual
       invitados: decodificacion.invitados,
