@@ -56,9 +56,9 @@ export default function ListadoCredencialesCheckIn({ uid }) {
 
   return (
     <div className="w-full">
-      <h1 className="text-sm uppercase tracking-tighter font-">Total de Credenciales {dataEvento?.acreditaciones?.length || 0}</h1>
+      <h1 className="text-sm uppercase tracking-tighter mb-10">Total de Credenciales {dataEvento?.acreditaciones?.length || 0}</h1>
 
-      <div className="w-full  h-10 my-10 bg-white/50 oerflow-x-hidden cursor-pointer backdrop-blur-sm  rounded-lg  border-2 border-gray-500/50 flex items-center justify-center relative">
+      <div className="w-full  h-10 my-5 bg-white/50 oerflow-x-hidden cursor-pointer backdrop-blur-sm  rounded-lg  border-2 border-gray-500/50 flex items-center justify-center relative">
         {/* contenedor de asistentes */}
         <div
           style={{
