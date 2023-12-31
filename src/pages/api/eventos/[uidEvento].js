@@ -72,7 +72,6 @@ export const PUT = async ({ request }) => {
       }
       return acc;
     }, []);
-    console.log(newData)
     // Generar códigos QR para cada credencial
     const promise = newData.map(async (credencial) => {
       return new Promise(async (resolve, reject) => {

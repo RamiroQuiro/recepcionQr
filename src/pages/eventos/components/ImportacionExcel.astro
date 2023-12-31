@@ -2,11 +2,14 @@
 const { uidEvento } = Astro.props;
 ---
 
-<div>
-    <astro-greet data-uidevento={uidEvento}></astro-greet>
-  <input type="file" name="excel" id="excel" />
+<div class="w-full flex-shrink flex-col flex items-center gap-2 ">
+  <label for="excel"class="cursor-pointer text-sm font-bold rounded-xl border-2 border-orange-400 border-dashed border-separate p-5">
+    Importa desde un Excel
+    </label> 
+  <astro-greet data-uidevento={uidEvento}></astro-greet>
+  <input type="file" name="excel" id="excel" accept=".xls, .xlsx" class="hidden"  />
 
-  <button class="bg-gray-200 px-5 py-2 rounded-lg" id="btnImportar"
+  <button class="bg-gray-200 px-5 text-xs font-bold hover:shadow-lg hover:shadow-orange-500/50 active:scale-95 hover:-translate-y-0.5 hover:border hover:border-orange-300 duration-200 border border-transparent py-2 rounded-lg" id="btnImportar"
     >importar</button
   >
 </div>
