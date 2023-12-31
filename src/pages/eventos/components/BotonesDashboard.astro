@@ -1,0 +1,16 @@
+---
+const {uidEvento,texto,btnName,href}=Astro.props
+console.log(uidEvento)
+---
+
+<button
+id={`btn${btnName}`}
+class="border-x border-gray-700/60 h-full text-center w-1/4 flex-shrink py-3 hover:bg-gray-700/60 duration-300 hover:text-gray-100">{texto}</button>
+
+<script define:vars={{uidEvento,btnName,href}}>
+
+document.getElementById(`btn${btnName}`).addEventListener('click',()=>{
+location.href=href
+})
+
+</script>
