@@ -32,7 +32,7 @@ texto="Portada"
 href={`/eventos/${uid}/editPortada`}
 />
  </div>
-<div class="bg-gray-100 flex items-center justify-evenly w-full h-2/5 px-2 py-5">
+<div class="bg-gray-100 flex md:flex-row space-y-5 md:space-y-0 flex-col items-center justify-evenly w-full h-2/5 px-2 py-5">
 <StatDanger client:load uidEvento={uid} />
   <ImportacionExcel uidEvento={uid}/>
 </div>

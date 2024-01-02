@@ -10,7 +10,7 @@ export default function StatDanger({ uidEvento }) {
   };
 
   return (
-    <div className="relative p-2 group w-1/3 h-full flex flex-col items-stretch justify-between bg-clip-border rounded-xl bg-gradient-to-tr from-red-600 to-red-400 shadow-red-500/40   hover:shadow-lg duration-200 text-gray-200 shadow-md">
+    <div className="relative p-2 group md:w-1/3 flex-grow w-full h-full flex flex-col items-stretch justify-between bg-clip-border rounded-xl bg-gradient-to-tr from-red-600 to-red-400 shadow-red-500/40   hover:shadow-lg duration-200 text-gray-200 shadow-md">
    
         <label
           htmlFor="isDanger"
