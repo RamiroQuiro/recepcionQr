@@ -1,41 +1,44 @@
 ---
-import BotonesDashboard from './components/BotonesDashboard.astro';
-import ImportacionExcel from './components/ImportacionExcel.astro';
-import ListadoCredencialesCheckIn from './components/ListadoCredencialesCheckIn.jsx'
-import StatDanger from './components/StatDanger';
-import LayoutEvento from './layout/LayoutEvento.astro'
-const {uid}=Astro.params
+import BotonesDashboard from "./components/BotonesDashboard.astro";
+import ImportacionExcel from "./components/ImportacionExcel.astro";
+import ListadoCredencialesCheckIn from "./components/ListadoCredencialesCheckIn.jsx";
+import StatDanger from "./components/StatDanger";
+import LayoutEvento from "./layout/LayoutEvento.astro";
+const { uid } = Astro.params;
 ---
 
 <LayoutEvento>
-
-
-  <div class="bg-white rounded-lg w-full min-h-[50vh]  text-paleta1-gray p-4 flex flex-col gap-y-5 items-center w">
-    <ListadoCredencialesCheckIn client:load uid={uid}/>
-<div class="bg-gray-100 flex items-stretch justify-evenly w-full h-2/5 px-2 -5 text-sm font-bold">
-<BotonesDashboard
-uidEvento={uid}
-btnName="lanzarEvento"
-texto="Lanzar Evento"
-href={`/recepcion/${uid}`}
-/>
-<BotonesDashboard
-uidEvento={uid}
-btnName="recepcion"
-texto="Recepcion"
-href={`/recepcion/receptor/${uid}`}
-/>
-<BotonesDashboard
-uidEvento={uid}
-btnName="portada"
-texto="Portada"
-href={`/eventos/${uid}/editPortada`}
-/>
- </div>
-<div class="bg-gray-100 flex items-center justify-evenly w-full h-2/5 px-2 py-5">
-<StatDanger client:load uidEvento={uid} />
-  <ImportacionExcel uidEvento={uid}/>
-</div>
-
+  <div
+    class="bg-white rounded-lg w-full min-h-[50vh] text-paleta1-gray p-4 flex flex-col gap-y-5 items-center w"
+  >
+    <ListadoCredencialesCheckIn client:load uid={uid} />
+    <div
+      class="bg-gray-100 flex items-stretch justify-evenly w-full h-2/5 px-2 -5 text-sm font-bold"
+    >
+      <BotonesDashboard
+        uidEvento={uid}
+        btnName="lanzarEvento"
+        texto="Lanzar Evento"
+        href={`/recepcion/${uid}`}
+      />
+      <BotonesDashboard
+        uidEvento={uid}
+        btnName="recepcion"
+        texto="Recepcion"
+        href={`/recepcion/receptor/${uid}`}
+      />
+      <BotonesDashboard
+        uidEvento={uid}
+        btnName="portada"
+        texto="Portada"
+        href={`/eventos/${uid}/editPortada`}
+      />
+    </div>
+    <div
+      class="bg-gray-100 flex items-center justify-evenly w-full h-2/5 px-2 py-5"
+    >
+      <StatDanger client:load uidEvento={uid} />
+      <ImportacionExcel uidEvento={uid} />
+    </div>
   </div>
 </LayoutEvento>
