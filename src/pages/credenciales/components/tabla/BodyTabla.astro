@@ -20,7 +20,7 @@ const eventos = await dataEventos?.eventos;
 
 <tbody class="divide-y divide-gray-200 my-3 text-neutral-800 w-full">
   {
-    credenciales?.map((credencial) => {
+    credenciales?.map((credencial,i) => {
       let nombreVideo, nombreEvento;
       if (!eventos) {
         return;
@@ -41,7 +41,9 @@ const eventos = await dataEventos?.eventos;
 
       return (
         <ItemsBodyTabla
+        
           credencial={credencial}
+          indice={i}
           evento={nombreEvento}
           video={nombreVideo}
         />
