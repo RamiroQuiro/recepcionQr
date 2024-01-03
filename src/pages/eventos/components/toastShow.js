@@ -13,7 +13,7 @@ const mandarToast = (text,opciones={}) => {
    // Crear un nuevo elemento toast
    const toast = document.createElement('div');
    toast.id = 'toastEvento';
-   toast.className = `${opciones.background}  flex top-10 left-50 shadow-lg leading-6 fixed z-40 bg-gray-700 rounded-lg px-5 py-2 text-xs items-center justify-center font-bold opacity-0`;
+   toast.className = `${opciones.background}  flex top-10 left-50 shadow-lg leading-6 fixed z-50 bg-gray-700 rounded-lg px-5 py-2 text-xs items-center justify-center font-bold opacity-0`;
    toast.style.transition = 'opacity 0.5s, transform 0.5s';
    toast.style.transform= "translateY(-50px)";
    toast.style.opacity = 0;
