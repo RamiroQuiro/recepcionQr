@@ -3,6 +3,7 @@ import BotonEliminar from "./BotonEliminar.jsx";
 import BotonEntrar from "./BotonEntrar.jsx";
 import BotonLanzarEventos from "./BotonLanzarEventos.jsx";
 import BotonLanzarReceptor from "./BotonLanzarReceptor.astro";
+import BtnDelet from "./BtnDelet.astro";
 const { evento, videos } = Astro.props;
 ---
 
@@ -13,7 +14,6 @@ const { evento, videos } = Astro.props;
     class="flex items-start justify- gap-0 hover:gap-10 bg-paleta1-primary py-3 px-4 group hover:justify-evenly hover:bg-paleta1-primary/80 backdrop-blur-sm duration-500 rounded-bl-full absolute right-0 top-0 before:content-[' '] before:absolute before:right-0 before:top-0 before:w-5 before:h-5 before:bg-paleta1-primary/80 before:backdrop-blur-sm before:rounded-full before:scale-0 before:hover:scale-[15] before:duration-500 z-20"
   >
     <BotonEliminar uidEvento={evento.uid} idVideo={null} client:load />
-
     <BotonEntrar uid={evento.uid} client:load />
   </div>
 

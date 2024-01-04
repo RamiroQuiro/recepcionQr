@@ -8,9 +8,10 @@ const astroGreet = document.querySelector("astro-greet");
 // const credenciales = JSON.parse(astroGreet.dataset.credenciales);
 const uidEvento = JSON.parse(astroGreet.dataset.uidevento);
 const fetcehingEventos=async()=>{
-  const resCheckIn = await fetch(`http://localhost:4321/api/eventos/${uidEvento}`);
+  const resCheckIn = await fetch(`http://localhost:4321/api/eventos/canvas/${uidEvento}`);
   const respuesta = await resCheckIn.json();
-  return respuesta.acreditaciones[0].acreditaciones
+  
+  return respuesta.acreditaciones
 }
 
 const credenciales= await fetcehingEventos()

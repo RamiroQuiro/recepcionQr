@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function ItemsBodyTabla({credencial}) {
+export default function ItemsBodyTabla({credencial,indice}) {
 
-
+console.log(indice)
     const captaruid=(e)=>{
       console.log(credencial.uid)
         window.location.href = '/credenciales/' + credencial.uid;
@@ -13,6 +13,12 @@ export default function ItemsBodyTabla({credencial}) {
             key={credencial.uid}
             className="odd:bg-neutral-300/50 cursor-pointer hover:bg-zinc-400 hover:text-gray-50 duration-200"
           >
+            <td className="whitespace-nowrap px-4 py-2 font-medium text-primary-text">
+              <input type="checkbox" name="checkUid" id="checkUid" />
+            </td>
+            <td className="whitespace-nowrap px-4 py-2 text-primary-text">
+              {indice}
+            </td>
             <td className="whitespace-nowrap px-4 py-2 font-medium text-primary-text">
               {credencial.nombreApellido}
             </td>
