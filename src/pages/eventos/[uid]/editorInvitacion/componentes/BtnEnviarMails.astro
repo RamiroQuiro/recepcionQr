@@ -2,13 +2,13 @@
 import email from '../../../../../../public/email.jpeg'
 ---
 <div>
-<div id="pop" popover  class=" w-1/2 z-30 h-1/2 overflow-hidden  px-2 py-3 bg-slate-600 rounded-lg border items-center justify-normal flex-col">
-   <div class="flex flex-col items-center">
-    <img src={email.src} alt="email" class="object-cover object-center w-auto h-full"/>
-    <p class="text-xs my-5 text-center text-white ">emails enviados</p>
-    <button class="py-2 px-4 rounded-lg bg-blue-500 hover:bg-blue-600 duration-300 text-xs text-white">aceptar</button>
-    </div> 
-      </div>
+    <div id="pop" popover  class=" z-30  overflow-hidden  px-2 py-3 bg-gray-700 rounded-lg border items-center justify-normal flex-col">
+    <div class="flex flex-col items-center">
+        <img src={email.src} alt="email" class="object-scale-down w-72 object-center "/>
+        <p class="text-xs my-5 text-center text-white ">emails enviados</p>
+        <button class="py-2 px-4 rounded-lg bg-blue-500 hover:bg-blue-600 duration-300 text-xs text-white">aceptar</button>
+        </div> 
+    </div>
   <button popovertarget="pop" id="enviarMails" class="border rounded-lg  flex-col w-16 flex items-center justify-center text-[10px] font-sans capitalize hover:bg-white/50 duration-300 group p-1 cursor-pointer">
     <svg
       viewBox="0 0 24 24"
