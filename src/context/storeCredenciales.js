@@ -3,16 +3,18 @@ import { atom } from 'nanostores'
 
 
 
-// Crea un nuevo mapa para almacenar el idioma seleccionado
-export const language = atom({
-    lang: "es"
+// Crea un nuevo mapa para almacenar un nuevo contexto
+
+export const storageContext = atom({
+    selectAllCredencial:false,
+    credencialesSelect:[]
 })
 
-// Exporta una función para obtener el estado actual de la tienda
-export function getLanguageState() {
+// Exporta una función para obtener el estado actual de la conctexto
+export function getSelectAllCredencial() {
+const currenState=storageContext.get()
 
-    return {
-        language: language.get(),
-     
-    }
+    return currenState
 }
+
+// Función para manejar el cambio en el checkbox "selectAllCredencial"

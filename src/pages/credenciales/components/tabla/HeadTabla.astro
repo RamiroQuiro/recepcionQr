@@ -1,4 +1,5 @@
 ---
+import CheckAllSelectCredenciales from "./CheckAllSelectCredenciales.astro";
 import ItemCabeceraTabla from "./ItemCabeceraTabla.astro";
 
 const cabeceras = [
@@ -50,11 +51,7 @@ const cabeceras = [
   class="text-left ltr:text-left rtl:text-right bg-zinc-600 rounded-lg z-30 py-2 sticky top-0 left-0"
 >
   <tr class="px-1 ">
-    <th
-    class="text-xs md:text-sm font-mono text-center border-l px-2 relative capitalize py-2 font-medium text-primary-800 cursor-pointer hover:bg-primary-300/20 duration-200"
-  >
-    <input type="checkbox" name="selectAll" id="selectAll">
-  </th>
+ <CheckAllSelectCredenciales  />
     {
       cabeceras?.map((item, i) => (
         <ItemCabeceraTabla key={item.key} id={item.id} label={item.name} />
