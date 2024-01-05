@@ -20,7 +20,7 @@ let credenciales=dataBase.credenciales?.filter((credencial)=>credencial.evento==
   let arrayEventos =credenciales
     ?.map((element) => {
       return {
-        name: element.nombreApellido,
+        nombreApellido: element.nombreApellido,
         uid: element.uid,
         email:element.email,
         QRCode:element.QRCode
