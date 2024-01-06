@@ -22,7 +22,6 @@ console.log('este es el body tabla '+uid)
         const fetchingEventos = await fetch(`http://localhost:4321/api/eventos`);
         const dataEventos = await fetchingEventos.json();
 
-        console.log('fetching ->',dataEventos)
         const eventos = await dataEventos?.eventos;
         setEventos(eventos);
       };
