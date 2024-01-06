@@ -1,8 +1,11 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import TablaCredenciales from "./components/tabla/TablaCredenciales.astro";
+import TablaCredenciales from "./components/tabla/TablaCredenciales";
 import MainDashboard from '../../components/MainDasboard.astro'
 import BotonCargaCredencial from "../../components/BotonCargaCredencial.astro";
+const {uid}=Astro.params
+console.log(uid)
+
 ---
 
 <Layout title="Credenciales">
@@ -18,7 +21,7 @@ import BotonCargaCredencial from "../../components/BotonCargaCredencial.astro";
         <h2 class="mt-5 text-lg font-bold text-gray-700">Credenciales</h2>
       </div>
 
-      <TablaCredenciales />
+      <TablaCredenciales uid={uid} client:load />
     </div>
   </MainDashboard>
 </Layout>

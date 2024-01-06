@@ -1,9 +1,10 @@
 ---
 import LayoutEvento from "../../layout/LayoutEvento.astro";
-import Tabla from "../../../credenciales/components/tabla/TablaCredenciales.astro";
+import Tabla from "../../../credenciales/components/tabla/TablaCredenciales";
 import BotonCargaCredencial from "../../../../components/BotonCargaCredencial.astro";
 
-
+const {uid}=Astro.params
+console.log('este es el evento ->'+uid)
 ---
 
 <LayoutEvento>
@@ -12,6 +13,6 @@ import BotonCargaCredencial from "../../../../components/BotonCargaCredencial.as
       <div class="w-10 top-2 absolute right-2 z-10">
         <BotonCargaCredencial />
       </div>
-    <Tabla />
+    <Tabla client:load uid={uid}/>
   </div>
 </LayoutEvento>
