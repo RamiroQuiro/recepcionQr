@@ -1,6 +1,6 @@
 import React from 'react'
-import BotonEdtar from './BotonEdtar.astro';
-import BotonArchivarItems from './BotonArchivarItems.astro';
+import BotonEdtar from './BotonEditar';
+import BotonArchivarItems from './BotonArchivarItems';
 import BotonEliminarItems from './BotonEliminarItems.astro';
 
 export default function ItemsBodyTabla( { credencial, evento, video,indice }) {
@@ -45,12 +45,12 @@ export default function ItemsBodyTabla( { credencial, evento, video,indice }) {
   </td>
   <td class="-nowrap py-1 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase">
     <div class="flex items-center z-20 flex-shrink flex-wrap">
-      {/* <BotonEdtar uidCredencial={uidCredencial} />
-      <BotonArchivarItems
+       <BotonEdtar uidCredencial={uidCredencial} />
+    <BotonArchivarItems
         uidCredencial={uidCredencial}
         estado={credencial.estado}
       />
-      <BotonEliminarItems uidCredencial={uidCredencial} /> */}
+      {/* <BotonEliminarItems uidCredencial={uidCredencial} />  */}
     </div>
   </td>
   <td class="items-center text-center  uppercase" >
