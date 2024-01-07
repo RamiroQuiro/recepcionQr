@@ -3,7 +3,6 @@ import HeadTabla from './HeadTabla'
 import BodyTabla from './BodyTabla'
 
 export default function TablaCredenciales({uid}) {
-  console.log('dentro del cliente tabla '+uid)
   return (
    
 <table

@@ -1,12 +1,14 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import BotonEdtar from "./BotonEditar";
 import BotonArchivarItems from "./BotonArchivarItems";
 import { storageContext } from "../../../../context/storeCredenciales";
+import EstadoCredencial from './EstadoCredencial'
 import { useStore } from "@nanostores/react";
 
 export default function ItemsBodyTabla({ credencial, evento, video, indice }) {
-  const $isContexto=useStore(storageContext)
-  let contextoActual=storageContext.get()
+  const $isContexto = useStore(storageContext);
+  const [estado, setEstado] = useState(null)
+  let contextoActual = $isContexto
   const captaruid = (e) => {
     window.location.href = "/credenciales/" + credencial.uid;
   };
@@ -16,16 +18,36 @@ export default function ItemsBodyTabla({ credencial, evento, video, indice }) {
 
   useEffect(() => {
     setIsChecked(contextoActual.selectAllCredencial);
+
   }, [contextoActual.selectAllCredencial]);
-  
+
+useEffect(() => {
+  setEstado(credencial.estado)
+
+}, [credencial.estado])
+
+
   const onCheckedCredencial = (e) => {
-    setIsChecked(e.target.checked);
-    storageContext.set({
-      ...contextoActual,
-      credencialesSelect: [...contextoActual.credencialesSelect, credencial.uid],
-    });
+    let isBoolean = e.target.checked;
+    setIsChecked(isBoolean);
+    if (isBoolean) {
+      storageContext.set({
+        ...contextoActual,
+        credencialesSelect: [
+          ...contextoActual.credencialesSelect,
+          credencial.uid,
+        ],
+      });
+    } else {
+      storageContext.set({
+        ...contextoActual,
+        credencialesSelect: contextoActual.credencialesSelect.filter(
+          (uid) => uid !== credencial.uid
+        ),
+      });
+    }
   };
-  
+
   return (
     <tr
       id={`bntCredencial${uidCredencial}`}
@@ -33,7 +55,7 @@ export default function ItemsBodyTabla({ credencial, evento, video, indice }) {
     >
       <td class="whitespace-nowrap px-4 py-2 font-medium text-primary-text">
         <input
-        onChange={onCheckedCredencial}
+          onChange={onCheckedCredencial}
           type="checkbox"
           name="checkUid"
           id={`credencial${credencial.uid}`}
@@ -56,22 +78,13 @@ export default function ItemsBodyTabla({ credencial, evento, video, indice }) {
       <td class="-nowrap px-2 py-2 text-primary-text">
         {credencial.estado == false ? "No Relacionado" : video}
       </td>
-      <td class="-nowrap text-primary-text">
-        <p
-          class={
-            credencial.estado == true
-              ? " bg-green-300/50 shadow-sm w-8/12 py-1 shadow-green-300 text-green-600 rounded-lg text-xs mx-auto text-center"
-              : " bg-red-300/50 shadow-sm w-8/12 py-1  shadow-red-300 text-red-600 rounded-lg text-xs mx-auto  text-center"
-          }
-        >
-          {credencial.estado == true ? "activo" : "inactivo"}
-        </p>
-      </td>
+     <EstadoCredencial estado={estado}/>
       <td class="-nowrap py-1 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase">
         <div class="flex items-center z-20 flex-shrink flex-wrap">
           <BotonEdtar uidCredencial={uidCredencial} />
           <BotonArchivarItems
-            uidCredencial={uidCredencial}
+          
+            uidCredencial={credencial.uid}
             estado={credencial.estado}
           />
           {/* <BotonEliminarItems uidCredencial={uidCredencial} />  */}

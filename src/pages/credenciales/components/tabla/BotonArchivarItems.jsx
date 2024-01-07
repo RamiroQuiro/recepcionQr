@@ -1,30 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function BotonArchivarItems({ uidCredencial, estado }) {
 
+
+  const [isLoading, setIsLoading] = useState(false)
     async function handleClick(uidCredencials, estado) {
-        try {
-            const response = await fetch(`http://localhost:4321/api/credencial/${uidCredencials}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    estado: estado,
-                }),
-            });
-    
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-    
-            const data = await response.json();
-    
-            if (data.status == 200) {
-                // Aquí podrías actualizar tus datos en lugar de recargar toda la página
-                setTimeout(() => {
-                    window.location.reload();
-                }, 500);
+      setIsLoading(true)
+      try {
+        const response = await fetch(`http://localhost:4321/api/credencial/${uidCredencials}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            estado: estado,
+          }),
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.status == 200) {
+          // Aquí podrías actualizar tus datos en lugar de recargar toda la página
+          setIsLoading(false)
             }
         } catch (error) {
             console.error('Error:', error);
@@ -35,7 +36,7 @@ export default function BotonArchivarItems({ uidCredencial, estado }) {
 
 
     <button
-    onClick={handleClick}
+    onClick={()=>handleClick(uidCredencial,estado)}
   id={`btnArchivar${uidCredencial}`}
   class="flex items-center justify-center overflow-hidden hover:overflow-visible group relative flex-shrink z-20 px-2.5 py-0.5 text-xs bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium "
 >
