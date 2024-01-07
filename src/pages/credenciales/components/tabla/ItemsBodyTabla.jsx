@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BotonEdtar from "./BotonEditar";
 import BotonArchivarItems from "./BotonArchivarItems";
+import BotonEliminarItems from "./BotonEliminarItems";
 import { storageContext } from "../../../../context/storeCredenciales";
 import EstadoCredencial from './EstadoCredencial'
 import { useStore } from "@nanostores/react";
@@ -87,7 +88,7 @@ useEffect(() => {
             uidCredencial={credencial.uid}
             estado={credencial.estado}
           />
-          {/* <BotonEliminarItems uidCredencial={uidCredencial} />  */}
+        <BotonEliminarItems uidCredencial={uidCredencial} />  
         </div>
       </td>
       <td class="items-center text-center  uppercase">
