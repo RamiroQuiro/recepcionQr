@@ -2,7 +2,6 @@ import React from 'react'
 
 export default function BotonEliminarItems({ uidCredencial }) {
 
-console.log(uidCredencial)
     const handleDelete=async(uidCredencial)=>{
        
             try {
@@ -13,7 +12,7 @@ console.log(uidCredencial)
                 const data = await response.json();
                 console.log(data)
                if (data.status==200) {
-                //  window.location.reload()
+                
                }
             } catch (error) {
                 console.error('Error:', error);

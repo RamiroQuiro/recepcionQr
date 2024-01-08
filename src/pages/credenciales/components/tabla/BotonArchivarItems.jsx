@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
-export default function BotonArchivarItems({ uidCredencial, estado }) {
-
+export default function BotonArchivarItems({ uidCredencial, estado ,setCredenciales,setEstado}) {
 
   const [isLoading, setIsLoading] = useState(false)
     async function handleClick(uidCredencials, estado) {

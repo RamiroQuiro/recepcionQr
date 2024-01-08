@@ -3,30 +3,28 @@ import BotonEdtar from "./BotonEditar";
 import BotonArchivarItems from "./BotonArchivarItems";
 import BotonEliminarItems from "./BotonEliminarItems";
 import { storageContext } from "../../../../context/storeCredenciales";
-import EstadoCredencial from './EstadoCredencial'
+import EstadoCredencial from "./EstadoCredencial";
 import { useStore } from "@nanostores/react";
 
-export default function ItemsBodyTabla({ credencial, evento, video, indice }) {
+
+
+export default function ItemsBodyTabla({ credencial, evento, video, indice ,setEstado,estado,setCredenciales}) {
   const $isContexto = useStore(storageContext);
-  const [estado, setEstado] = useState(null)
-  let contextoActual = $isContexto
+  const [isChecked, setIsChecked] = useState(false);
+  let contextoActual = $isContexto;
   const captaruid = (e) => {
     window.location.href = "/credenciales/" + credencial.uid;
   };
   const uidCredencial = credencial.uid;
 
-  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     setIsChecked(contextoActual.selectAllCredencial);
-
   }, [contextoActual.selectAllCredencial]);
 
-useEffect(() => {
-  setEstado(credencial.estado)
-
-}, [credencial.estado])
-
+  useEffect(() => {
+    setEstado(credencial.estado);
+  }, [credencial.estado]);
 
   const onCheckedCredencial = (e) => {
     let isBoolean = e.target.checked;
@@ -79,16 +77,17 @@ useEffect(() => {
       <td class="-nowrap px-2 py-2 text-primary-text">
         {credencial.estado == false ? "No Relacionado" : video}
       </td>
-     <EstadoCredencial estado={estado}/>
+      <EstadoCredencial estado={estado} />
       <td class="-nowrap py-1 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase">
         <div class="flex items-center z-20 flex-shrink flex-wrap">
           <BotonEdtar uidCredencial={uidCredencial} />
-          <BotonArchivarItems
-          
+         { <BotonArchivarItems
+         setCredenciales={setCredenciales}
             uidCredencial={credencial.uid}
-            estado={credencial.estado}
-          />
-        <BotonEliminarItems uidCredencial={uidCredencial} />  
+            setEstado={setEstado}
+            estado={estado}
+          />}
+          <BotonEliminarItems uidCredencial={uidCredencial} />
         </div>
       </td>
       <td class="items-center text-center  uppercase">
