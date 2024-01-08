@@ -62,6 +62,7 @@ export const GET = async ({ request }) => {
 };
 
 export const DELETE = async ({ request }) => {
+
   try {
     const filePathData = path.join(
       process.cwd(),
@@ -70,6 +71,7 @@ export const DELETE = async ({ request }) => {
       "base.json"
     );
     const uidCredencial = request.url.split("/")[5];
+    console.log(uidCredencial)
     const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
     const index = dataBase.credenciales.findIndex(
       (credencial) => credencial.uid == uidCredencial
