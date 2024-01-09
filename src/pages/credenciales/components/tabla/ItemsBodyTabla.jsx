@@ -85,7 +85,7 @@ export default function ItemsBodyTabla({ credencial, evento, video, indice ,setE
          credencial={credencial}
             uidCredencial={credencial.uid}
             setEstado={credencial.estado}
-            estado={estado}
+            estado={credencial.estado}
           />}
           <BotonEliminarItems uidCredencial={uidCredencial} />
         </div>
