@@ -77,14 +77,14 @@ export default function ItemsBodyTabla({ credencial, evento, video, indice ,setE
       <td class="-nowrap px-2 py-2 text-primary-text">
         {credencial.estado == false ? "No Relacionado" : video}
       </td>
-      <EstadoCredencial estado={estado} />
+      <EstadoCredencial estado={credencial.estado} />
       <td class="-nowrap py-1 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase">
         <div class="flex items-center z-20 flex-shrink flex-wrap">
           <BotonEdtar uidCredencial={uidCredencial} />
          { <BotonArchivarItems
-         setCredenciales={setCredenciales}
+         credencial={credencial}
             uidCredencial={credencial.uid}
-            setEstado={setEstado}
+            setEstado={credencial.estado}
             estado={estado}
           />}
           <BotonEliminarItems uidCredencial={uidCredencial} />
