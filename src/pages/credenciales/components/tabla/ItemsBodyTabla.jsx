@@ -6,40 +6,38 @@ import { storageContext } from "../../../../context/storeCredenciales";
 import EstadoCredencial from "./EstadoCredencial";
 import { useStore } from "@nanostores/react";
 
-export default function ItemsBodyTabla({credencial,evento,video,indice}) {
-  const $isContexto = useStore(storageContext);
+export default function ItemsBodyTabla({credencial,evento,video,indice,$contexto}) {
   const [isChecked, setIsChecked] = useState(false);
   const [estado, setEstado] = useState(true)
-  let contextoActual = $isContexto;
   const captaruid = (e) => {
     window.location.href = "/credenciales/" + credencial.uid;
   };
   const uidCredencial = credencial.uid;
-
+console.log($contexto)
 
   useEffect(() => {
     setEstado(credencial.estado)
-    setIsChecked(contextoActual.selectAllCredencial);
-  }, [contextoActual.selectAllCredencial]);
+    setIsChecked($contexto.selectAllCredencial);
+  }, [$contexto.selectAllCredencial]);
 
   const onCheckedCredencial = (e) => {
     let isBoolean = e.target.checked;
     setIsChecked(isBoolean);
     if (isBoolean) {
-      storageContext.set(prevContexto => ({
-        ...prevContexto,
+      storageContext.set({
+        ...$contexto,
         credencialesSelect: [
-          ...prevContexto.credencialesSelect,
+          ...$contexto.credencialesSelect,
           credencial.uid,
         ],
-      }));
+      });
     } else {
-      storageContext.set(prevContexto => ({
-        ...prevContexto,
-        credencialesSelect: prevContexto.credencialesSelect.filter(
+      storageContext.set({
+        ...$contexto,
+        credencialesSelect: $contexto.credencialesSelect.filter(
           (uid) => uid !== credencial.uid
         ),
-      }));
+      });
     }
   };
 

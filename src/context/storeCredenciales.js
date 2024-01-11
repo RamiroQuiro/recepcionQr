@@ -13,10 +13,11 @@ export const storageContext = atom({
 })
 
 //* creando funcionees  */
-export function getSelectAllCredencial() {
-const currenState=storageContext.get()
+export function getContexto() {
 
-    return currenState
+    return {
+        storageContext:storageContext.get()
+     
+    }
 }
-
 // Función para manejar el cambio en el checkbox "selectAllCredencial"
