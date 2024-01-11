@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 
-export default function BotonArchivarItems({
-  uidCredencial,
-  estado,
-  setEstado,
-  credencial,
-}) {
+export default function BotonArchivarItems({uidCredencial,estado,setEstado,}) {
   const [isLoading, setIsLoading] = useState(false);
-  async function handleClick(uidCredencials, estado) {
+  async function handleClick(uidCredencial, estado) {
+    console.log('dando el click ,',uidCredencial,estado)
     setIsLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:4321/api/credencial/${uidCredencials}`,
+        `http://localhost:4321/api/credencial/${uidCredencial}`,
         {
           method: "PUT",
           headers: {
@@ -28,9 +24,8 @@ export default function BotonArchivarItems({
       }
 
       const data = await response.json();
-
       if (data.status == 200) {
-       setEstado(estado=>!estado)
+        setEstado((estado) => !estado);
         // Aquí podrías actualizar tus datos en lugar de recargar toda la página
         setIsLoading(false);
       }
@@ -43,7 +38,6 @@ export default function BotonArchivarItems({
   return (
     <button
       onClick={() => handleClick(uidCredencial, estado)}
-      id={`btnArchivar${uidCredencial}`}
       class="flex items-center justify-center overflow-hidden hover:overflow-visible group relative flex-shrink z-20 px-2.5 py-0.5 text-xs bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium "
     >
       <svg

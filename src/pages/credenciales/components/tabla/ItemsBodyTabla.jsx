@@ -6,7 +6,7 @@ import { storageContext } from "../../../../context/storeCredenciales";
 import EstadoCredencial from "./EstadoCredencial";
 import { useStore } from "@nanostores/react";
 
-export default function ItemsBodyTabla({credencial,evento,video,indice,}) {
+export default function ItemsBodyTabla({credencial,evento,video,indice}) {
   const $isContexto = useStore(storageContext);
   const [isChecked, setIsChecked] = useState(false);
   const [estado, setEstado] = useState(true)
@@ -16,7 +16,9 @@ export default function ItemsBodyTabla({credencial,evento,video,indice,}) {
   };
   const uidCredencial = credencial.uid;
 
+
   useEffect(() => {
+    setEstado(credencial.estado)
     setIsChecked(contextoActual.selectAllCredencial);
   }, [contextoActual.selectAllCredencial]);
 
@@ -75,12 +77,7 @@ export default function ItemsBodyTabla({credencial,evento,video,indice,}) {
       <td class="-nowrap py-1 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase">
         <div class="flex items-center z-20 flex-shrink flex-wrap">
           <BotonEdtar uidCredencial={uidCredencial} />
-          <BotonArchivarItems
-            credencial={credencial}
-            uidCredencial={credencial.uid}
-            setEstado={setEstado}
-            estado={estado}
-          />
+          <BotonArchivarItems uidCredencial={credencial.uid} setEstado={setEstado} estado={estado}/>
           <BotonEliminarItems uidCredencial={uidCredencial} />
         </div>
       </td>

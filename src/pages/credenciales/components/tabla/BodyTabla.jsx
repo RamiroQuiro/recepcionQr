@@ -51,12 +51,9 @@ export default function BodyTabla({ uid }) {
     <tbody className="divide-y divide-gray-200 my-3 text-neutral-800 w-full">
       {credenciales.map((credencial, i) => (
         <ItemsBodyTabla
-          setCredenciales={setCredenciales}
           key={i}
           credencial={credencial}
           indice={i}
-          evento={credencial.nombreEvento}
-          video={credencial.nombreVideo}
         />
       ))}
     </tbody>
