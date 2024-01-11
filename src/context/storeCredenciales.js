@@ -3,14 +3,16 @@ import { atom } from 'nanostores'
 
 
 
-// Crea un nuevo mapa para almacenar un nuevo contexto
+//* Creando un almacen para el contexto */
 
 export const storageContext = atom({
     selectAllCredencial:false,
-    credencialesSelect:[]
+    credencialesSelect:[],
+    credenciales:[],
+    eventos:[],
 })
 
-// Exporta una función para obtener el estado actual de la conctexto
+//* creando funcionees  */
 export function getSelectAllCredencial() {
 const currenState=storageContext.get()
 

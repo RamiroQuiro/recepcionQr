@@ -56,7 +56,6 @@ export default function HeadTabla() {
       selectAllCredencial: boolCheck,
     });
   };
-  console.log(estadoContexto);
   return (
     <thead class="text-left ltr:text-left rtl:text-right bg-zinc-600 rounded-lg z-30 py-2 sticky top-0 left-0">
       <tr class="px-1 ">
