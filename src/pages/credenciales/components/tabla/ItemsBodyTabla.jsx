@@ -6,17 +6,22 @@ import { storageContext } from "../../../../context/storeCredenciales";
 import EstadoCredencial from "./EstadoCredencial";
 import { useStore } from "@nanostores/react";
 
-export default function ItemsBodyTabla({credencial,evento,video,indice,$contexto}) {
+export default function ItemsBodyTabla({
+  credencial,
+  evento,
+  video,
+  indice,
+  $contexto,
+}) {
   const [isChecked, setIsChecked] = useState(false);
-  const [estado, setEstado] = useState(true)
+  const [estado, setEstado] = useState(true);
   const captaruid = (e) => {
     window.location.href = "/credenciales/" + credencial.uid;
   };
   const uidCredencial = credencial.uid;
-console.log($contexto)
 
   useEffect(() => {
-    setEstado(credencial.estado)
+    setEstado(credencial.estado);
     setIsChecked($contexto.selectAllCredencial);
   }, [$contexto.selectAllCredencial]);
 
@@ -26,10 +31,7 @@ console.log($contexto)
     if (isBoolean) {
       storageContext.set({
         ...$contexto,
-        credencialesSelect: [
-          ...$contexto.credencialesSelect,
-          credencial.uid,
-        ],
+        credencialesSelect: [...$contexto.credencialesSelect, credencial.uid],
       });
     } else {
       storageContext.set({
@@ -75,8 +77,15 @@ console.log($contexto)
       <td class="-nowrap py-1 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase">
         <div class="flex items-center z-20 flex-shrink flex-wrap">
           <BotonEdtar uidCredencial={uidCredencial} />
-          <BotonArchivarItems uidCredencial={credencial.uid} setEstado={setEstado} estado={estado}/>
-          <BotonEliminarItems uidCredencial={uidCredencial} $contexto={$contexto} />
+          <BotonArchivarItems
+            uidCredencial={credencial.uid}
+            setEstado={setEstado}
+            estado={estado}
+          />
+          <BotonEliminarItems
+            uidCredencial={uidCredencial}
+            $contexto={$contexto}
+          />
         </div>
       </td>
       <td class="items-center text-center  uppercase">

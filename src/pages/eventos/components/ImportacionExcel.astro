@@ -3,7 +3,7 @@ const { uidEvento } = Astro.props;
 ---
 
 <div class="w-1/3 vertical:w-[45%] flex-shrink flex-col flex items-center gap-2 ">
-  <label for="excel"class="cursor-pointer text-sm font-bold rounded-xl border-2 border-orange-400 border-dashed border-separate p-5">
+  <label id="labelInport" for="excel"class="cursor-pointer duration-300 text-sm font-bold rounded-xl border-2 text-xs border-orange-400/50 border-dashed border-separate p-5">
     Importa desde un Excel
     </label> 
   <astro-greet data-uidevento={uidEvento}></astro-greet>
@@ -33,7 +33,9 @@ const uidEvento = JSON.parse(astroGreet.dataset.uidevento);
     reader.onload = function (e) {
       const data = new Uint8Array(e.target.result);
       const workbook = read(data, { type: "array" });
-
+document.getElementById('labelInport').textContent="👌 Excel Cargado"
+document.getElementById('labelInport').style.borderColor="#8DC3EE50"
+document.getElementById('labelInport').style.backgroundColor="#8DC3EE50"
       // Iterar sobre cada hoja de cálculo en el libro
       for (const sheetName of workbook.SheetNames) {
         // Convertir la hoja de cálculo a JSON

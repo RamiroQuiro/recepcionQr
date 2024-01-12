@@ -111,7 +111,6 @@ export const PUT = async ({ request }) => {
   try {
     const body = await request.json(); // Espera a que se resuelva la promesa
     const { estado } = body; // Ahora puedes desestructurar el cuerpo de la solicitud
-    console.log('este es el put ->',estado)
     const filePathData = path.join(process.cwd(),basePath,"base","base.json");
     const uidCredencial = request.url.split("/")[5];
     const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));

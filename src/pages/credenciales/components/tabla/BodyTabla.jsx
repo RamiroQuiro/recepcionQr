@@ -4,7 +4,7 @@ import { storageContext } from "../../../../context/storeCredenciales";
 import { useStore } from "@nanostores/react";
 
 export default function BodyTabla({ uid }) {
-  const [eventos, setEventos] = useState([]);
+  
 const $contexto=useStore(storageContext)
   useEffect(() => {
     const fetchData = async () => {
