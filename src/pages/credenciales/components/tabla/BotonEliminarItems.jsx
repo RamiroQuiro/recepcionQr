@@ -1,8 +1,6 @@
 import React from "react";
 import { storageContext } from "../../../../context/storeCredenciales";
-import { useStore } from "@nanostores/react";
-export default function BotonEliminarItems({ uidCredencial }) {
-  const $credenciales=useStore(storageContext)
+export default function BotonEliminarItems({ uidCredencial,$contexto }) {
   const handleDelete = async (uidCredencial) => {
     try {
       const response = await fetch(
@@ -14,12 +12,12 @@ export default function BotonEliminarItems({ uidCredencial }) {
       const data = await response.json();
       console.log(data);
       if (data.status == 200) {
-        storageContext.set((prevContext) => ({
-          ...prevContext,
-          credenciales: $credenciales.credenciales.filter(
+        storageContext.set({
+          ...$contexto,
+          credenciales: $contexto.credenciales.filter(
             (credencial) => credencial.uid != uidCredencial
           ),
-        }));
+        })
       }
     } catch (error) {
       console.error("Error:", error);

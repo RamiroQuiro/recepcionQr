@@ -4,10 +4,8 @@ import { storageContext } from "../../../../context/storeCredenciales";
 import { useStore } from "@nanostores/react";
 
 export default function BodyTabla({ uid }) {
-  const [credenciales, setCredenciales] = useState([]);
   const [eventos, setEventos] = useState([]);
 const $contexto=useStore(storageContext)
-console.log($contexto)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,8 +37,7 @@ console.log($contexto)
           credenciales: filteredCredenciales,
           eventos: dataEventos.eventos,
         });
-        setCredenciales(filteredCredenciales);
-        setEventos(dataEventos.eventos);
+     
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -51,7 +48,7 @@ console.log($contexto)
 
   return (
     <tbody className="divide-y divide-gray-200 my-3 text-neutral-800 w-full">
-      {credenciales.map((credencial, i) => (
+      { $contexto.credenciales.map((credencial, i) => (
         <ItemsBodyTabla
         $contexto={$contexto}
           key={i}

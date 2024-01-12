@@ -76,7 +76,7 @@ console.log($contexto)
         <div class="flex items-center z-20 flex-shrink flex-wrap">
           <BotonEdtar uidCredencial={uidCredencial} />
           <BotonArchivarItems uidCredencial={credencial.uid} setEstado={setEstado} estado={estado}/>
-          <BotonEliminarItems uidCredencial={uidCredencial} />
+          <BotonEliminarItems uidCredencial={uidCredencial} $contexto={$contexto} />
         </div>
       </td>
       <td class="items-center text-center  uppercase">
