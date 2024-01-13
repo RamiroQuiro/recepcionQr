@@ -4,8 +4,9 @@ let mandarVideo;
 let streamRef;
 let videoRef;
 let videosCargados;
+let isActivadoCamara = false;
 const selectorCamaras = document.getElementById("selectorCamaraReceptor");
-const modalLector=document.getElementById('modalLector')
+const modalLector = document.getElementById("modalLector");
 const qrEquivocado = document.getElementById("qrEquivocado");
 
 /** Traer UID del cliente */
@@ -18,7 +19,7 @@ class AstroGreet extends HTMLElement {
   }
 
   getMessage() {
-    console.log(this.message)
+    console.log(this.message);
     return this.message;
   }
 }
@@ -52,22 +53,31 @@ llenarSelector();
 
 // Función para obtener el video
 const getVideo = async () => {
-  try {
-    const opcionSeleccionada = selectorCamaras.value;
-    streamRef = await navigator.mediaDevices.getUserMedia({
-      video: { deviceId: opcionSeleccionada, width: 960, height: 540 },
-    });
-    videoRef = document.getElementById("lectorQr");
-    videoRef.srcObject = streamRef;
-    videoRef.play();
-    // Cuando el video esté cargado, iniciamos el escaneo
-    videoRef.addEventListener("loadedmetadata", scan);
-  } catch (error) {
-    console.error("Error al obtener el video: ", error);
+  if (isActivadoCamara) {
+    try {
+      const opcionSeleccionada = selectorCamaras.value;
+      streamRef = await navigator.mediaDevices.getUserMedia({
+        video: { deviceId: opcionSeleccionada, width: 960, height: 540 },
+      });
+      videoRef = document.getElementById("lectorQr");
+      videoRef.srcObject = streamRef;
+      videoRef.play();
+      // Cuando el video esté cargado, iniciamos el escaneo
+      videoRef.addEventListener("loadedmetadata", scan);
+    } catch (error) {
+      console.error("Error al obtener el video: ", error);
+    }
+  } else {
+    // Detener el stream de la cámara si no está activada
+    if (streamRef) {
+      const tracks = streamRef.getTracks();
+      tracks.forEach((track) => track.stop());
+    }
   }
 };
 // Evento que se dispara cuando se selecciona una opción en el selector
 selectorCamaras.addEventListener("change", () => {
+  isActivadoCamara = true;
   getVideo();
 });
 
@@ -116,7 +126,7 @@ const scan = async () => {
   if (code && code.data) {
     try {
       const token = code.data;
-      console.log(code.data)
+      console.log(code.data);
       const res = await fetch("http://localhost:4321/api/verify", {
         headers: {
           Authorization: "Bearer " + token + " evento " + uidEvento,
@@ -124,21 +134,20 @@ const scan = async () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
+          console.log(data);
           const { evento, video } = data.decodificacion;
           const isOk = data.status == 200 || data.status == 205;
 
           if (isOk) {
-           modalLector.classList.remove('modal')
+            modalLector.classList.remove("modal");
+            isActivadoCamara = false; // Desactivar la cámara al resolver la decodificación
+            getVideo(); // Llamar a getVideo para detener el stream de la cámara
           }
-          if (data.status==404 || data.status==500) {
-            
-            qrEquivocado.style.visibility="visible"
-            const mensajeError=document.getElementById('mensajeError');
-            mensajeError.textContent(data.message)
+          if (data.status == 404 || data.status == 500) {
+            qrEquivocado.style.visibility = "visible";
+            const mensajeError = document.getElementById("mensajeError");
+            mensajeError.textContent(data.message);
           }
-          
-          
         });
 
       await delay(300);

@@ -1,6 +1,11 @@
 ---
 const {uidEvento}=Astro.props
+
+import { storageModal } from "../../../../context/modalLector";
 import ScanerReceptor from "./ScanerReceptor.astro";
+
+
+
 ---
 <div
 id="modalLector"
@@ -17,7 +22,7 @@ class="bg-gray-800/50 backdrop-blur-sm absolute hidden top-0 left-0  items-cente
            
             <ScanerReceptor uidEvento={uidEvento}/>
         </div>
-  </div>
+  </div>}
 
   <style>
     .modal{
