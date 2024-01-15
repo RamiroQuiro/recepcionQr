@@ -22,10 +22,6 @@ export default function ItemsBodyTabla({ credencial, evento, video, indice ,setE
     setIsChecked(contextoActual.selectAllCredencial);
   }, [contextoActual.selectAllCredencial]);
 
-  useEffect(() => {
-    setEstado(credencial.estado);
-  }, [credencial.estado]);
-
   const onCheckedCredencial = (e) => {
     let isBoolean = e.target.checked;
     setIsChecked(isBoolean);
@@ -84,7 +80,7 @@ export default function ItemsBodyTabla({ credencial, evento, video, indice ,setE
          { <BotonArchivarItems
          credencial={credencial}
             uidCredencial={credencial.uid}
-            setEstado={credencial.estado}
+            setEstado={setEstado}
             estado={credencial.estado}
           />}
           <BotonEliminarItems uidCredencial={uidCredencial} />

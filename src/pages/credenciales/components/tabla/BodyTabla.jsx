@@ -33,7 +33,7 @@ export default function BodyTabla({ uid }) {
     };
 
     fetchData();
-  }, []); // Remover 'estado' de las dependencias si no es necesario
+  }, [estado]); // Remover 'estado' de las dependencias si no es necesario
 
   return (
     <tbody className='divide-y divide-gray-200 my-3 text-neutral-800 w-full'>

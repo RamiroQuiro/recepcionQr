@@ -3,7 +3,7 @@ import React, { useState } from "react";
 export default function BotonArchivarItems({
   uidCredencial,
   estado,
-  setCredenciales,
+  setEstado,
   credencial,
 }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +30,7 @@ export default function BotonArchivarItems({
       const data = await response.json();
 
       if (data.status == 200) {
-        credencial.estado = !estado;
+        setEstado(!estado)
         // Aquí podrías actualizar tus datos en lugar de recargar toda la página
         setIsLoading(false);
       }
