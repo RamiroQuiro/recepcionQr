@@ -1,6 +1,7 @@
 import {mandarToast} from './eventos/components/toastShow'
 
 const modalMensaje = (mensaje, uidEvento, idVideo) => {
+  console.log(mensaje)
   const container = document.getElementById('mensaje-modal');
   const parrafo = document.getElementById('textoModal');
   const closeButton = document.getElementById('botonCerrarModal');
@@ -9,7 +10,7 @@ const modalMensaje = (mensaje, uidEvento, idVideo) => {
   // Crea un elemento para la notificación
   const children = document.createElement('div');
   children.classList.add('modalMensaje');
-  parrafo.textContent = mensaje;
+  parrafo.innerHTML = mensaje;
 
   // Función para cerrar el modal
   const closeModal = () => {

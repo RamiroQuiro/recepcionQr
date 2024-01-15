@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 
-<<<<<<< HEAD
-export default function BotonArchivarItems({
-  uidCredencial,
-  estado,
-  setEstado,
-  credencial,
-}) {
-=======
+
 export default function BotonArchivarItems({uidCredencial,estado,setEstado,}) {
->>>>>>> 7c30829c8ce0f0f39ccecaea5a806135473b0bc3
   const [isLoading, setIsLoading] = useState(false);
   async function handleClick(uidCredencial, estado) {
     console.log('dando el click ,',uidCredencial,estado)
@@ -34,11 +26,7 @@ export default function BotonArchivarItems({uidCredencial,estado,setEstado,}) {
 
       const data = await response.json();
       if (data.status == 200) {
-<<<<<<< HEAD
-        setEstado(!estado)
-=======
         setEstado((estado) => !estado);
->>>>>>> 7c30829c8ce0f0f39ccecaea5a806135473b0bc3
         // Aquí podrías actualizar tus datos en lugar de recargar toda la página
         setIsLoading(false);
       }

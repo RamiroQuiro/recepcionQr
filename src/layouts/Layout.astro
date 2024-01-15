@@ -9,7 +9,7 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -22,12 +22,15 @@ const { title } = Astro.props;
   <body
     class="w-full flex flex-col items-center justify-center bg-gradient-to-tr text-white from-paleta1-primary backdrop-blur-sm to-paleta1-secondary min-h-screen"
   >
-  <div class="absolute w-full h-full bg-gradient-to-tr from-white/30 to-white/80 backdrop-blur-none -z-10 "></div>
+    <div
+      class="absolute w-full h-full bg-gradient-to-tr from-white/30 to-white/80 backdrop-blur-none -z-10"
+    >
+    </div>
     <NavBar />
     <slot />
     <div id="toast-container"></div>
-   <Modal/>
-    <Footer/>
+    <Modal />
+    <Footer />
   </body>
 </html>
 
@@ -65,7 +68,9 @@ const { title } = Astro.props;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 4px;
-    animation: slideInDown 0.5s ease-in-out, slideOutUp 1s ease-in-out 2s;
+    animation:
+      slideInDown 0.5s ease-in-out,
+      slideOutUp 1s ease-in-out 2s;
   }
   .activarModal {
     display: flex; /* Hace que el modal sea visible */
@@ -75,15 +80,13 @@ const { title } = Astro.props;
     z-index: 1; /* Sitúa el modal por encima de otros elementos */
     left: 0;
     top: 0;
-  
+
     width: 100%; /* Ancho completo */
-    height:100vh; /* Altura completa */
+    height: 100vh; /* Altura completa */
     overflow: auto; /* Habilita el scroll si es necesario */
     background-color: rgb(0, 0, 0); /* Color de fondo */
     background-color: rgba(0, 0, 0, 0.4); /* Color de fondo con opacidad */
-   
   }
- 
 
   @keyframes slideInDown {
     0% {
@@ -106,7 +109,6 @@ const { title } = Astro.props;
     }
     100% {
       transform: translateY(-100%);
-   
     }
   }
 </style>

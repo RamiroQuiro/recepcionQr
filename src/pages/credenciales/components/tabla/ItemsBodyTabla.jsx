@@ -20,17 +20,11 @@ export default function ItemsBodyTabla({
   };
   const uidCredencial = credencial.uid;
 
-<<<<<<< HEAD
-
-  useEffect(() => {
-    setIsChecked(contextoActual.selectAllCredencial);
-  }, [contextoActual.selectAllCredencial]);
-=======
   useEffect(() => {
     setEstado(credencial.estado);
     setIsChecked($contexto.selectAllCredencial);
   }, [$contexto.selectAllCredencial]);
->>>>>>> 7c30829c8ce0f0f39ccecaea5a806135473b0bc3
+
 
   const onCheckedCredencial = (e) => {
     let isBoolean = e.target.checked;
@@ -87,18 +81,12 @@ export default function ItemsBodyTabla({
           <BotonArchivarItems
             uidCredencial={credencial.uid}
             setEstado={setEstado}
-<<<<<<< HEAD
-            estado={credencial.estado}
-          />}
-          <BotonEliminarItems uidCredencial={uidCredencial} />
-=======
             estado={estado}
           />
           <BotonEliminarItems
             uidCredencial={uidCredencial}
             $contexto={$contexto}
           />
->>>>>>> 7c30829c8ce0f0f39ccecaea5a806135473b0bc3
         </div>
       </td>
       <td class="items-center text-center  uppercase">

@@ -45,6 +45,7 @@ export const PUT = async ({ request }) => {
   const filePathData = path.join(process.cwd(), basePath, "base", "base.json");
   const dataBase = JSON.parse(await fs.readFile(filePathData, "utf8"));
   const credenciales = dataBase.credenciales;
+  let arrayConfirmaciones=[]
   try {
     // Parsear el cuerpo de la solicitud
     const body = await request.json();
@@ -58,6 +59,10 @@ export const PUT = async ({ request }) => {
       );
       if (!verificacion) {
         const uid = generarUID();
+        arrayConfirmaciones.push({
+          nombreApellido,
+          exportacion:true
+        })
         acc.push({
           uid,
           nombreApellido,
@@ -69,6 +74,11 @@ export const PUT = async ({ request }) => {
           estado: true,
           evento: url,
         });
+      }else{
+arrayConfirmaciones.push({
+  nombreApellido,
+  exportacion:false
+})
       }
       return acc;
     }, []);
@@ -99,7 +109,7 @@ export const PUT = async ({ request }) => {
     return new Response(
       JSON.stringify({
         status: 200,
-        acreditaciones: "ok",
+        acreditaciones: arrayConfirmaciones,
       })
     );
   } catch (error) {

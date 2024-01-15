@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import ItemsBodyTabla from "./ItemsBodyTabla";
 import { storageContext } from "../../../../context/storeCredenciales";
 import { useStore } from "@nanostores/react";
+import ItemsBody from "../../../../components/skeletor/ItemsBody";
 
 export default function BodyTabla({ uid }) {
-  
-const $contexto=useStore(storageContext)
+  const [isLoading, setIsLoading] = useState(false)
+  const $contexto = useStore(storageContext)
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true)
       try {
         const fetching = await fetch("http://localhost:4321/api/data");
         const dataCredenciales = await fetching.json();
@@ -37,25 +39,35 @@ const $contexto=useStore(storageContext)
           credenciales: filteredCredenciales,
           eventos: dataEventos.eventos,
         });
-     
+        setIsLoading(false)
+
       } catch (error) {
+        setIsLoading(false)
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, [estado]); // Remover 'estado' de las dependencias si no es necesario
+  }, []);
 
   return (
     <tbody className="divide-y divide-gray-200 my-3 text-neutral-800 w-full">
-      { $contexto.credenciales.map((credencial, i) => (
-        <ItemsBodyTabla
-        $contexto={$contexto}
-          key={i}
-          credencial={credencial}
-          indice={i}
-        />
-      ))}
+      {
+        isLoading ?
+          [0, 1, 2, 3, 4, 5].map((i) => (
+            <ItemsBody />
+          ))
+
+          :
+          $contexto.credenciales.map((credencial, i) => (
+            <ItemsBodyTabla
+              $contexto={$contexto}
+              key={i}
+              credencial={credencial}
+              indice={i}
+            />
+          ))
+      }
     </tbody>
   );
 }
