@@ -6,37 +6,44 @@ import { storageContext } from "../../../../context/storeCredenciales";
 import EstadoCredencial from "./EstadoCredencial";
 import { useStore } from "@nanostores/react";
 
-
-
-export default function ItemsBodyTabla({ credencial, evento, video, indice ,setEstado,estado,setCredenciales}) {
-  const $isContexto = useStore(storageContext);
+export default function ItemsBodyTabla({
+  credencial,
+  evento,
+  video,
+  indice,
+  $contexto,
+}) {
   const [isChecked, setIsChecked] = useState(false);
-  let contextoActual = $isContexto;
+  const [estado, setEstado] = useState(true);
   const captaruid = (e) => {
     window.location.href = "/credenciales/" + credencial.uid;
   };
   const uidCredencial = credencial.uid;
 
+<<<<<<< HEAD
 
   useEffect(() => {
     setIsChecked(contextoActual.selectAllCredencial);
   }, [contextoActual.selectAllCredencial]);
+=======
+  useEffect(() => {
+    setEstado(credencial.estado);
+    setIsChecked($contexto.selectAllCredencial);
+  }, [$contexto.selectAllCredencial]);
+>>>>>>> 7c30829c8ce0f0f39ccecaea5a806135473b0bc3
 
   const onCheckedCredencial = (e) => {
     let isBoolean = e.target.checked;
     setIsChecked(isBoolean);
     if (isBoolean) {
       storageContext.set({
-        ...contextoActual,
-        credencialesSelect: [
-          ...contextoActual.credencialesSelect,
-          credencial.uid,
-        ],
+        ...$contexto,
+        credencialesSelect: [...$contexto.credencialesSelect, credencial.uid],
       });
     } else {
       storageContext.set({
-        ...contextoActual,
-        credencialesSelect: contextoActual.credencialesSelect.filter(
+        ...$contexto,
+        credencialesSelect: $contexto.credencialesSelect.filter(
           (uid) => uid !== credencial.uid
         ),
       });
@@ -71,19 +78,27 @@ export default function ItemsBodyTabla({ credencial, evento, video, indice ,setE
         {evento == false ? "No Relacionado" : evento}
       </td>
       <td class="-nowrap px-2 py-2 text-primary-text">
-        {credencial.estado == false ? "No Relacionado" : video}
+        {estado == false ? "" : video}
       </td>
-      <EstadoCredencial estado={credencial.estado} />
+      <EstadoCredencial estado={estado} />
       <td class="-nowrap py-1 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase">
         <div class="flex items-center z-20 flex-shrink flex-wrap">
           <BotonEdtar uidCredencial={uidCredencial} />
-         { <BotonArchivarItems
-         credencial={credencial}
+          <BotonArchivarItems
             uidCredencial={credencial.uid}
             setEstado={setEstado}
+<<<<<<< HEAD
             estado={credencial.estado}
           />}
           <BotonEliminarItems uidCredencial={uidCredencial} />
+=======
+            estado={estado}
+          />
+          <BotonEliminarItems
+            uidCredencial={uidCredencial}
+            $contexto={$contexto}
+          />
+>>>>>>> 7c30829c8ce0f0f39ccecaea5a806135473b0bc3
         </div>
       </td>
       <td class="items-center text-center  uppercase">

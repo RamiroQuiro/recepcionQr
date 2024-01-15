@@ -5,11 +5,8 @@ import { atom } from 'nanostores'
 
 //* Creando un almacen para el contexto */
 
-export const storageContext = atom({
-    selectAllCredencial:false,
-    credencialesSelect:[],
-    credenciales:[],
-    eventos:[],
+export const storageModal = atom({
+    modalOpen:false
 })
 
 //* creando funcionees  */

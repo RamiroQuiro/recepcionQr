@@ -1,6 +1,6 @@
 import React from "react";
-
-export default function BotonEliminarItems({ uidCredencial }) {
+import { storageContext } from "../../../../context/storeCredenciales";
+export default function BotonEliminarItems({ uidCredencial,$contexto }) {
   const handleDelete = async (uidCredencial) => {
     try {
       const response = await fetch(
@@ -12,6 +12,12 @@ export default function BotonEliminarItems({ uidCredencial }) {
       const data = await response.json();
       console.log(data);
       if (data.status == 200) {
+        storageContext.set({
+          ...$contexto,
+          credenciales: $contexto.credenciales.filter(
+            (credencial) => credencial.uid != uidCredencial
+          ),
+        })
       }
     } catch (error) {
       console.error("Error:", error);

@@ -3,11 +3,15 @@ import LayoutLector from "../../../layouts/LayoutLector.astro";
 import MainDashboard from "../../../components/MainDasboard.astro";
 import Listado from "./componentes/Listado.jsx";
 import BotonBackHistory from "../../../components/BotonBackHistory.astro";
-import ModalLector from "./componentes/ModalLector.astro";
+import BtnModalActivar from "./componentes/BtnModalActivar";
+import ModalLector from './componentes/ModalLector.astro'
+import { storageModal } from "../../../context/modalLector";
 const { uidEvento } = Astro.params;
 const fetching = await fetch(`http://localhost:4321/api/${uidEvento}`);
 const data = await fetching.json();
 const evento = data.files;
+const contexto=storageModal.get()
+console.log('contexto en el uidEvento del receptro',contexto)
 ---
 
 <LayoutLector title="RecepcionQR">
@@ -51,7 +55,6 @@ const evento = data.files;
 <script define:vars={{ uidEvento }}>
   // Declara 'code' fuera de la función del evento
   let token = "";
-  console.log("este es el uidEvento ->", uidEvento);
   window.addEventListener("keydown", async function (event) {
     // Asegúrate de que el evento no sea una tecla especial (por ejemplo, shift, ctrl, alt, etc.)
     if (event.key.length === 1) {
@@ -114,9 +117,12 @@ const evento = data.files;
   }
 </style>
 <script>
+  import {storageModal} from '../../../context/modalLector'
   const btnLector = document.getElementById("btnLector");
   const modal = document.getElementById("modalLector");
+  let isBoolean=storageModal.get().modalOpen
   btnLector.addEventListener("click", () => {
+
     modal.classList.add("modal");
   });
 </script>
