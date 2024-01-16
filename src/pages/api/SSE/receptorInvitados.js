@@ -7,7 +7,7 @@ http.createServer((req, res) => {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
       'Connection': 'keep-alive',
-      'Access-Control-Allow-Origin': 'http://localhost:4321', // Configurar encabezados para CORS
+      'Access-Control-Allow-Origin': '*', // Configurar encabezados para CORS
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
       'Access-Control-Allow-Headers': 'Content-Type'
     });

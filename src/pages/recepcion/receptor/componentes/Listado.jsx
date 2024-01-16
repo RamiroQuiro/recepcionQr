@@ -1,14 +1,20 @@
 import {useState, useEffect} from "react";
 import CardCheckIn from "./CardCheckIn";
 
+const DES = import.meta.env.PATH_DESARROLLO;
+const PRODUC = import.meta.env.PATH_PRODUCCION;
+const isDev = import.meta.env.DEV;
+
 export default function Listado({uidEvento,eventoName}) {
-
-
+ 
   const [checkIn, setCheckIn] = useState([]);
+  const serverUrl = !isDev  ? PRODUC : DES;
 
+
+  console.log(serverUrl)
   useEffect(() => {
     // Crear un nuevo objeto EventSource
-    const source = new EventSource('http://localhost:8000/event-stream?uidEvento=' + uidEvento);
+    const source = new EventSource(`http://${'172.16.0.10'}:8000/event-stream?uidEvento=${uidEvento}`);
 
     // Escuchar el evento 'message'
     source.onmessage = (event) => {
