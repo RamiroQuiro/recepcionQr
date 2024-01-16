@@ -1,50 +1,47 @@
 ---
-const {uidEvento}=Astro.props
+const { uidEvento } = Astro.props;
 
 import { storageModal } from "../../../../context/modalLector";
 import ScanerReceptor from "./ScanerReceptor.astro";
-
-
-
 ---
-<div
-id="modalLector"
-class="bg-gray-800/50 backdrop-blur-sm absolute hidden top-0 left-0  items-center justify-center z-40 w-full h-full duration-300">
-    <div
-    id="qrEquivocado"
-    class="absolute top-1/4 invisible z-30 py-1 px-2 rounded-lg bg-red-500/80 backdrop-blur-sm text-gray-100 text-xl  font-bold duration-200">
-      <p id="mensajeError"></p>
-    </div>
-    <div class="absolute top-7 right-10">
-        <button id="salirModal" class="rounded-full p-2 bg-white" >❌</button>
-    </div>
-        <div class="bg-white absolute  rounded  items-center justify-center w-52 h-52">
-           
-            <ScanerReceptor uidEvento={uidEvento}/>
-        </div>
-  </div>}
 
-  <style>
-    .modal{
-        display: flex;
-        animation: appear 0.4s ease-in-out;
+<div
+  id="modalLector"
+  class="bg-gray-800/50 backdrop-blur-sm absolute hidden top-0 left-0 items-center justify-center z-40 w-full h-full duration-300"
+>
+  <div
+    id="qrEquivocado"
+    class="absolute top-1/4 invisible z-30 py-1 px-2 rounded-lg bg-red-500/80 backdrop-blur-sm text-gray-100 text-xl font-bold duration-200"
+  >
+    <p id="mensajeError"></p>
+  </div>
+  <div class="absolute top-7 right-10">
+    <button id="salirModal" class="rounded-full p-2 bg-white">❌</button>
+  </div>
+  <div class="bg-white absolute rounded items-center justify-center md:w-52 w-2/3 h-2/3 md:h-52">
+    <ScanerReceptor uidEvento={uidEvento} />
+  </div>
+</div>
+
+<style>
+  .modal {
+    display: flex;
+    animation: appear 0.4s ease-in-out;
+  }
+
+  @keyframes appear {
+    0% {
+      opacity: 0;
     }
-    
-    @keyframes appear {
-        0% {
-            opacity: 0;
-           
-        }
-        100% {
-            opacity: 1;
-            
-        }
+    100% {
+      opacity: 1;
     }
-  </style>
-  
-  <script>
-    const modalLector=document.getElementById('modalLector')
-    document.getElementById('salirModal').addEventListener('click', () => {
-        modalLector.classList.remove('modal');
-    });
-  </script>
+  }
+</style>
+
+<script>
+  const modalLector = document.getElementById("modalLector");
+  document.getElementById("salirModal").addEventListener("click", () => {
+    modalLector.classList.remove("modal");
+  });
+</script>

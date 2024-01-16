@@ -14,7 +14,7 @@ export default function Listado({uidEvento,eventoName}) {
   console.log(serverUrl)
   useEffect(() => {
     // Crear un nuevo objeto EventSource
-    const source = new EventSource(`http://${'172.16.0.10'}:8000/event-stream?uidEvento=${uidEvento}`);
+    const source = new EventSource(`http://${'192.168.1.51'}:8000/event-stream?uidEvento=${uidEvento}`);
 
     // Escuchar el evento 'message'
     source.onmessage = (event) => {
