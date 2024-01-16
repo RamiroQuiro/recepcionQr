@@ -12,7 +12,7 @@ export default function Listado({uidEvento,eventoName}) {
 
     // Escuchar el evento 'message'
     source.onmessage = (event) => {
-      console.log(event.data)
+      // console.log(event.data)
       setCheckIn(JSON.parse(event.data));
       localStorage.setItem('checkInData', JSON.stringify(JSON.parse(event.data)));
     };

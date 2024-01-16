@@ -1,7 +1,6 @@
 import {mandarToast} from './eventos/components/toastShow'
 
 const modalMensaje = (mensaje, uidEvento, idVideo) => {
-  console.log(mensaje)
   const container = document.getElementById('mensaje-modal');
   const parrafo = document.getElementById('textoModal');
   const closeButton = document.getElementById('botonCerrarModal');
