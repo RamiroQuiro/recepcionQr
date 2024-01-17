@@ -19,7 +19,13 @@ export default function BodyTabla({ uid,serverURL }) {
         );
         const dataEventos = await fetchingEventos.json();
 
-        const filteredCredenciales = dataCredenciales.credenciales.map(
+        const filteredCredenciales = dataCredenciales.credenciales.filter((credencial)=>{
+          if(!uid){
+            return credencial
+          }
+           return credencial.evento==uid
+          })
+          .map(
           (credencial) => {
             const evento = dataEventos.eventos.find(
               (event) => event.uid === credencial.evento
