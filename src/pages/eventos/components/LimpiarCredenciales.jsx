@@ -1,9 +1,9 @@
 import { mandarToast } from './toastShow';
 
 export default function LimpiarCredenciales({uidEvento}) {
-
+const PATH_DESARROLLO='192.168.1.51'
     const handleResetAsistencia = async (uidEvento) => {
-        const res = await fetch('http://localhost:4321/api/eventos', {
+        const res = await fetch(`/api/eventos`, {
             method: 'PUT',
             body: JSON.stringify({
                 accion: 'resetInvitaciones',

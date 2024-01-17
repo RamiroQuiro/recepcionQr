@@ -4,7 +4,7 @@ import { modalMensaje } from "../../modal";
 
 export default function Formulario({ credencial, eventos, videos }) {
 
-
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     const [newData, setNewData] = useState(credencial)
 
     const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +28,7 @@ setIsLoading(true)
       data.append("video", newData.video);
       data.append("invitados", newData.invitados);
       const fetiiching = await fetch(
-        `http://localhost:4321/api/credencial/${credencial.uid}`,
+        `https://192.168.1.51:4321/api/credencial/${credencial.uid}`,
         {
           method: "PUT",
           headers: {

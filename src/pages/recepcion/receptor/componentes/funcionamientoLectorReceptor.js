@@ -121,13 +121,13 @@ const scan = async () => {
 
   // Decodificar el código QR de los datos de la imagen
   const code = jsQR(imageData.data, imageData.width, imageData.height);
-
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
   // Si el código es válido y contiene datos
   if (code && code.data) {
     try {
       const token = code.data;
       console.log(code.data);
-      const res = await fetch("http://localhost:4321/api/verify", {
+      const res = await fetch("https://192.168.1.51:4321/api/verify", {
         headers: {
           Authorization: "Bearer " + token + " evento " + uidEvento,
         },

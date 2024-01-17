@@ -7,7 +7,8 @@ import BtnModalActivar from "./componentes/BtnModalActivar";
 import ModalLector from './componentes/ModalLector.astro'
 import { storageModal } from "../../../context/modalLector";
 const { uidEvento } = Astro.params;
-const fetching = await fetch(`http://localhost:4321/api/${uidEvento}`);
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+const fetching = await fetch(`https://192.168.1.51:4321/api/${uidEvento}`);
 const data = await fetching.json();
 const evento = data.files;
 const contexto=storageModal.get()

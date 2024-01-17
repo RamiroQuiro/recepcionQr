@@ -6,9 +6,10 @@ export default function ListadoCredencialesCheckIn({ uid }) {
   const [porcentajeAcreditaciones, setPorcentajeAcreditaciones] = useState(0);
   const [porcentajeCheckIn, setPorcentajeCheckIn] = useState(0);
   const refContenedor = useRef();
+  const PATH_DESARROLLO='192.168.1.51'
   useEffect(() => {
     const fetching = async () => {
-      const resCheckIn = await fetch(`http://localhost:4321/api/eventos`);
+      const resCheckIn = await fetch(`/api/eventos`);
       const respuesta = await resCheckIn.json();
 
       const evento = respuesta?.eventos?.find((evento) => evento.uid == uid);
@@ -23,7 +24,7 @@ export default function ListadoCredencialesCheckIn({ uid }) {
   useEffect(() => {
     // Crear un nuevo objeto EventSource
     const source = new EventSource(
-      "http://localhost:8000/event-stream?uidEvento=" + uid
+      "https://192.168.1.51:8000/event-stream?uidEvento=" + uid
     );
 
     // Escuchar el evento 'message'

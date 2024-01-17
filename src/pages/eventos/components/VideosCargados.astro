@@ -1,6 +1,6 @@
 ---
 import CardVideos from './CardVideos.astro'
-const respuesta = await fetch("http://localhost:4321/api/listarvideos");
+const respuesta = await fetch("https://192.168.1.51:4321/api/listarvideos");
 const data = await respuesta.json();
 ---
 

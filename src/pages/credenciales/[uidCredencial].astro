@@ -5,9 +5,10 @@ import Layout from "../../layouts/Layout.astro";
 import Formulario from './components/Formulario.jsx'
 import ContenedorFormulario from "../../components/ContenedorFormualrio.astro";
 const { uidCredencial } = Astro.params;
-const fetichingCredencial = await fetch(`http://localhost:4321/api/credencial/${uidCredencial}`);
-const fetichingEventos = await fetch(`http://localhost:4321/api/eventos`);
-const fetichingVideos = await fetch(`http://localhost:4321/api/listarvideos`);
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+const fetichingCredencial = await fetch(`https://192.168.1.51:4321/api/credencial/${uidCredencial}`);
+const fetichingEventos = await fetch(`https://192.168.1.51:4321/api/eventos`);
+const fetichingVideos = await fetch(`https://192.168.1.51:4321/api/listarvideos`);
 const data = await fetichingCredencial.json();
 const dataEventos = await fetichingEventos.json();
 const dataVideos = await fetichingVideos.json();
@@ -21,7 +22,7 @@ const eventos = await dataEventos?.eventos;
     <ContenedorFormulario>
       <BotonBackHistory
         clase="absolute top-5"
-        href="http://localhost:4321/credenciales"
+        href="https://192.168.1.51:4321/credenciales"
       />
       <div class="text-center">
         <h2 class="mt-5 text-lg font-bold text-gray-700">Carga Credencial</h2>

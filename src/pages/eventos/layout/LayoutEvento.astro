@@ -5,7 +5,7 @@ const { uid } = Astro.params;
 import StatCredenciales from "../components/StatCredenciales.astro";
 import StatInvitacion from "../components/StatInvitacion.astro";
 import StatVideos from "../components/StatVideos.astro";
-const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
+const objectEvento = await fetch(`https://192.168.1.51:4321/api/${uid}`);
 const data = await objectEvento.json();
 const evento = data.files;
 const acreditaciones = data.acreditaciones;

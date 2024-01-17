@@ -11,10 +11,10 @@ window.addEventListener("keydown", async function (event) {
   // Si se presiona la tecla Enter, asume que el escaneo del código de barras ha terminado
   if (event.key === "Enter") {
 
-
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
     try {
-      const res = await fetch("http://localhost:4321/api/verify", {
+      const res = await fetch("https://192.168.1.51:4321/api/verify", {
         headers: {
           Authorization: "Bearer " + token + " evento " + uidEvento,
         },

@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwind from "@astrojs/tailwind";
 import node from "@astrojs/node";
-
+import basicSsl from '@vitejs/plugin-basic-ssl'
 const ENV=process.env
 
 export default defineConfig({
@@ -19,4 +19,11 @@ export default defineConfig({
   adapter: node({
     mode: 'standalone',
   }),
+  vite:{
+plugins:[basicSsl()],
+server:{
+  https:true,
+}
+
+  },
 });

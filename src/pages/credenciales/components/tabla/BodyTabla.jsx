@@ -11,10 +11,10 @@ export default function BodyTabla({ uid }) {
     const fetchData = async () => {
       setIsLoading(true)
       try {
-        const fetching = await fetch("http://localhost:4321/api/data");
+        const fetching = await fetch("https://192.168.1.51:4321/api/data");
         const dataCredenciales = await fetching.json();
         const fetchingEventos = await fetch(
-          "http://localhost:4321/api/eventos"
+          "https://192.168.1.51:4321/api/eventos"
         );
         const dataEventos = await fetchingEventos.json();
 

@@ -5,6 +5,7 @@ import LayoutLector from "../../layouts/LayoutLector.astro";
 import BotonReceptor from "./components/BotonReceptor.astro";
 import Scaner from "./components/Scaner.astro";
 const { uid } = Astro.params;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
 const data = await objectEvento.json();
 ---
