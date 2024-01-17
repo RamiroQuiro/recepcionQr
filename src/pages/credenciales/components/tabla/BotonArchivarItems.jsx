@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
 
-export default function BotonArchivarItems({uidCredencial,estado,setEstado,}) {
+export default function BotonArchivarItems({uidCredencial,estado,setEstado,serverURL}) {
   const [isLoading, setIsLoading] = useState(false);
+  
   async function handleClick(uidCredencial, estado) {
-    console.log('dando el click ,',uidCredencial,estado)
     setIsLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:4321/api/credencial/${uidCredencial}`,
+        `https://${serverURL}:4321/api/credencial/${uidCredencial}`,
         {
           method: "PUT",
           headers: {

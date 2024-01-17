@@ -25,9 +25,9 @@ class={`${
   <script define:vars={{evento}}>
   const uidEvento=evento.uid
 const cardVideos=document.getElementById(`videosEventosDe${evento.uid}`)
-
+const serverURL='172.16.0.10'
 cardVideos.addEventListener('click',()=>{
-  window.location.href=`http://localhost:4321/eventos/${uidEvento}/videos/`
+  window.location.href=`https://${serverURL}:4321/eventos/${uidEvento}/videos/`
 })
 
   </script>

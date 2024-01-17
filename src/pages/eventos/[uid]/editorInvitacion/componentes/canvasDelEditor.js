@@ -1,14 +1,14 @@
 import { fabric } from "fabric";
 import JSZip from "jszip";
 import { mandarToast } from "../../../components/toastShow";
-
+const serverURL='172.16.0.10'
 const zip = new JSZip();
 // Declaración de constantes y variables
 const astroGreet = document.querySelector("astro-greet");
 // const credenciales = JSON.parse(astroGreet.dataset.credenciales);
 const uidEvento = JSON.parse(astroGreet.dataset.uidevento);
 const fetcehingEventos=async()=>{
-  const resCheckIn = await fetch(`http://localhost:4321/api/eventos/canvas/${uidEvento}`);
+  const resCheckIn = await fetch(`https://${serverURL}:4321/api/eventos/canvas/${uidEvento}`);
   const respuesta = await resCheckIn.json();
   
   return respuesta.acreditaciones
@@ -358,7 +358,7 @@ async function fetchingMandarMails() {
           formData.append("nombreApellido", credencial.nombreApellido);
 
           // Enviar el formulario multipart/form-data
-          fetch("http://localhost:4321/api/sendmailer/router", {
+          fetch(`https://${serverURL}:4321/api/sendmailer/router`, {
             method: "POST",
             body: formData,
           })

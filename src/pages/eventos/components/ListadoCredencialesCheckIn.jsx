@@ -6,7 +6,8 @@ export default function ListadoCredencialesCheckIn({ uid }) {
   const [porcentajeAcreditaciones, setPorcentajeAcreditaciones] = useState(0);
   const [porcentajeCheckIn, setPorcentajeCheckIn] = useState(0);
   const refContenedor = useRef();
-  const PATH_DESARROLLO='192.168.1.51'
+  const serverURL=import.meta.env.PUBLIC_SERVER_URL || '192.168.1.51'
+
   useEffect(() => {
     const fetching = async () => {
       const resCheckIn = await fetch(`/api/eventos`);
@@ -24,7 +25,7 @@ export default function ListadoCredencialesCheckIn({ uid }) {
   useEffect(() => {
     // Crear un nuevo objeto EventSource
     const source = new EventSource(
-      "https://192.168.1.51:8000/event-stream?uidEvento=" + uid
+      `http://${serverURL}:8000/event-stream?uidEvento=${uid}`
     );
 
     // Escuchar el evento 'message'

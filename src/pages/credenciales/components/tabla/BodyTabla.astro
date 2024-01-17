@@ -1,6 +1,12 @@
 ---
 import ItemsBodyTabla from "./ItemsBodyTabla.astro";
-const fetching = await fetch("http://localhost:4321/api/data");
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';/*esto se sa para hacer peticion a un host con https */
+
+const serverURL=import.meta.env.PUBLIC_SERVER_URL || '192.168.1.51'
+console.log(serverURL)
+
+const fetching = await fetch(`https://${serverURL}:4321/api/data`);
 const {uid}=Astro.params
 const dataCredenciales = await fetching.json();
 const credenciales = dataCredenciales.credenciales.filter((credencial)=>{
@@ -8,9 +14,9 @@ if(!uid){
   return credencial
 }
  return credencial.evento==uid
-
 })
-const fetichingEventos = await fetch(`http://localhost:4321/api/eventos`);
+
+const fetichingEventos = await fetch(`https://${serverURL}:4321/api/eventos`);
 const dataEventos = await fetichingEventos.json();
 const eventos = await dataEventos?.eventos;
 

@@ -1,8 +1,10 @@
 ---
 import SidebarCanvas from './componentes/sidebarCanvas.astro'
 const { uid } = Astro.params;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+const serverURL=import.meta.env.PUBLIC_SERVER_URL || '192.168.1.51'
 
-const fetching = await fetch("http://localhost:4321/api/data");
+const fetching = await fetch(`https://${serverURL}:4321/api/data`);
 const dataCredenciales = await fetching.json();
 const credenciales =await JSON.stringify(dataCredenciales.credenciales.filter((credencial) => {
   if (!uid) {

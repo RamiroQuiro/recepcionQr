@@ -8,11 +8,12 @@ import ModalLector from './componentes/ModalLector.astro'
 import { storageModal } from "../../../context/modalLector";
 const { uidEvento } = Astro.params;
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-const fetching = await fetch(`https://192.168.1.51:4321/api/${uidEvento}`);
+const serverURL=import.meta.env.PUBLIC_SERVER_URL || '192.168.1.51'
+
+const fetching = await fetch(`https://${serverURL}:4321/api/${uidEvento}`);
 const data = await fetching.json();
 const evento = data.files;
 const contexto=storageModal.get()
-console.log('contexto en el uidEvento del receptro',contexto)
 ---
 
 <LayoutLector title="RecepcionQR">
@@ -66,7 +67,7 @@ console.log('contexto en el uidEvento del receptro',contexto)
     // Si se presiona la tecla Enter, asume que el escaneo del código de barras ha terminado
     if (event.key === "Enter") {
       try {
-        const res = await fetch("http://localhost:4321/api/verify", {
+        const res = await fetch("https://localhost:4321/api/verify", {
           headers: {
             Authorization: "Bearer " + token + " evento " + uidEvento,
           },

@@ -1,10 +1,10 @@
 import React from "react";
 import { storageContext } from "../../../../context/storeCredenciales";
-export default function BotonEliminarItems({ uidCredencial,$contexto }) {
+export default function BotonEliminarItems({ uidCredencial,$contexto ,serverURL}) {
   const handleDelete = async (uidCredencial) => {
     try {
       const response = await fetch(
-        `http://localhost:4321/api/credencial/${uidCredencial}`,
+        `httpS://${serverURL}:4321/api/credencial/${uidCredencial}`,
         {
           method: "DELETE",
         }

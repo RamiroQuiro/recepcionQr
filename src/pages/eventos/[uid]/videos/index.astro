@@ -4,8 +4,10 @@ import LayoutEvento from "../../layout/LayoutEvento.astro";
 const { uid } = Astro.params;
 import CardVideos from "../../components/CardVideos.astro";
 import BotonCargarVideo from "./BotonCargarVideo.astro";
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+const serverURL=import.meta.env.PUBLIC_SERVER_URL || '192.168.1.51'
 
-const objectEvento = await fetch(`http://localhost:4321/api/${uid}`);
+const objectEvento = await fetch(`https://${serverURL}:4321/api/${uid}`);
 const data = await objectEvento.json();
 const evento = data.files;
 // const acreditaciones=data.acreditaciones

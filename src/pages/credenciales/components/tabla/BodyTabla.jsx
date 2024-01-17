@@ -4,17 +4,18 @@ import { storageContext } from "../../../../context/storeCredenciales";
 import { useStore } from "@nanostores/react";
 import ItemsBody from "../../../../components/skeletor/ItemsBody";
 
-export default function BodyTabla({ uid }) {
+export default function BodyTabla({ uid,serverURL }) {
   const [isLoading, setIsLoading] = useState(false)
   const $contexto = useStore(storageContext)
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
       try {
-        const fetching = await fetch("https://192.168.1.51:4321/api/data");
+        const fetching = await fetch(`https://${serverURL}:4321/api/data`);
         const dataCredenciales = await fetching.json();
         const fetchingEventos = await fetch(
-          "https://192.168.1.51:4321/api/eventos"
+          `https://${serverURL}:4321/api/eventos`
         );
         const dataEventos = await fetchingEventos.json();
 
@@ -62,6 +63,7 @@ export default function BodyTabla({ uid }) {
           $contexto.credenciales.map((credencial, i) => (
             <ItemsBodyTabla
               $contexto={$contexto}
+              serverURL={serverURL}
               key={i}
               credencial={credencial}
               indice={i}

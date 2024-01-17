@@ -25,9 +25,10 @@ const isPath = name[3] == "credenciales";
   <script define:vars={{evento}}>
     const uidEvento=evento.uid
   const cardVideos=document.getElementById(`credencialesEventosDe${evento.uid}`)
-  
+
+const serverURL='172.16.0.10'
   cardVideos.addEventListener('click',()=>{
-    window.location.href=`https://192.168.1.51:4321/eventos/${uidEvento}/credenciales/`
+    window.location.href=`https://${serverURL}:4321/eventos/${uidEvento}/credenciales/`
   })
   
     </script>

@@ -62,8 +62,8 @@ const isPath = name[3] == "editorInvitacion";
 <script define:vars={{ evento }}>
   const uidEvento = evento.uid;
   const cardVideos = document.getElementById(`editorInvitacion${evento.uid}`);
-
+  const serverURL='172.16.0.10'
   cardVideos.addEventListener("click", () => {
-    window.location.href = `http://localhost:4321/eventos/${uidEvento}/editorInvitacion/`;
+    window.location.href = `https://${serverURL}:4321/eventos/${uidEvento}/editorInvitacion/`;
   });
 </script>

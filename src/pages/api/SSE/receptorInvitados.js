@@ -1,6 +1,8 @@
 import http from 'http'
 import {obtenerInformacionDeLaBaseDeDatos} from './obtenerInformacionDeLaBaseDeDatos.js'
+
 http.createServer((req, res) => {
+
   if (req.url.startsWith('/event-stream')) {
     // Configurar encabezados para SSE
     res.writeHead(200, {

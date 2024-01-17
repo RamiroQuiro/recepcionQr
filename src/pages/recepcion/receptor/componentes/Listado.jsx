@@ -10,10 +10,11 @@ export default function Listado({uidEvento,eventoName}) {
   const [checkIn, setCheckIn] = useState([]);
   const serverUrl = !isDev  ? PRODUC : DES;
 
+  const serverURL=import.meta.env.PUBLIC_SERVER_URL || '192.168.1.51'
 
   useEffect(() => {
     // Crear un nuevo objeto EventSource
-    const source = new EventSource(`http://${'192.168.1.51'}:8000/event-stream?uidEvento=${uidEvento}`);
+    const source = new EventSource(`https://${serverURL}:8000/event-stream?uidEvento=${uidEvento}`);
 
     // Escuchar el evento 'message'
     source.onmessage = (event) => {

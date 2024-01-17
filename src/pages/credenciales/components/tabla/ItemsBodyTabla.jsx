@@ -4,7 +4,6 @@ import BotonArchivarItems from "./BotonArchivarItems";
 import BotonEliminarItems from "./BotonEliminarItems";
 import { storageContext } from "../../../../context/storeCredenciales";
 import EstadoCredencial from "./EstadoCredencial";
-import { useStore } from "@nanostores/react";
 
 export default function ItemsBodyTabla({
   credencial,
@@ -12,6 +11,7 @@ export default function ItemsBodyTabla({
   video,
   indice,
   $contexto,
+  serverURL
 }) {
   const [isChecked, setIsChecked] = useState(false);
   const [estado, setEstado] = useState(true);
@@ -77,13 +77,15 @@ export default function ItemsBodyTabla({
       <EstadoCredencial estado={estado} />
       <td class="-nowrap py-1 text-primary-text flex flex-col items-center text-center text-[10px] gap-y-1 uppercase">
         <div class="flex items-center z-20 flex-shrink flex-wrap">
-          <BotonEdtar uidCredencial={uidCredencial} />
+          <BotonEdtar uidCredencial={uidCredencial} serverURL={serverURL}/>
           <BotonArchivarItems
+serverURL={serverURL}
             uidCredencial={credencial.uid}
             setEstado={setEstado}
             estado={estado}
           />
           <BotonEliminarItems
+          serverURL={serverURL}
             uidCredencial={uidCredencial}
             $contexto={$contexto}
           />
