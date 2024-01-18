@@ -1,7 +1,7 @@
-import http from 'http'
+import https from 'https'
 import {obtenerInformacionDeLaBaseDeDatos} from './obtenerInformacionDeLaBaseDeDatos.js'
 
-http.createServer((req, res) => {
+https.createServer((req, res) => {
 
   if (req.url.startsWith('/event-stream')) {
     // Configurar encabezados para SSE

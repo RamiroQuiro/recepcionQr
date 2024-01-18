@@ -25,7 +25,7 @@ export default function ListadoCredencialesCheckIn({ uid }) {
   useEffect(() => {
     // Crear un nuevo objeto EventSource
     const source = new EventSource(
-      `http://${serverURL}:8000/event-stream?uidEvento=${uid}`
+      `https://${serverURL}:8000/event-stream?uidEvento=${uid}`
     );
 
     // Escuchar el evento 'message'
